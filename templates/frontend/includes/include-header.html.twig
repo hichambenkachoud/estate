@@ -1,0 +1,207 @@
+<header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 45, 'stickySetTop': '-45px', 'stickyChangeLogo': true}">
+    <div class="header-body">
+        <div class="header-container container">
+            <div class="header-row">
+                <div class="header-column">
+                    <div class="header-row">
+                        <div class="header-logo">
+                            <a href="{{ path('front_index') }}">
+                                <img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="25" src="img/logo.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-column justify-content-end">
+                    <div class="header-row pt-3">
+                        <nav class="header-nav-top">
+                            <ul class="nav nav-pills">
+                                <li></li>
+                                <li></li>
+                                <li class="nav-item dropdown nav-item-left-border d-sm-block nav-item-left-border-remove nav-item-left-border-md-show">
+                                    <a class="nav-link" href="#" role="button" id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if app.request.locale == 'ar' %}
+                                            <img src="{{ asset('img/blank.gif') }}" class="flag flag-ma" alt="{{ 'front.arabe'|trans }}">
+                                        {% elseif app.request.locale == 'fr' %}
+                                            <img src="{{ asset('img/blank.gif') }}" class="flag flag-fr" alt="{{ 'front.frensh'|trans }}">
+                                        {% elseif app.request.locale == 'en' %}
+                                            <img src="{{ asset('img/blank.gif') }}" class="flag flag-us" alt="{{ 'front.english'|trans }}">
+                                        {% endif %}
+                                        <i class="fas fa-angle-down d-none"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu  {% if app.request.locale == 'ar' %}show-rtl" {% endif %} aria-labelledby="dropdownLanguage">
+                                        <a class="dropdown-item change-language {{ app.request.locale == 'ar' ? 'language-ar' : '' }}" href="#" data-lang="ar"><img src="{{ asset('img/blank.gif') }}" class="flag flag-ma" alt="English" /> {{ 'front.arabe'|trans }}</a>
+                                        <a class="dropdown-item change-language {{ app.request.locale == 'ar' ? 'language-ar' : '' }}" href="#" data-lang="fr"><img src="{{ asset('img/blank.gif') }}" class="flag flag-fr" alt="English" /> {{ 'front.frensh'|trans }}</a>
+                                        <a class="dropdown-item change-language {{ app.request.locale == 'ar' ? 'language-ar' : '' }}" href="#" data-lang="en"><img src="{{ asset('img/blank.gif') }}" class="flag flag-us" alt="English" /> {{ 'front.english'|trans }}</a>
+                                        <div class="hidden" style="display: none;">
+                                            <form action="{{ path('front_index') }}" method="post" id="change-language">
+                                                <input type="hidden" class="lang-value" name="_locale" value="">
+                                                <input type="hidden" name="_current_route" value="{{ app.request.attributes.get('_route') }}">
+                                                {% for index, params in app.request.attributes.get('_route_params') %}
+                                                    <input type="hidden" name="params[]" value="{{ index ~ '*' ~ params }}">
+                                                {% endfor %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                               {# <li class="nav-item nav-item-left-border nav-item-left-border-remove nav-item-left-border-sm-show">
+                                    <span class="ws-nowrap"><i class="fas fa-phone"></i> (212) 621-456-789</span>
+                                </li>#}
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-row">
+                        <div class="header-nav pt-1">
+                            <div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1">
+                                <nav class="collapse">
+                                    <ul class="nav nav-pills" id="mainNav">
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle active" href="{{ path('front_index') }}">
+                                                {{ 'front.home' |trans}}
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#"> {{ 'front.aboutus'|trans }}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">{{ 'front.contactus' |trans }}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="{{ path('front_index') }}">
+                                                {{ 'front.property' |trans}}
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('search-advert') }}?advertType=1">{{ 'sell'|trans}}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('search-advert') }}?advertType=2">{{ 'rent'|trans}}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="{{ path('front_agency_index') }}">
+                                                {{ 'front.agent.found'| trans }}
+                                            </a>
+                                        </li>
+                                      {#
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="#">
+                                                {{ 'front.blog' |trans }}
+                                            </a>
+                                        </li>
+                                      #}
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="{{ path('front_advert_new') }}">
+                                                {{ 'front.advert.add' |trans }}
+                                            </a>
+                                        </li>
+                                        {% if app.user is null %}
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="#">
+                                                {{ 'front.account' |trans }}
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('front_security_login') }}"> {{ 'front.signin'|trans }}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('front_security_register') }}">{{ 'front.register.new' |trans }}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        {% else %}
+                                            <li class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle" href="#">
+                                                    {{ 'front.myaccount' |trans }}
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ path('front_security_profile') }}">{{ 'front.myinfo' |trans }}</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ path('front_security_logout') }}">{{ 'front.logout' |trans }}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                            <ul class="header-social-icons social-icons d-none d-sm-block">
+                                <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- Modal -->
+<div class="modal fade" id="email_agent" tabindex="-1" role="dialog" aria-labelledby="email_agent" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label">{{ 'front.contact_agent'|trans }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'front.cancel'|trans }}" style="display: contents; float: inline-end;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row" style="color: #000;">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger" id="errors_div" style="display: none;">
+
+                    </div>
+                    <div class="alert alert-success" id="success_div" style="display: none;">
+
+                    </div>
+                </div>
+                <div class="form-group col-md-8">
+                    <input type="hidden" id="advertId">
+                    <div class="contact-form-info">
+                        <div class="contact-title mb-2">
+                            <div class="contact-form-title text-4"></div>
+                            <div class="contact-form-price" style="color: #4488cd;"></div>
+                        </div>
+                        <div class="contact-form-agent" style="display: flex;">
+                            <div class="contact-form-agent-label">{{ 'front.agent'|trans }}: </div>
+                            &nbsp;
+                            <div class="contact-form-agent-content"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <img src="" class="contact-form-img" style="max-width: 100%;height: auto;">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <textarea class="form-control contact-form-content" id="contact-message"></textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="email" class="form-control" id="contact-email" required placeholder="{{ 'front.email'|trans }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" id="contact-name" required placeholder="{{ 'front.fullname'|trans }}">
+                </div>
+                <div class="form-group col-md-12" style="direction: ltr;">
+                    <input type="tel" class="form-control telephone" id="telephone" required minlength="8" maxlength="9">
+                </div>
+            </div>
+            {{ include('frontend/includes/include-ajax-loader.html.twig') }}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'front.cancel'|trans }}</button>
+                <button type="button" class="btn btn-primary" id="send-email-contact">{{ 'front.send'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

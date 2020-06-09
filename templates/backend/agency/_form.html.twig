@@ -1,0 +1,55 @@
+{{ form_start(form) }}
+{{ form_errors(form) }}
+<div class="form-group">
+    {{ form_label(form.code) }}
+    {{ form_widget(form.code) }}
+    {{ form_errors(form.code) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    {{ form_errors(form.name)}}
+</div>
+<div class="form-group">
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_errors(form.email)}}
+</div>
+<div class="form-group">
+    {{ form_label(form.url) }}
+    {{ form_widget(form.url) }}
+    {{ form_errors(form.url) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.mobileNumber) }}
+    {{ form_widget(form.mobileNumber) }}
+    {{ form_errors(form.mobileNumber)  }}
+</div>
+<div class="form-group">
+    {{ form_label(form.city) }}
+    {{ form_widget(form.city) }}
+    {{ form_errors(form.city)  }}
+</div>
+<div class="form-group">
+    {{ form_label(form.address) }}
+    {{ form_widget(form.address) }}
+    {{ form_errors(form.address) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+    {{ form_errors(form.image) }}
+</div>
+{% if agency.image is defined and agency.image is not empty %}
+    <div class="form-group">
+        <img src="{{ asset('uploads/agency/' ~ agency.image) }}" width="100" />
+    </div>
+{% endif %}
+<div class="form-group">
+    {{ form_label(form.enabled) }}
+    {{ form_widget(form.enabled) }}
+</div>
+<div class="form-group">
+    <button class="btn btn-success btn-sm">{{ button_label|default('admin.save')|trans }}</button>
+</div>
+{{ form_end(form) }}

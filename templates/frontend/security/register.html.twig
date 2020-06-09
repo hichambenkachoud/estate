@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div role="main" class="main">
+
+            <section class="page-header page-header-classic">
+                <div class="container">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col p-static">
+                            <h1 data-title-border>{{ 'front.signin'|trans }}</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="featured-boxes">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="featured-box featured-box-primary text-left mt-5 register">
+                                        <div class="box-content">
+                                            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">{{ 'front.register.new'|trans }}</h4>
+                                            {{ form_start(form, {'attr': { 'id': 'frmSignUp', 'class': 'needs-validation' }}) }}
+                                            <div class="form-row">
+                                                <div class="form-group col">
+                                                    {% if form.vars.errors.form.getErrors(true) | length > 0 %}
+                                                        <div class="alert alert-danger">
+                                                            <ul>
+                                                                {% for error in form.vars.errors.form.getErrors(true) %}
+                                                                    <li>{{ error.message | trans }}</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+
+                                                        {% else %}
+
+                                                        {{ include('frontend/includes/include-flash.html.twig') }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-lg-6">
+                                                    <label class="font-weight-bold text-dark text-2">{{ 'front.firstName'|trans }}</label>
+                                                    {{ form_widget(form.firstName) }}
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label class="font-weight-bold text-dark text-2">{{ 'front.lastName'|trans }}</label>
+                                                    {{ form_widget(form.lastName) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col">
+                                                    <label class="font-weight-bold text-dark text-2">{{ 'front.email'|trans }}</label>
+                                                    {{ form_widget(form.email) }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-lg-6">
+                                                    <label class="font-weight-bold text-dark text-2">{{ 'front.password'|trans }}</label>
+                                                    {{ form_widget(form.password.first) }}
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label class="font-weight-bold text-dark text-2">{{ 'front.password.confirm'|trans }}</label>
+                                                    {{ form_widget(form.password.second) }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-lg-9">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="terms">
+                                                        <label class="custom-control-label text-2" for="terms">{{ 'front.read.agree.tc'|trans }} <a href="#"> {{ 'front.terms.service'|trans }}</a></label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group col-lg-3">
+                                                    <input type="submit" value="{{ 'front.register'|trans }}" class="btn btn-primary btn-modern float-right" data-loading-text="Loading...">
+                                                </div>
+                                            </div>
+                                            {{ form_end(form) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock body %}

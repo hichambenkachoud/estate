@@ -1,0 +1,55 @@
+<div class="col-sm-12 order-2 order-sm-2 align-self-center p-static search-estate">
+    <div class="overflow-hidden">
+        {#<ul class="custom-fullwidth-dropdown-menu ml-0">
+
+        </ul>#}
+        <li style="list-style-type: none;padding: 12px 0;">
+            <div class="dropdown-mega-content mt-3 ml-3 mr-3">
+                <form id="propertiesFormHeader" action="{{ path('search-advert-home') }}"
+                      method="GET">
+                    <div class="container p-0">
+                        <div class="form-row {% if app.request.locale == 'ar' %} arabe-home {% endif %}">
+                            <div class="col-lg-3 col-md-3 col-sm-12 mb-1">
+                                <!--<select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                        name="adverts[type]"
+                                        data-msg-required="This field is required."
+                                        id="adverts-type">
+                                    {% for advertType in advertTypes %}
+                                        <option value="{{ advertType.id }}" data-code="{{ advertType.code|lower }}">{{ advertType.code|lower|trans }}</option>
+                                    {% endfor %}
+                                </select>-->
+                                <div class="new-radio-button">
+                                    {% for advertType in advertTypes %}
+                                        <input name="advertType" id="free-search-operation-{{ advertType.code }}" type="radio" {% if advertType.code == 'sell'  %} checked {% endif %}
+                                               value="{{ advertType.id }}" autocomplete="off" data-code="{{ advertType.code|lower }}">
+                                        <label for="free-search-operation-{{ advertType.code }}" title="{{ advertType.code|lower|trans }}"> {{ advertType.code|lower|trans }} </label>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 mb-1">
+                                <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                        name="estateType"
+                                        data-msg-required="This field is required."
+                                        id="estate-type">
+                                    {% for estateType in estateTypes %}
+                                        <option value="{{ estateType.id }}">{{ estateType.code|lower|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
+                                <div class="btn-submit-home" style="display: flex;">
+                                    <input type="text" class="form-control text-uppercase text-3"
+                                           placeholder="{{ 'front.city'|trans }}" name="city">
+                                    <input type="submit" value="{{ 'front.search'|trans }}"
+                                           class="btn btn-secondary btn-sm text-uppercase text-3" >
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </div>
+</div>

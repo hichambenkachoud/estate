@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div role="main" class="main">
+        <section
+                class="page-header page-header-modern page-header-background page-header-background-md py-0 overlay overlay-color-primary overlay-show overlay-op-8"
+                style="background-image: url({{ asset('images/estate-background-2.jpg') }});max-height: 350px;">
+            <div class="container">
+                <div class="row search-home">
+                    {{ include('frontend/static/block-search-home.html.twig') }}
+                    <div class="order-1 order-sm-1 align-items-end justify-content-end d-flex pt-5">
+                        <div style="min-height: 350px;" class="overflow-hidden">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <div class="container" style="max-width: 960px;">
+            <div class="row mt-5">
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="font-weight-normal mb-2">
+                               {{ 'front.listingfor'|trans }} <strong class="text-color-secondary font-weight-extra-bold">{{ 'front.sale'|trans }}</strong>
+                                <span class="font-weight-light">{{ 'front.or'|trans }} </span> <strong
+                                        class="text-color-secondary font-weight-extra-bold">{{ 'front.rent'|trans }}</strong>
+                            </h2>
+                        </div>
+                    </div>
+                    <div id="listingLoadMoreWrapper" class="row properties-listing sort-destination p-0"
+                         data-total-pages="2">
+
+                        {% for advert in adverts %}
+                        <div class="col-md-6 col-lg-6 col-sm-12 p-3 isotope-item">
+                            <div class="listing-item">
+                                <a href="{{ path('front_advert_single', {id: advert.id}) }}" class="text-decoration-none">
+                                    <div class="thumb-info thumb-info-lighten border advert">
+                                        <div class="thumb-info-wrapper m-0">
+
+                                            <img src="{{ asset('uploads/' ~ advert.images ~ '/0.png') }}"
+                                                 class="img-fluid" alt="{{ advert.title }}" id="advert-img-{{ advert.id }}">
+                                            <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3">
+                                                {{ advert.advertType.code|trans }}
+                                            </div>
+                                        </div>
+                                        <div class="thumb-info-price bg-color-dark text-color-light text-4 p-2 pl-4 pr-4" id="advert-price-{{ advert.id }}">
+                                            {% if advert.advertType.code == 'sell' %}
+                                                {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}
+                                            {% elseif advert.advertType.code == 'rent' %}
+                                                {% if advert.rentType == 'year' %}
+                                                    {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.year'|trans }}
+                                                {% elseif advert.rentType == 'month' %}
+                                                    {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.month'|trans }}
+                                                {% else %}
+                                                    {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.day'|trans }}
+                                                {% endif %}
+                                             {% endif %}
+                                            <i class="fas fa-caret-right text-color-primary float-right"></i>
+                                        </div>
+                                        <div class="custom-thumb-info-title b-normal p-4">
+                                            <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}">{{ advert.title|striptags }}</div>
+                                            <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
+                                            <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
+                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {{ advert.quartier ? (advert.quartier.name|trans)~',' : ''  }} {{ advert.city ? (advert.city.name|trans) : ''  }}</div>
+                                            <div class="thumb-info-inner text-4" style="color: #4488cd;">
+                                                {{ advert.estateType ? advert.estateType.code | trans : ' '}}
+                                                <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="custom-thumb-info-title p-4 col-md-12 row" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
+                                            <div class="col-md-6 phone_agent" data-tel="{{ advert.mobileNumber }}">
+                                                <span class="ws-nowrap"><i class="fas fa-phone"></i> {{ 'front.phone_agent'|trans }} </span>
+                                            </div>
+                                                <div class="col-md-6 email_agent" data-id="{{ advert.id }}" data-toggle="modal" data-target="#email_agent">
+                                                    <span class="ws-nowrap"><i class="fas fa-envelope"></i> {{ 'front.send_mail'|trans }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!--<div id="listingLoadMoreBtnWrapper" class="row align-items-center" style="min-height: 140px;">
+                        <div class="col text-center">
+                            <div id="listingLoadMoreLoader" class="listing-load-more-loader">
+                                <div class="bounce-loader">
+                                    <div class="bounce1"></div>
+                                    <div class="bounce2"></div>
+                                    <div class="bounce3"></div>
+                                </div>
+                            </div>
+
+                            <button id="listingLoadMore" type="button"
+                                    class="btn btn-secondary btn-xs text-3 text-uppercase outline-none custom-padding-1">
+                                Load More...
+                            </button>
+                        </div>
+                    </div>-->
+                    <div class="row pb-2">
+                        <div class="col">
+                            <h2 class="font-weight-normal mt-1 mb-0">{{ 'front.exclusive.locations'|trans }}</h2>
+                        </div>
+                    </div>
+                    <div class="row pb-4 mb-4">
+                        {% for city in cities %}
+                            <div class="col-md-4 mt-3">
+                                <div class="special-offer-item text-center text-color-light">
+                                    <input type="hidden" name="city" value="{{ city.id }}">
+                                    <a href="{{ path('front_advert_by_city', {'city': city.code|lower, id: city.id}) }}" class="text-decoration-none">
+                                    <span class="special-offer-wrapper">
+                                        <img src="{{ asset('images/'~ city.code|lower ~'.jpg') }}"
+                                             class="img-fluid exclusive" alt="">
+                                        <span class="special-offer-infos text-color-light">
+                                            <span class="special-offer-title font-weight-normal text-5 p-1 mb-2">
+                                                {{ city.code|lower|trans }}
+                                            </span>
+                                            <span class="btn btn-secondary text-uppercase custom-padding-1 d-inline-block">{{ city.adverts|length }} {{ 'properties'|trans }}</span>
+                                        </span>
+                                    </span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <aside class="sidebar">
+                        <div class="row">
+                            <div class="col">
+                                <h2 class="font-weight-normal mb-4">
+                                    {{ 'front.special.offers' |trans }}
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="special-offer-item text-center text-color-light">
+                                    <a href="{{ path('front_advert_single', {id: specialAdvert.id}) }}" class="text-decoration-none">
+												<span class="special-offer-wrapper">
+													<img src="{{ asset('uploads/'~specialAdvert.images~'/0.png') }}"
+                                                         class="img-fluid" alt="special" height="250" style="height: 250px;">
+													<span class="special-offer-infos text-color-light">
+														<span class="special-offer-description font-weight-light text-5" style="padding: 0 2px;font-weight: 400 !important;">
+															{{ specialAdvert.title }}
+														</span>
+														<span class="special-offer-title font-weight-bold text-uppercase text-3 pb-3 pt-5 mb-3">
+															{{ specialAdvert.price }}{{ 'front.currency.dh'|trans }}
+														</span>
+														<span class="btn btn-secondary text-uppercase custom-padding-1 d-inline-block">view more</span>
+													</span>
+												</span>
+                                    </a>
+                                </div>
+                            </div>
+                           {# <div class="col-md-6 col-lg-12">
+                                <div class="special-offer-item text-center text-color-light">
+                                    <a href="demo-real-estate-properties.html" class="text-decoration-none">
+												<span class="special-offer-wrapper">
+													<img src="../../../public/../../../public/img/demos/real-estate/offers/special-offer-2.jpg"
+                                                         class="img-fluid" alt="">
+													<span class="special-offer-infos text-color-light pt-4">
+														<span class="special-offer-description font-weight-light text-5">
+															Exclusive Comdominium
+														</span>
+														<span class="special-offer-title font-weight-bold text-uppercase text-3 mb-3">
+															Miami Beach
+														</span>
+														<span class="btn btn-secondary text-uppercase custom-padding-1 d-inline-block">view more</span>
+													</span>
+												</span>
+                                    </a>
+                                </div>
+                            </div>#}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="agents text-color-light text-center" style="background: #0c525d">
+                                    <h4 class="text-light pt-4 m-0">{{ 'front.our-agent'|trans }}</h4>
+                                    <div class="owl-carousel owl-theme nav-bottom rounded-nav pl-1 pr-1 pt-3 m-0"
+                                         data-plugin-options="{'items': 1, 'loop': false, 'dots': false, 'nav': true}">
+
+                                        {% for member in members %}
+
+                                            <div class="pr-2 pl-2">
+                                                <a href="demo-real-estate-agents-detail.html" class="text-decoration-none">
+														<span class="agent-thumb">
+															<img class="img-fluid rounded-circle"
+                                                                 src="../../../public/img/team/team-11.jpg" alt/>
+														</span>
+                                                    <span class="agent-infos text-light pt-3 mb-2">
+															<strong class="text-uppercase font-weight-bold">{{ member.firstName ~' '~ member.lastName }}</strong>
+															<span class="font-weight-light">{{ member.mobileNumber }}</span>
+															<span class="font-weight-light">{{ member.email }}</span>
+														</span>
+                                                </a>
+                                            </div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-12">
+                                <div class="newsletter box-shadow-custom p-4 text-center">
+                                    <i class="icon-envelope-letter icons"></i>
+                                    <h4 class="mt-1 mb-1">
+                                        {{ 'front.newsletter'|trans }}
+                                    </h4>
+                                    <p>
+                                        {{ 'front.newsletter.content'|trans }}
+                                    </p>
+
+                                    <div class="alert alert-success d-none" id="newsletterSuccess">
+                                        <strong>{{ 'front.success'|trans }}</strong> {{ 'front.newsletter.success'|trans }}
+                                    </div>
+
+                                    <div class="alert alert-danger d-none" id="newsletterError"></div>
+
+                                    <form id="newsletterForm" class="text-black pt-2"
+                                          action="#" method="POST">
+                                        <input class="form-control" placeholder="{{ 'front.fullname'|trans }}" name="newsletterName"
+                                               id="newsletterName" type="text">
+                                        <input class="form-control" placeholder="{{ 'front.email'|trans }}"
+                                               name="newsletterEmail" id="newsletterEmail" type="text">
+                                        <button class="btn btn-light btn-block text-uppercase bg-color-secondary mt-4 text-light custom-padding-1"
+                                                type="submit">{{ 'front.subscribe'|trans }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+   {{ include('/frontend/static/search.html.twig') }}
+    <script type="text/javascript">
+
+        $('.phone_agent').on('click', function (e) {
+            let $tel = $(this).data('tel');
+            $(this).children('.ws-nowrap').html($tel);
+            e.preventDefault();
+        });
+    </script>
+{% endblock %}

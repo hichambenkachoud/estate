@@ -1,0 +1,47 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}{{ 'regions.management' | trans }}{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.regions.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-map-marker-alt"></i></span>
+                </li>
+                <li><span>{{ 'admin.regions' | trans }}</span></li>
+                <li><span>{{ 'admin.update' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    {{ include('backend/region/_form.html.twig', {'button_label': 'admin.update'}) }}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('region_index') }}" class="btn btn-info btn-sm">{{ 'admin.backtolist'|trans }}</a>
+
+                    {{ include('backend/region/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+
+{% endblock %}

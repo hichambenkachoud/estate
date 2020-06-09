@@ -1,0 +1,11 @@
+{% if app.request.hasPreviousSession %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-{% if type == 'error' %}danger{% else %}{{ type }}{% endif %}" id="errors_div2">
+                <ul id="errors">
+                    <li style="list-style-type: none;">{{ message|trans }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}

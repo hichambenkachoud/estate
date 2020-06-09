@@ -1,0 +1,82 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.estates.characteristic.management' | trans }}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.estates.characteristic.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-list-alt"></i></span>
+                </li>
+                <li><span>{{ 'admin.estates.characteristic' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <div class="estate-icon-show">
+                        <i class="{{ estate_characteristic.icon }} estate-icon" style="text-align: center; font-size: 30px"></i>
+                    </div>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id' | trans }}</th>
+                            <td>{{ estate_characteristic.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.code' | trans }}</th>
+                            <td>{{ estate_characteristic.code }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <td>{{ estate_characteristic.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.type' | trans }}</th>
+                            <td>{{ ('admin.characteristic.' ~ estate_characteristic.type)|trans }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            <td>{{ estate_characteristic.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <td>{{ estate_characteristic.createDate ? estate_characteristic.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('estate_characteristics_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('estate_characteristics_edit', {'id': estate_characteristic.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/estate_characteristics/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

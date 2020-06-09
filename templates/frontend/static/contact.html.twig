@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ 'front.contact'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div role="main" class="main">
+
+        <section class="page-header page-header-classic">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1>{{ 'front.contact'|trans }}</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container py-2">
+
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <h4 class="text-primary mt-4">{{ 'front.send_message'|trans }}</h4>
+                    <p>{{ 'front.message_description'|trans }}</p>
+
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="contact-form-success alert alert-success d-none mt-4">
+                            <strong>{{ 'front.contact.success'|trans }}</strong> {{ 'front.contact.success.message'|trans }}
+                        </div>
+
+                        <input type="hidden" value="Contact Form" name="subject" id="subject">
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>{{ 'front.fullname'|trans }} *</label>
+                                <input type="text" value="" id="fullName" maxlength="100" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>{{ 'front.email'|trans }} *</label>
+                                <input type="email" value="" id="email" data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>{{ 'front.message'|trans }} *</label>
+                                <textarea maxlength="5000" id="message" rows="5" class="form-control" name="message" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <button  class="btn btn-secondary mb-4" id="contact-us">{{ 'front.send'|trans }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-12 mt-lg-4 order-1">
+                            <h4 class="text-primary">{{ 'front.office'|trans }}</h4>
+                            <ul class="list list-icons mt-3">
+                                <li>
+                                    <a href="mailto:mail@domain.com">
+                                        <i class="icon-envelope-open icons"></i> mail@domain.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-call-out icons"></i> (800) 123-4567
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-social-linkedin icons"></i> {{ 'front.linkedin'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-social-facebook icons"></i> {{ 'front.facebook'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col order-2 order-md-3 order-lg-2">
+                            <hr class="solid">
+                        </div>
+                        <div class="col-md-6 col-lg-12 order-3 order-md-2 order-lg-3">
+                            <h4 class="text-primary">{{ 'front.business_hours'|trans }}</h4>
+                            <ul class="list list-icons mt-3">
+                                <li><i class="far fa-clock"></i> {{ 'front.monday'|trans }} - {{ 'front.friday'|trans }} - {{ 'front.9am'|trans }} {{ 'front.to'|trans }} {{ 'front.5pm'|trans }}</li>
+                                <li><i class="far fa-clock"></i> {{ 'front.satuday'|trans }} - {{ 'front.9am'|trans }} {{ 'front.to'|trans }} {{ 'front.2pm'|trans }}</li>
+                                <li><i class="far fa-clock"></i> {{ 'front.sunday'|trans }} - {{ 'front.closed'|trans }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#contact-us').on('click', function (e) {
+                let $successDiv = $('.contact-form-success');
+                $successDiv.removeClass('d-none');
+                let $fullName = $('#fullName').val();
+                let $email = $('#email').val();
+                let $message = $('#message').val();
+
+                $.ajax({
+                    url: "{{ path('ajax_contact_us') }}",
+                    data: JSON.stringify({fullName: $fullName, email: $email, message: $message}),
+                    dataType: "json",
+                    method: "POST",
+                    contentType: 'application/json',
+                    success: function (data) {
+                    },
+                    error: function (a, b, c) {
+                        console.log(a, b, c);
+                    },
+                    complete: function () {
+                        setTimeout(function(){
+                            $successDiv.addClass('d-none');
+                        }, 3000);
+                    }
+                });
+
+                e.preventDefault();
+            })
+
+        });
+    </script>
+{% endblock %}

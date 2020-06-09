@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'front.contact-us' |trans }}</title>
+</head>
+<body {% if lang == "ar" %} style="direction: rtl;"{% endif %}>
+<div>
+   <h4>{{ 'hello'|trans }}</h4>
+    <p style="font-size: 15px;">
+        {{ 'front.contact-us.email.content' |trans }} :
+    </p>
+
+    <p style="font-size: 15px;">
+        {{ 'front.fullname'|trans }}: {{ fullName }}
+    </p>
+    <p style="font-size: 15px;">
+        {{ 'front.email'|trans }}: {{ email }}
+    </p>
+
+    <p style="font-size: 15px;">
+        {{ 'front.message'|trans }}: {{ message }}
+    </p>
+    <p style="font-size: 15px;">
+        <br/>
+        {{ 'enjoy'|trans }}
+    </p>
+</div>
+</body>
+</html>

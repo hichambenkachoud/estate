@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('city_delete', {'id': city.id}) }}" onsubmit="return confirm('{{ 'admin.delete.sure' | trans }}');" style="display: inline;">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ city.id) }}">
+    <button class="btn btn-danger btn-sm">{{ 'admin.delete' |trans }}</button>
+</form>

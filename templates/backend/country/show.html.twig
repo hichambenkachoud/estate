@@ -1,0 +1,79 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}{{ 'country_management' | trans }}{% endblock %}
+
+{% block body %}
+
+    <header class="page-header">
+        <h2>{{ 'admin.countries.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-map-marker-alt"></i></span>
+                </li>
+                <li><span>{{ 'admin.countries' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id' | trans }}</th>
+                            <td>{{ country.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.code' | trans }}</th>
+                            <td>{{ country.code }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <td>{{ country.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            <td>{{ country.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.isdefault' | trans }}</th>
+                            <td>{{ country.isDefault ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <td>{{ country.createDate ? country.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('country_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('country_edit', {'id': country.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/country/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

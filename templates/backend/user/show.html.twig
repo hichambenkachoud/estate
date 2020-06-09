@@ -1,0 +1,158 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.users.management' | trans }}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.users.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.users' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-lg-4 col-xl-4 mb-4 mb-xl-0">
+
+            <section class="card">
+                <div class="card-body">
+                    <div class="thumb-info mb-3">
+                        <img src="{{ asset('images/avatar_user.jpg') }}" class="rounded img-fluid" style="width: 60%">
+                        <div class="thumb-info-title">
+                            <span class="thumb-info-type">{{ user.simpleRole|trans }}</span>
+                        </div>
+                    </div>
+
+                    <div class="widget-toggle-expand mb-3">
+                        <div class="widget-header">
+                            <h5 class="mb-2">{{ 'admin.profile.completion' | trans }}</h5>
+                            <div class="widget-toggle">+</div>
+                        </div>
+                        <div class="widget-content-collapsed">
+                            <div class="progress progress-xs light">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                                    60%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content-expanded">
+                            <ul class="simple-todo-list mt-3">
+                                {% if user.firstName is not empty %}
+                                    <li class="stats-complete">{{ 'admin.firstname' | trans }}</li>
+                                {% endif %}
+                                {% if user.lastName is not empty %}
+                                    <li class="completed">{{ 'admin.lastname' | trans }}</li>
+                                {% endif %}
+                                {% if user.mobileNumber is not empty %}
+                                    <li class="completed">{{ 'admin.mobileNumber' | trans }}</li>
+                                {% endif %}
+                                {% if user.firstName is  empty %}
+                                    <li class="">{{ 'admin.firstname.update' | trans }}</li>
+                                {% endif %}
+                                {% if user.lastName is  empty %}
+                                    <li class="">{{ 'admin.lastname.update' | trans }}</li>
+                                {% endif %}
+                                {% if user.mobileNumber is  empty %}
+                                    <li class="">{{ 'admin.mobileNumber.update' | trans }}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr class="dotted short">
+
+                    <h5 class="mb-2 mt-3">{{ 'admin.profile.information' | trans }}</h5>
+                    <p class="text-2">{{ 'admin.role.super_admin.information' | trans }}</p>
+                    <div class="clearfix">
+                    </div>
+
+                    <hr class="dotted short">
+
+                    <div class="social-icons-list">
+                        <a rel="tooltip" data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a>
+                        <a rel="tooltip" data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a>
+                        <a rel="tooltip" data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fab fa-linkedin-in"></i><span>Linkedin</span></a>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+        <div class="col-lg-8 col-xl-6">
+
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#overview" data-toggle="tab">{{ 'admin.overview' | trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#edit" data-toggle="tab">{{ 'admin.actions' | trans }}</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="overview" class="tab-pane active">
+
+                        <div class="p-3">
+                            <div class="timeline timeline-simple mb-3">
+                                <div class="tm-body">
+                                    <ol class="tm-items">
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-0">{{ 'admin.email'|trans }}</p>
+                                                <p>
+                                                    {{ user.email }}
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-0">{{ 'admin.firstname'|trans }}</p>
+                                                <p>
+                                                    {{ user.firstName }}
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-0">{{ 'admin.lastname'|trans }}</p>
+                                                <p>
+                                                    {{ user.lastName }}
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-0">{{ 'admin.mobileNumber'|trans }}</p>
+                                                <p>
+                                                    {{ user.mobileNumber }}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="edit" class="tab-pane ">
+                        <a href="{{ path('user_index') }}" class="btn btn-info btn-sm">{{ 'admin.backtolist'|trans }}</a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-success btn-sm">{{ 'admin.update'|trans }}</a>
+                        {{ include('backend/user/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

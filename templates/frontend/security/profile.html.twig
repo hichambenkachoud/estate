@@ -1,0 +1,271 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div role="main" class="main">
+
+            <section class="page-header page-header-classic">
+                <div class="container">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col p-static">
+                            <h1 data-title-border>{{ 'front.profile'|trans }}</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container py-2">
+
+                <div class="row">
+                    <div class="col-lg-3 mt-4 mt-lg-0">
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="profile-image-outer-container">
+                                    <div class="profile-image-inner-container bg-color-primary">
+                                        <img src="{{ asset('uploads/members/'~app.user.image) }}" id="picture">
+                                        <span class="profile-image-button bg-color-dark">
+                                                <i class="fas fa-camera text-light"></i>
+                                            </span>
+                                    </div>
+                                <input type="file" id="file" class="profile-image-input" name="file">
+                            </div>
+                        </div>
+
+                        <aside class="sidebar mt-2" id="sidebar">
+                            <ul class="nav nav-list flex-column mb-5">
+                                <li class="nav-item"><a class="nav-link text-dark active" href="#">{{ 'front.myinfo'|trans }}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">User Preferences</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Billing</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Invoices</a></li>
+                            </ul>
+                        </aside>
+
+                    </div>
+                    <div class="col-lg-7" id="response">
+                        <div class="overflow-hidden mb-1">
+                            <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">{{ 'front.myinfo'|trans }}</strong></h2>
+                            <div class="alert alert-info">
+                                <span class="fa fa-info"></span>
+                                {{ 'front.profile.update.email' |trans }}
+                            </div>
+                        </div>
+                        <div class="overflow-hidden mb-4 pb-3">
+                            <p class="mb-0"></p>
+                        </div>
+
+                        <form method="post" class="needs-validation">
+                            <div class="form-group">
+                                <div class="alert alert-danger" id="errors_div_profile" style="display: none;">
+
+                                </div>
+                                <div class="alert alert-success" id="success_div_profile" style="display: none;">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">{{ 'front.firstName'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="first-name" name="firstname" type="text" value="{{ app.user.firstName }}" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">{{ 'front.lastName'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="last-name" name="lastname" type="text" value="{{ app.user.lastName }}" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">{{ 'front.email'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="email" name="email" type="email" value="{{ app.user.email }}" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">{{ 'front.username'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="user-name" name="username" type="text" value="{{ app.user.userName }}" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">{{ 'front.mobilenumber'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control telephone" type="text" required>
+                                    <input id="tel" name="tel" type="hidden" value="{{ app.user.mobileNumber }}" placeholder="212(5|6|7)66873678" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">{{ 'front.birthday'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="date form-control" id="birth-date" name="birthdate" type="text" value="{{ app.user.birthDay|date('Y-m-d') }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">{{ 'front.password'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="password-1" name="password_1" type="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">{{ 'front.password.confirm'|trans }}</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" id="password-2" name="password_2" type="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col-lg-9">
+                                    {{ include('frontend/includes/include-ajax-loader.html.twig') }}
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <button class="btn btn-primary btn-modern float-right update-profile-btn">{{ 'front.save'|trans }}</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.telephone').val({{ app.user.mobileNumber }});
+            $('.telephone').on('keyup',function () {
+                let indicative = $('#w4-description .iti__selected-dial-code').text();
+                let $val = $(this).val();
+
+                $('#tel').val(indicative+$val);
+            });
+
+            $('.date').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: "-70y",
+                endDate: "-18y",
+                language: '{{ app.request.locale }}'
+            });
+
+            $('.update-profile-btn').on('click', function () {
+                let btn = $(this);
+                let errorsDiv = $('#errors_div_profile');
+                let successDiv = $('#success_div_profile');
+                let response = $('#response');
+                let loader = $('.loader');
+
+                let firstName = $('#first-name').val();
+                let lastName = $('#last-name').val();
+                let userName = $('#user-name').val();
+                let email = $('#email').val();
+                let birthDay = $('#birth-date').val();
+                let tel = $('#tel').val();
+                let password_1 = $('#password-1').val();
+                let password_2 = $('#password-2').val();
+
+                if ($('.needs-validation').valid()){
+                    btn.prop('disabled', true);
+                    loader.css('opacity', 1);
+                    $.ajax({
+                        url: "{{ path('ajax_security_update_profile') }}",
+                        data: JSON.stringify({firstName: firstName, lastName: lastName, userName: userName, email: email,birthDay: birthDay, tel: tel, password_1: password_1, password_2: password_2}),
+                        dataType: "json",
+                        method: "POST",
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if(data.code == '0'){
+                                successDiv.show();
+                                successDiv.html(' ');
+                                successDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                                setTimeout(function(){
+                                    successDiv.hide();
+                                }, 5000);
+                            }
+                            else if (data.code == '-1'){
+                                errorsDiv.show();
+                                errorsDiv.html(' ');
+                                errorsDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                                setTimeout(function(){
+                                    errorsDiv.hide();
+                                }, 5000);
+                            }
+                        },
+                        error: function (a, b, c) {
+                            console.log(a, b, c);
+                        },
+                        complete: function () {
+                            loader.css('opacity', 0);
+                            btn.prop('disabled', false);
+                            response[0].scrollIntoView();
+                        }
+                    });
+                }
+
+               return false;
+            });
+
+
+            $(document).on('change', '#file', function(){
+                var name = document.getElementById("file").files[0].name;
+                let errorsDiv = $('#errors_div_profile');
+                let successDiv = $('#success_div_profile');
+                var form_data = new FormData();
+                var ext = name.split('.').pop().toLowerCase();
+                if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
+                {
+                    alert({{ 'front.image.bad.format'|trans }});
+                }
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(document.getElementById("file").files[0]);
+                var f = document.getElementById("file").files[0];
+                var fsize = f.size||f.fileSize;
+                if(fsize > 2000000)
+                {
+                    alert({{ 'front.image.big'|trans }});
+                }
+                else
+                {
+                    form_data.append("file", document.getElementById('file').files[0]);
+                    $.ajax({
+                        url:"{{ path('ajax_upload_member_picture') }}",
+                        method:"POST",
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        /*beforeSend:function(){
+                            $('#uploaded_image').html("<label class='text-success'>Image Uploading...</label>");
+                        },*/
+                        success:function(data)
+                        {
+                            data = JSON.parse(data);
+                            if (data.code ==  '0'){
+                                $('#picture').attr("src", "{{ asset('uploads/members/') }}"+data.response.imageSrc);
+                                successDiv.show();
+                                successDiv.html(' ');
+                                successDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                                setTimeout(function(){
+                                    successDiv.hide();
+                                }, 5000);
+                            } else{
+                                errorsDiv.show();
+                                errorsDiv.html(' ');
+                                errorsDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                                setTimeout(function(){
+                                    errorsDiv.hide();
+                                }, 5000);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

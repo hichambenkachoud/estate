@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <style>
+        .search-estate{
+            background: #413c46;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <div role="main" class="main">
+
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md" style="padding: 30px 0;">
+            <div class="container">
+                {{ include('frontend/static/block-search-portal.html.twig') }}
+            </div>
+        </section>
+
+        <div class="container">
+
+            <div class="row mb-4 properties-listing sort-destination p-0">
+
+                {% for advert in adverts %}
+                    <div class="col-md-6 col-lg-4 p-3 isotope-item">
+                    <div class="listing-item">
+                        <a href="{{ path('front_advert_single', {id: advert.id}) }}" class="text-decoration-none">
+                            <div class="thumb-info thumb-info-lighten border advert">
+                                <div class="thumb-info-wrapper m-0">
+                                    <img src="{{ asset('uploads/' ~ advert.images ~ '/0.png') }}" class="img-fluid"
+                                         alt="{{ advert.title }}" id="advert-img-{{ advert.id }}">
+                                    <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3">
+                                        {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
+                                    </div>
+                                </div>
+                                <div class="thumb-info-price bg-color-dark text-color-light text-4 p-2 pl-4 pr-4" id="advert-price-{{ advert.id }}">
+                                    {% if advert.advertType.code == 'sell' %}
+                                        {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}
+                                    {% elseif advert.advertType.code == 'rent' %}
+                                        {% if advert.rentType == 'year' %}
+                                            {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.year'|trans }}
+                                        {% elseif advert.rentType == 'month' %}
+                                            {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.month'|trans }}
+                                        {% else %}
+                                            {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.day'|trans }}
+                                        {% endif %}
+                                    {% endif %}
+                                    <i class="fas fa-caret-right text-color-primary float-right"></i>
+                                </div>
+                                <div class="custom-thumb-info-title b-normal p-4">
+                                    <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}" style="font-size: 1.1em !important;">{{ advert.title }}</div>
+                                    <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
+                                    <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
+                                    <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {{ advert.quartier ? (advert.quartier.name|trans)~',' : ''  }} {{ advert.city ? (advert.city.name|trans) : ''  }}</div>
+                                    <div class="thumb-info-inner text-4" style="color: #4488cd;">
+                                        {{ advert.estateType ? advert.estateType.code | trans : ' '}}
+                                        <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
+                                    </div>
+                                </div>
+                                <div class="custom-thumb-info-title p-4 col-md-12 row" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
+                                    <div class="col-md-6 phone_agent" data-tel="00000000">
+                                        <span class="ws-nowrap"><i class="fas fa-phone"></i> {{ 'front.phone_agent'|trans }} </span>
+                                    </div>
+                                    <div class="col-md-6 email_agent" data-id="1" data-toggle="modal" data-target="#email_agent">
+                                        <span class="ws-nowrap"><i class="fas fa-envelope"></i> {{ 'front.send_mail'|trans }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if page_count >0 %}
+            <div class="row my-5">
+                <div class="col">
+                    <ul class="pagination justify-content-center">
+                        {% if 1 != current_page %}
+                            <li class="page-item {{ (1==current_page)?'disabled':'' }}">
+                                <a class="page-link" href="{{ (1==current_page)?'#':path('front_advert_by_city',{'page':current_page-1, 'city': advertCity.code|lower|trans, 'id': advertCity.id}) }}">
+                                    <i class="fas {{ app.request.locale != 'ar' ? 'fa-angle-left' : 'fa-angle-right'}}"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {%  for page in 1..page_count %}
+                            <li class="page-item {{ (page==current_page)?'active':'' }}">
+                                <a class="page-link" href="{{ (1==current_page)?'#':path('front_advert_by_city',{'page':page, 'city': advertCity.code|lower|trans, 'id': advertCity.id}) }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if page_count != current_page %}
+                            <li class="page-item {{ (page_count==current_page)?'disabled':'' }}">
+                                <a class="page-link" href="{{ (page_count==current_page)?'#':path('front_advert_by_city',{'page':current_page+1, 'city': advertCity.code|lower|trans, 'id': advertCity.id}) }}">
+                                    <i class="fas {{ app.request.locale == 'ar' ? 'fa-angle-left' : 'fa-angle-right'}}"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ include('/frontend/static/search.html.twig') }}
+    <script type="text/javascript">
+
+        $('.phone_agent').on('click', function (e) {
+            let $tel = $(this).data('tel');
+            $(this).children('.ws-nowrap').html($tel);
+            e.preventDefault();
+        });
+    </script>
+{% endblock %}

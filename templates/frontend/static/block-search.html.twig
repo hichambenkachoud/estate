@@ -1,0 +1,723 @@
+<div class="col-sm-12 order-2 order-sm-2 align-self-center p-static search-estate">
+    <div class="overflow-hidden">
+        <ul class="custom-fullwidth-dropdown-menu ml-0" {% if app.request.locale != 'ar' %} style="left: -10%; position: relative;" {% else %} style="right: -8%; position: relative;" {% endif %}>
+            <li style="list-style-type: none;">
+                <div class="dropdown-mega-content mt-3">
+                    <form id="propertiesFormHeader" action="{{ path('search-advert') }}"
+                          method="GET">
+                        <div class="container p-0">
+                            <div class="form-row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                                    {#<select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                            name="adverts[type]"
+                                            data-msg-required="This field is required."
+                                            id="adverts-type">
+                                        <option value="">{{ 'front.adverts.type'|trans }}</option>
+                                        {% for advertType in advertTypes %}
+                                            <option value="{{ advertType.id }}" data-code="{{ advertType.code|lower }}">{{ advertType.code|lower|trans }}</option>
+                                        {% endfor %}
+                                    </select>#}
+                                    <div class="new-radio-button">
+                                        {% for advertType in advertTypes %}
+                                            <input name="advertType" id="advert-{{ advertType.code }}" type="radio" {% if advertType.id == app.request.get('advertType') or  advertType.code|lower == 'sell'  %} checked {% endif %}
+                                                   value="{{ advertType.id }}" autocomplete="off" data-code="{{ advertType.code|lower }}" class="get-sorted advertTypeRadio">
+                                            <label for="advert-{{ advertType.code }}" title="{{ advertType.code|lower|trans }}"> {{ advertType.code|lower|trans }} </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3" id="rent-type" style="display: none;">
+                                    <div class="item-form">
+                                        <span>{{ 'front.rent.type'|trans }}</span>
+                                    </div>
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="rentType"
+                                            data-msg-required="This field is required."
+                                            id="adverts-rent">
+                                        <option value="">{{ 'front.rent.type'|trans }}</option>
+                                        <option value="day" {% if app.request.get('rentType') == 'day' %} selected="selected" {% endif %}>{{ 'front.rent.day'|trans }}</option>
+                                        <option value="month" {% if app.request.get('rentType') == 'month' %} selected="selected" {% endif %}>{{ 'front.rent.month'|trans }}</option>
+                                        <option value="year" {% if app.request.get('rentType') == 'year' %} selected="selected" {% endif %}>{{ 'front.rent.year'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12 item-form">
+                                    <span>{{ 'front.estates.type'|trans }}</span>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="estateType"
+                                            data-msg-required="This field is required."
+                                            id="estate-type">
+                                            <option value="">{{ 'front.estates.type'|trans }}</option>
+                                        {% for estateType in estateTypes %}
+                                            <option value="{{ estateType.id }}" {% if app.request.get('estateType') == estateType.id %} selected="selected" {% endif %}>{{ estateType.code|lower|trans }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12 item-form">
+                                    <span>{{ 'front.price'|trans }}</span>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-sell">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMin"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-min">
+                                        <option value=""  data-price="0">{{ 'front.price.min'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMin') == '100000' %} selected="selected" {% endif %}>{{ 100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="200000" data-price="200000" {% if app.request.get('priceMin') == '200000' %} selected {% endif %}>{{ 200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="300000" data-price="300000" {% if app.request.get('priceMin') == '300000' %} selected="selected" {% endif %}>{{ 300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="400000" data-price="400000" {% if app.request.get('priceMin') == '400000' %} selected {% endif %}>{{ 400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="500000" data-price="500000" {% if app.request.get('priceMin') == '500000' %} selected {% endif %}>{{ 500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="600000" data-price="600000" {% if app.request.get('priceMin') == '600000' %} selected {% endif %}>{{ 600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="700000" data-price="700000" {% if app.request.get('priceMin') == '700000' %} selected {% endif %}>{{ 700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="800000" data-price="800000" {% if app.request.get('priceMin') == '800000' %} selected {% endif %}>{{ 800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="900000" data-price="900000" {% if app.request.get('priceMin') == '900000' %} selected {% endif %}>{{ 900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1000000" data-price="1000000" {% if app.request.get('priceMin') == '1000000' %} selected {% endif %}>{{ 1000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1100000" data-price="1100000" {% if app.request.get('priceMin') == '1100000' %} selected {% endif %}>{{ 1100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1200000" data-price="1200000" {% if app.request.get('priceMin') == '1200000' %} selected {% endif %}>{{ 1200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1300000" data-price="1300000" {% if app.request.get('priceMin') == '1300000' %} selected {% endif %}>{{ 1300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1400000" data-price="1400000" {% if app.request.get('priceMin') == '1400000' %} selected {% endif %}>{{ 1400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1500000" data-price="1500000" {% if app.request.get('priceMin') == '1500000' %} selected {% endif %}>{{ 1500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1600000" data-price="1600000" {% if app.request.get('priceMin') == '1600000' %} selected {% endif %}>{{ 1600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1700000" data-price="1700000" {% if app.request.get('priceMin') == '1700000' %} selected {% endif %}>{{ 1700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1800000" data-price="1800000" {% if app.request.get('priceMin') == '1800000' %} selected {% endif %}>{{ 1800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1900000" data-price="1900000" {% if app.request.get('priceMin') == '1900000' %} selected {% endif %}>{{ 1900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2000000" data-price="2000000" {% if app.request.get('priceMin') == '2000000' %} selected {% endif %}>{{ 2000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2200000" data-price="2200000" {% if app.request.get('priceMin') == '2200000' %} selected {% endif %}>{{ 2200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2400000" data-price="2400000" {% if app.request.get('priceMin') == '2400000' %} selected {% endif %}>{{ 2400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2600000" data-price="2600000" {% if app.request.get('priceMin') == '2600000' %} selected {% endif %}>{{ 2600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2800000" data-price="2800000" {% if app.request.get('priceMin') == '2800000' %} selected {% endif %}>{{ 2800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3250000" data-price="3250000" {% if app.request.get('priceMin') == '3250000' %} selected {% endif %}>{{ 3250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3500000" data-price="3500000" {% if app.request.get('priceMin') == '3500000' %} selected {% endif %}>{{ 3500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3750000" data-price="3750000" {% if app.request.get('priceMin') == '3750000' %} selected {% endif %}>{{ 3750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4000000" data-price="4000000" {% if app.request.get('priceMin') == '4000000' %} selected {% endif %}>{{ 4000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4250000" data-price="4250000" {% if app.request.get('priceMin') == '4250000' %} selected {% endif %}>{{ 4250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4500000" data-price="4500000" {% if app.request.get('priceMin') == '4500000' %} selected {% endif %}>{{ 4500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4750000" data-price="4750000" {% if app.request.get('priceMin') == '4750000' %} selected {% endif %}>{{ 4750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="5000000" data-price="5000000" {% if app.request.get('priceMin') == '5000000' %} selected {% endif %}>{{ 5000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="5500000" data-price="5500000" {% if app.request.get('priceMin') == '5500000' %} selected {% endif %}>{{ 5500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="6000000" data-price="6000000" {% if app.request.get('priceMin') == '6000000' %} selected {% endif %}>{{ 6000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="6500000" data-price="6500000" {% if app.request.get('priceMin') == '6500000' %} selected {% endif %}>{{ 6500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="7000000" data-price="7000000" {% if app.request.get('priceMin') == '7000000' %} selected {% endif %}>{{ 7000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="7500000" data-price="7500000" {% if app.request.get('priceMin') == '7500000' %} selected {% endif %}>{{ 7500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="8000000" data-price="8000000" {% if app.request.get('priceMin') == '8000000' %} selected {% endif %}>{{ 8000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="9000000" data-price="9000000" {% if app.request.get('priceMin') == '9000000' %} selected {% endif %}>{{ 9000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="10000000" data-price="10000000" {% if app.request.get('priceMin') == '10000000' %} selected {% endif %}>{{ 10000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="20000000" data-price="20000000" {% if app.request.get('priceMin') == '20000000' %} selected {% endif %}>{{ 20000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="30000000" data-price="30000000" {% if app.request.get('priceMin') == '30000000' %} selected {% endif %}>{{ 30000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="40000000" data-price="40000000" {% if app.request.get('priceMin') == '40000000' %} selected {% endif %}>{{ 40000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="50000000" data-price="50000000" {% if app.request.get('priceMin') == '50000000' %} selected {% endif %}>{{ 50000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-sell">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMax"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-max">
+                                        <option value=""  data-price="0">{{ 'front.price.max'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMax') == '100000' %} selected {% endif %}>{{ 100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="200000" data-price="200000" {% if app.request.get('priceMax') == '200000' %} selected {% endif %}>{{ 300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="300000" data-price="300000" {% if app.request.get('priceMax') == '300000' %} selected {% endif %}>{{ 200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="400000" data-price="400000" {% if app.request.get('priceMax') == '400000' %} selected {% endif %}>{{ 400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="500000" data-price="500000" {% if app.request.get('priceMax') == '500000' %} selected {% endif %}>{{ 500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="600000" data-price="600000" {% if app.request.get('priceMax') == '600000' %} selected {% endif %}>{{ 600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="700000" data-price="700000" {% if app.request.get('priceMax') == '700000' %} selected {% endif %}>{{ 700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="800000" data-price="800000" {% if app.request.get('priceMax') == '800000' %} selected {% endif %}>{{ 800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="900000" data-price="900000" {% if app.request.get('priceMax') == '900000' %} selected {% endif %}>{{ 900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1000000" data-price="1000000" {% if app.request.get('priceMax') == '1000000' %} selected {% endif %}>{{ 1000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1100000" data-price="1100000" {% if app.request.get('priceMax') == '1100000' %} selected {% endif %}>{{ 1100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1200000" data-price="1200000" {% if app.request.get('priceMax') == '1200000' %} selected {% endif %}>{{ 1200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1300000" data-price="1300000" {% if app.request.get('priceMax') == '1300000' %} selected {% endif %}>{{ 1300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1400000" data-price="1400000" {% if app.request.get('priceMax') == '1400000' %} selected {% endif %}>{{ 1400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1500000" data-price="1500000" {% if app.request.get('priceMax') == '1500000' %} selected {% endif %}>{{ 1500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1600000" data-price="1600000" {% if app.request.get('priceMax') == '1600000' %} selected {% endif %}>{{ 1600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1700000" data-price="1700000" {% if app.request.get('priceMax') == '1700000' %} selected {% endif %}>{{ 1700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1800000" data-price="1800000" {% if app.request.get('priceMax') == '1800000' %} selected {% endif %}>{{ 1800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="1900000" data-price="1900000" {% if app.request.get('priceMax') == '1900000' %} selected {% endif %}>{{ 1900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2000000" data-price="2000000" {% if app.request.get('priceMax') == '2000000' %} selected {% endif %}>{{ 2000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2200000" data-price="2200000" {% if app.request.get('priceMax') == '2200000' %} selected {% endif %}>{{ 2200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2400000" data-price="2400000" {% if app.request.get('priceMax') == '2400000' %} selected {% endif %}>{{ 2400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2600000" data-price="2600000" {% if app.request.get('priceMax') == '2600000' %} selected {% endif %}>{{ 2600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="2800000" data-price="2800000" {% if app.request.get('priceMax') == '2800000' %} selected {% endif %}>{{ 2800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3250000" data-price="3250000" {% if app.request.get('priceMax') == '3250000' %} selected {% endif %}>{{ 3250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3500000" data-price="3500000" {% if app.request.get('priceMax') == '3500000' %} selected {% endif %}>{{ 3500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="3750000" data-price="3750000" {% if app.request.get('priceMax') == '3750000' %} selected {% endif %}>{{ 3750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4000000" data-price="4000000" {% if app.request.get('priceMax') == '4000000' %} selected {% endif %}>{{ 4000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4250000" data-price="4250000" {% if app.request.get('priceMax') == '4250000' %} selected {% endif %}>{{ 4250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4500000" data-price="4500000" {% if app.request.get('priceMax') == '4500000' %} selected {% endif %}>{{ 4500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="4750000" data-price="4750000" {% if app.request.get('priceMax') == '4750000' %} selected {% endif %}>{{ 4750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="5000000" data-price="5000000" {% if app.request.get('priceMax') == '5000000' %} selected {% endif %}>{{ 5000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="5500000" data-price="5500000" {% if app.request.get('priceMax') == '5500000' %} selected {% endif %}>{{ 5500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="6000000" data-price="6000000" {% if app.request.get('priceMax') == '6000000' %} selected {% endif %}>{{ 6000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="6500000" data-price="6500000" {% if app.request.get('priceMax') == '6500000' %} selected {% endif %}>{{ 6500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="7000000" data-price="7000000" {% if app.request.get('priceMax') == '7000000' %} selected {% endif %}>{{ 7000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="7500000" data-price="7500000" {% if app.request.get('priceMax') == '7500000' %} selected {% endif %}>{{ 7500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="8000000" data-price="8000000" {% if app.request.get('priceMax') == '8000000' %} selected {% endif %}>{{ 8000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="9000000" data-price="9000000" {% if app.request.get('priceMax') == '9000000' %} selected {% endif %}>{{ 9000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="10000000" data-price="10000000" {% if app.request.get('priceMax') == '10000000' %} selected {% endif %}>{{ 10000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="20000000" data-price="20000000" {% if app.request.get('priceMax') == '20000000' %} selected {% endif %}>{{ 20000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="30000000" data-price="30000000" {% if app.request.get('priceMax') == '30000000' %} selected {% endif %}>{{ 30000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="40000000" data-price="40000000" {% if app.request.get('priceMax') == '40000000' %} selected {% endif %}>{{ 40000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                        <option value="50000000" data-price="50000000" {% if app.request.get('priceMax') == '50000000' %} selected {% endif %}>{{ 50000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-day" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMinDay"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-min-day">
+                                        <option value="" data-price="0">{{ 'front.price.min'|trans }}</option>
+                                        <option value="100" data-price="100" {% if app.request.get('priceMinDay') == '100' %} selected {% endif %}> 100 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="200" data-price="200" {% if app.request.get('priceMinDay') == '200' %} selected {% endif %}> 200 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="300" data-price="300" {% if app.request.get('priceMinDay') == '300' %} selected {% endif %}> 300 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="400" data-price="400" {% if app.request.get('priceMinDay') == '400' %} selected {% endif %}> 400 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="500" data-price="500" {% if app.request.get('priceMinDay') == '500' %} selected {% endif %}> 500 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="600" data-price="600" {% if app.request.get('priceMinDay') == '600' %} selected {% endif %}> 600 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="700" data-price="700" {% if app.request.get('priceMinDay') == '700' %} selected {% endif %}> 700 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="800" data-price="800" {% if app.request.get('priceMinDay') == '800' %} selected {% endif %}> 800 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="900" data-price="900" {% if app.request.get('priceMinDay') == '900' %} selected {% endif %}> 900 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="1000" data-price="1000" {% if app.request.get('priceMinDay') == '1000' %} selected {% endif %}> 1,000 {{ 'front.currency.dh.day'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-day" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMaxDay"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-max-day">
+                                        <option value="" data-price="0">{{ 'front.price.max'|trans }}</option>
+                                        <option value="100" data-price="100" {% if app.request.get('priceMaxDay') == '100' %} selected {% endif %}> 100 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="200" data-price="200" {% if app.request.get('priceMaxDay') == '200' %} selected {% endif %}> 200 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="300" data-price="300" {% if app.request.get('priceMaxDay') == '300' %} selected {% endif %}> 300 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="400" data-price="400" {% if app.request.get('priceMaxDay') == '400' %} selected {% endif %}> 400 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="500" data-price="500" {% if app.request.get('priceMaxDay') == '500' %} selected {% endif %}> 500 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="600" data-price="600" {% if app.request.get('priceMaxDay') == '600' %} selected {% endif %}> 600 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="700" data-price="700" {% if app.request.get('priceMaxDay') == '700' %} selected {% endif %}> 700 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="800" data-price="800" {% if app.request.get('priceMaxDay') == '800' %} selected {% endif %}> 800 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="900" data-price="900" {% if app.request.get('priceMaxDay') == '900' %} selected {% endif %}> 900 {{ 'front.currency.dh.day'|trans }}</option>
+                                        <option value="1000" data-price="1000" {% if app.request.get('priceMaxDay') == '1000' %} selected {% endif %}> 1,000 {{ 'front.currency.dh.day'|trans }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-month" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMinMonth"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-min-month">
+                                        <option value="" data-price="0">{{ 'front.price.min'|trans }}</option>
+                                        <option value="100" data-price="100" {% if app.request.get('priceMinMonth') == '100' %} selected {% endif %}> 100 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="500" data-price="500" {% if app.request.get('priceMinMonth') == '500' %} selected {% endif %}> 500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="1000" data-price="1000" {% if app.request.get('priceMinMonth') == '1000' %} selected {% endif %}> 1,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="1500" data-price="1500" {% if app.request.get('priceMinMonth') == '1500' %} selected {% endif %}> 1,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="2000" data-price="2000" {% if app.request.get('priceMinMonth') == '2000' %} selected {% endif %}> 2,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="2500" data-price="2500" {% if app.request.get('priceMinMonth') == '2500' %} selected {% endif %}> 2,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="3000" data-price="3000" {% if app.request.get('priceMinMonth') == '3000' %} selected {% endif %}> 3,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="3500" data-price="3500" {% if app.request.get('priceMinMonth') == '3500' %} selected {% endif %}> 3,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="4000" data-price="4000" {% if app.request.get('priceMinMonth') == '4000' %} selected {% endif %}> 4,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="5000" data-price="5000" {% if app.request.get('priceMinMonth') == '5000' %} selected {% endif %}> 5,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="6000" data-price="6000" {% if app.request.get('priceMinMonth') == '6000' %} selected {% endif %}> 6,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="7000" data-price="7000" {% if app.request.get('priceMinMonth') == '7000' %} selected {% endif %}> 7,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="8000" data-price="8000" {% if app.request.get('priceMinMonth') == '8000' %} selected {% endif %}> 8,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="9000" data-price="9000" {% if app.request.get('priceMinMonth') == '9000' %} selected {% endif %}> 9,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="10000" data-price="10000" {% if app.request.get('priceMinMonth') == '10000' %} selected {% endif %}> 10,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="20000" data-price="20000" {% if app.request.get('priceMinMonth') == '20000' %} selected {% endif %}> 20,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="30000" data-price="30000" {% if app.request.get('priceMinMonth') == '30000' %} selected {% endif %}> 30,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="40000" data-price="40000" {% if app.request.get('priceMinMonth') == '40000' %} selected {% endif %}> 40,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="50000" data-price="50000" {% if app.request.get('priceMinMonth') == '50000' %} selected {% endif %}> 50,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="60000" data-price="60000" {% if app.request.get('priceMinMonth') == '60000' %} selected {% endif %}> 60,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="70000" data-price="70000" {% if app.request.get('priceMinMonth') == '70000' %} selected {% endif %}> 70,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="80000" data-price="80000" {% if app.request.get('priceMinMonth') == '80000' %} selected {% endif %}> 80,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="90000" data-price="90000" {% if app.request.get('priceMinMonth') == '90000' %} selected {% endif %}> 90,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMinMonth') == '100000' %} selected {% endif %}> 100,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-month" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMaxMonth"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-max-month">
+                                        <option value="" data-price="0">{{ 'front.price.max'|trans }}</option>
+                                        <option value="100" data-price="100" {% if app.request.get('priceMaxMonth') == '100' %} selected {% endif %}> 100 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="500" data-price="500" {% if app.request.get('priceMaxMonth') == '500' %} selected {% endif %}> 500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="1000" data-price="1000" {% if app.request.get('priceMaxMonth') == '1000' %} selected {% endif %}> 1,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="1500" data-price="1500" {% if app.request.get('priceMaxMonth') == '1500' %} selected {% endif %}> 1,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="2000" data-price="2000" {% if app.request.get('priceMaxMonth') == '2000' %} selected {% endif %}> 2,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="2500" data-price="2500" {% if app.request.get('priceMaxMonth') == '2500' %} selected {% endif %}> 2,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="3000" data-price="3000" {% if app.request.get('priceMaxMonth') == '3000' %} selected {% endif %}> 3,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="3500" data-price="3500" {% if app.request.get('priceMaxMonth') == '3500' %} selected {% endif %}> 3,500 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="4000" data-price="4000" {% if app.request.get('priceMaxMonth') == '4000' %} selected {% endif %}> 4,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="5000" data-price="5000" {% if app.request.get('priceMaxMonth') == '5000' %} selected {% endif %}> 5,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="6000" data-price="6000" {% if app.request.get('priceMaxMonth') == '6000' %} selected {% endif %}> 6,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="7000" data-price="7000" {% if app.request.get('priceMaxMonth') == '7000' %} selected {% endif %}> 7,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="8000" data-price="8000" {% if app.request.get('priceMaxMonth') == '8000' %} selected {% endif %}> 8,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="9000" data-price="9000" {% if app.request.get('priceMaxMonth') == '9000' %} selected {% endif %}> 9,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="10000" data-price="10000" {% if app.request.get('priceMaxMonth') == '10000' %} selected {% endif %}> 10,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="20000" data-price="20000" {% if app.request.get('priceMaxMonth') == '20000' %} selected {% endif %}> 20,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="30000" data-price="30000" {% if app.request.get('priceMaxMonth') == '30000' %} selected {% endif %}> 30,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="40000" data-price="40000" {% if app.request.get('priceMaxMonth') == '40000' %} selected {% endif %}> 40,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="50000" data-price="50000" {% if app.request.get('priceMaxMonth') == '50000' %} selected {% endif %}> 50,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="60000" data-price="60000" {% if app.request.get('priceMaxMonth') == '60000' %} selected {% endif %}> 60,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="70000" data-price="70000" {% if app.request.get('priceMaxMonth') == '70000' %} selected {% endif %}> 70,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="80000" data-price="80000" {% if app.request.get('priceMaxMonth') == '80000' %} selected {% endif %}> 80,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="90000" data-price="90000" {% if app.request.get('priceMaxMonth') == '90000' %} selected {% endif %}> 90,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMaxMonth') == '100000' %} selected {% endif %}> 100,000 {{ 'front.currency.dh.month'|trans }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-year" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMinYear"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-min-year">
+                                        <option value="" data-price="0">{{ 'front.price.min'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMinYear') == '100000' %} selected {% endif %}> 100,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="150000" data-price="150000" {% if app.request.get('priceMinYear') == '150000' %} selected {% endif %}> 150,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="200000" data-price="200000" {% if app.request.get('priceMinYear') == '200000' %} selected {% endif %}> 200,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="250000" data-price="250000" {% if app.request.get('priceMinYear') == '250000' %} selected {% endif %}> 250,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="300000" data-price="300000" {% if app.request.get('priceMinYear') == '300000' %} selected {% endif %}> 300,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="350000" data-price="350000" {% if app.request.get('priceMinYear') == '350000' %} selected {% endif %}> 350,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="400000" data-price="400000" {% if app.request.get('priceMinYear') == '400000' %} selected {% endif %}> 400,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 for-rent-year" style="display: none;">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="priceMaxYear"
+                                            data-msg-required="This field is required."
+                                            id="adverts-price-max-year">
+                                        <option value="" data-price="0">{{ 'front.price.max'|trans }}</option>
+                                        <option value="100000" data-price="100000" {% if app.request.get('priceMaxYear') == '100000' %} selected {% endif %}> 100,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="150000" data-price="150000" {% if app.request.get('priceMaxYear') == '150000' %} selected {% endif %}> 150,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="200000" data-price="200000" {% if app.request.get('priceMaxYear') == '200000' %} selected {% endif %}> 200,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="250000" data-price="250000" {% if app.request.get('priceMaxYear') == '250000' %} selected {% endif %}> 250,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="300000" data-price="300000" {% if app.request.get('priceMaxYear') == '300000' %} selected {% endif %}> 300,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="350000" data-price="350000" {% if app.request.get('priceMaxYear') == '350000' %} selected {% endif %}> 350,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                        <option value="400000" data-price="400000" {% if app.request.get('priceMaxYear') == '400000' %} selected {% endif %}> 400,000 {{ 'front.currency.dh.year'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12 item-form">
+                                    <span>{{ 'front.area'|trans }}</span>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="areaMin"
+                                            data-msg-required="This field is required."
+                                            id="adverts-area-min">
+                                        <option value="">{{ 'front.area.min'|trans }}</option>
+                                        <option value="50" data-area="50" {% if app.request.get('areaMin') == '50' %} selected {% endif %}>50 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="100" data-area="100" {% if app.request.get('areaMin') == '100' %} selected {% endif %}>100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="150" data-area="150" {% if app.request.get('areaMin') == '150' %} selected {% endif %}>150 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="200" data-area="200" {% if app.request.get('areaMin') == '200' %} selected {% endif %}>200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="250" data-area="250" {% if app.request.get('areaMin') == '250' %} selected {% endif %}>250 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="300" data-area="300" {% if app.request.get('areaMin') == '300' %} selected {% endif %}>300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="350" data-area="350" {% if app.request.get('areaMin') == '350' %} selected {% endif %}>350 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="400" data-area="400" {% if app.request.get('areaMin') == '400' %} selected {% endif %}>400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="450" data-area="450" {% if app.request.get('areaMin') == '450' %} selected {% endif %}>450 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="500" data-area="500" {% if app.request.get('areaMin') == '500' %} selected {% endif %}>500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="550" data-area="550" {% if app.request.get('areaMin') == '550' %} selected {% endif %}>550 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="600" data-area="600" {% if app.request.get('areaMin') == '600' %} selected {% endif %}>600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="650" data-area="650" {% if app.request.get('areaMin') == '650' %} selected {% endif %}>650 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="700" data-area="700" {% if app.request.get('areaMin') == '700' %} selected {% endif %}>700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="750" data-area="750" {% if app.request.get('areaMin') == '750' %} selected {% endif %}>750 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="800" data-area="800" {% if app.request.get('areaMin') == '800' %} selected {% endif %}>800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="850" data-area="850" {% if app.request.get('areaMin') == '850' %} selected {% endif %}>850 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="900" data-area="900" {% if app.request.get('areaMin') == '900' %} selected {% endif %}>900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1000" data-area="1000" {% if app.request.get('areaMin') == '1000' %} selected {% endif %}>1000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1100" data-area="1100" {% if app.request.get('areaMin') == '1100' %} selected {% endif %}>1100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1200" data-area="1200" {% if app.request.get('areaMin') == '1200' %} selected {% endif %}>1200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1300" data-area="1300" {% if app.request.get('areaMin') == '1300' %} selected {% endif %}>1300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1400" data-area="1400" {% if app.request.get('areaMin') == '1400' %} selected {% endif %}>1400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1500" data-area="1500" {% if app.request.get('areaMin') == '1500' %} selected {% endif %}>1500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1600" data-area="1600" {% if app.request.get('areaMin') == '1600' %} selected {% endif %}>1600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1700" data-area="1700" {% if app.request.get('areaMin') == '1700' %} selected {% endif %}>1700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1800" data-area="1800" {% if app.request.get('areaMin') == '1800' %} selected {% endif %}>1800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1900" data-area="1900" {% if app.request.get('areaMin') == '1900' %} selected {% endif %}>1900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2000" data-area="2000" {% if app.request.get('areaMin') == '2000' %} selected {% endif %}>2000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2100" data-area="2100" {% if app.request.get('areaMin') == '2100' %} selected {% endif %}>2100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2200" data-area="2200" {% if app.request.get('areaMin') == '2200' %} selected {% endif %}>2200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2300" data-area="2300" {% if app.request.get('areaMin') == '2300' %} selected {% endif %}>2300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2400" data-area="2400" {% if app.request.get('areaMin') == '2400' %} selected {% endif %}>2400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2500" data-area="2500" {% if app.request.get('areaMin') == '2500' %} selected {% endif %}>2500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2600" data-area="2600" {% if app.request.get('areaMin') == '2600' %} selected {% endif %}>2600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2700" data-area="2700" {% if app.request.get('areaMin') == '2700' %} selected {% endif %}>2700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2800" data-area="2800" {% if app.request.get('areaMin') == '2800' %} selected {% endif %}>2800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2900" data-area="2900" {% if app.request.get('areaMin') == '2900' %} selected {% endif %}>2900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3000" data-area="3000" {% if app.request.get('areaMin') == '3000' %} selected {% endif %}>3000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3100" data-area="3100" {% if app.request.get('areaMin') == '3100' %} selected {% endif %}>3100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3200" data-area="3200" {% if app.request.get('areaMin') == '3200' %} selected {% endif %}>3200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3300" data-area="3300" {% if app.request.get('areaMin') == '3300' %} selected {% endif %}>3300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3400" data-area="3400" {% if app.request.get('areaMin') == '3400' %} selected {% endif %}>3400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3500" data-area="3500" {% if app.request.get('areaMin') == '3500' %} selected {% endif %}>3500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3600" data-area="3600" {% if app.request.get('areaMin') == '3600' %} selected {% endif %}>3600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3700" data-area="3700" {% if app.request.get('areaMin') == '3700' %} selected {% endif %}>3700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3800" data-area="3800" {% if app.request.get('areaMin') == '3800' %} selected {% endif %}>3800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3900" data-area="3900" {% if app.request.get('areaMin') == '3900' %} selected {% endif %}>3900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="4000" data-area="4000" {% if app.request.get('areaMin') == '4000' %} selected {% endif %}>4000 {{ 'front.metre.carre'|trans }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                                    <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate get-sorted"
+                                            name="areaMax"
+                                            data-msg-required="This field is required."
+                                            id="adverts-area-max">
+                                        <option value="">{{ 'front.area.max'|trans }}</option>
+                                        <option value="50" data-area="50" {% if app.request.get('areaMax') == '50' %} selected {% endif %}>50 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="100" data-area="100" {% if app.request.get('areaMax') == '100' %} selected {% endif %}>100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="150" data-area="150" {% if app.request.get('areaMax') == '150' %} selected {% endif %}>150 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="200" data-area="200" {% if app.request.get('areaMax') == '200' %} selected {% endif %}>200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="250" data-area="250" {% if app.request.get('areaMax') == '250' %} selected {% endif %}>250 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="300" data-area="300" {% if app.request.get('areaMax') == '300' %} selected {% endif %}>300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="350" data-area="350" {% if app.request.get('areaMax') == '350' %} selected {% endif %}>350 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="400" data-area="400" {% if app.request.get('areaMax') == '400' %} selected {% endif %}>400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="450" data-area="450" {% if app.request.get('areaMax') == '450' %} selected {% endif %}>450 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="500" data-area="500" {% if app.request.get('areaMax') == '500' %} selected {% endif %}>500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="550" data-area="550" {% if app.request.get('areaMax') == '550' %} selected {% endif %}>550 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="600" data-area="600" {% if app.request.get('areaMax') == '600' %} selected {% endif %}>600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="650" data-area="650" {% if app.request.get('areaMax') == '650' %} selected {% endif %}>650 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="700" data-area="700" {% if app.request.get('areaMax') == '700' %} selected {% endif %}>700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="750" data-area="750" {% if app.request.get('areaMax') == '750' %} selected {% endif %}>750 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="800" data-area="800" {% if app.request.get('areaMax') == '800' %} selected {% endif %}>800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="850" data-area="850" {% if app.request.get('areaMax') == '850' %} selected {% endif %}>850 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="900" data-area="900" {% if app.request.get('areaMax') == '900' %} selected {% endif %}>900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1000" data-area="1000" {% if app.request.get('areaMax') == '1000' %} selected {% endif %}>1000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1100" data-area="1100" {% if app.request.get('areaMax') == '1100' %} selected {% endif %}>1100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1200" data-area="1200" {% if app.request.get('areaMax') == '1200' %} selected {% endif %}>1200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1300" data-area="1300" {% if app.request.get('areaMax') == '1300' %} selected {% endif %}>1300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1400" data-area="1400" {% if app.request.get('areaMax') == '1400' %} selected {% endif %}>1400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1500" data-area="1500" {% if app.request.get('areaMax') == '1500' %} selected {% endif %}>1500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1600" data-area="1600" {% if app.request.get('areaMax') == '1600' %} selected {% endif %}>1600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1700" data-area="1700" {% if app.request.get('areaMax') == '1700' %} selected {% endif %}>1700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1800" data-area="1800" {% if app.request.get('areaMax') == '1800' %} selected {% endif %}>1800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="1900" data-area="1900" {% if app.request.get('areaMax') == '1900' %} selected {% endif %}>1900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2000" data-area="2000" {% if app.request.get('areaMax') == '2000' %} selected {% endif %}>2000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2100" data-area="2100" {% if app.request.get('areaMax') == '2100' %} selected {% endif %}>2100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2200" data-area="2200" {% if app.request.get('areaMax') == '2200' %} selected {% endif %}>2200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2300" data-area="2300" {% if app.request.get('areaMax') == '2300' %} selected {% endif %}>2300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2400" data-area="2400" {% if app.request.get('areaMax') == '2400' %} selected {% endif %}>2400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2500" data-area="2500" {% if app.request.get('areaMax') == '2500' %} selected {% endif %}>2500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2600" data-area="2600" {% if app.request.get('areaMax') == '2600' %} selected {% endif %}>2600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2700" data-area="2700" {% if app.request.get('areaMax') == '2700' %} selected {% endif %}>2700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2800" data-area="2800" {% if app.request.get('areaMax') == '2800' %} selected {% endif %}>2800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="2900" data-area="2900" {% if app.request.get('areaMax') == '2900' %} selected {% endif %}>2900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3000" data-area="3000" {% if app.request.get('areaMax') == '3000' %} selected {% endif %}>3000 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3100" data-area="3100" {% if app.request.get('areaMax') == '3100' %} selected {% endif %}>3100 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3200" data-area="3200" {% if app.request.get('areaMax') == '3200' %} selected {% endif %}>3200 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3300" data-area="3300" {% if app.request.get('areaMax') == '3300' %} selected {% endif %}>3300 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3400" data-area="3400" {% if app.request.get('areaMax') == '3400' %} selected {% endif %}>3400 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3500" data-area="3500" {% if app.request.get('areaMax') == '3500' %} selected {% endif %}>3500 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3600" data-area="3600" {% if app.request.get('areaMax') == '3600' %} selected {% endif %}>3600 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3700" data-area="3700" {% if app.request.get('areaMax') == '3700' %} selected {% endif %}>3700 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3800" data-area="3800" {% if app.request.get('areaMax') == '3800' %} selected {% endif %}>3800 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="3900" data-area="3900" {% if app.request.get('areaMax') == '3900' %} selected {% endif %}>3900 {{ 'front.metre.carre'|trans }}</option>
+                                        <option value="4000" data-area="4000" {% if app.request.get('areaMax') == '4000' %} selected {% endif %}>4000 {{ 'front.metre.carre'|trans }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                    {#<select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                            name="adverts[roomsMin]"
+                                            data-msg-required="This field is required."
+                                            id="adverts-rooms-min">
+                                        <option value="" data-room="0">{{ 'front.bedrooms.min'|trans }}</option>
+                                        <option value="1" data-room="1">{{ 'front.bedrooms1'|trans }}</option>
+                                        <option value="2" data-room="2">{{ 'front.bedrooms2'|trans }}</option>
+                                        <option value="3" data-room="3">{{ 'front.bedrooms3'|trans }}</option>
+                                        <option value="4" data-room="4">{{ 'front.bedrooms4'|trans }}</option>
+                                        <option value="5" data-room="5">{{ 'front.bedrooms5'|trans }}</option>
+                                        <option value="6" data-room="6">{{ 'front.bedrooms6'|trans }}</option>
+                                        <option value="7" data-room="7">{{ 'front.bedrooms7'|trans }}</option>
+                                        <option value="8" data-room="8">{{ 'front.bedrooms8'|trans }}</option>
+                                        <option value="9" data-room="9">{{ 'front.bedrooms9'|trans }}</option>
+                                        <option value="10" data-room="10">{{ 'front.bedrooms10'|trans }}</option>
+                                    </select>#}
+                                    <span>{{ 'front.bedrooms'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_0" class="get-sorted" value="0" {% if 0 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms0'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_1" class="get-sorted" value="1" {% if 1 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms1'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_2" class="get-sorted" value="2" {% if 2 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms2'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_3" class="get-sorted" value="3" {% if 3 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms3'|trans }} </span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_4" class="get-sorted" value="4" {% if 4 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms4'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="rooms[]" id="rooms_5" class="get-sorted" value="5" {% if 5 in app.request.get('rooms') %} checked {% endif %}><span><span>{{ 'front.bedrooms5'|trans }}</span></span></label> </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                    {#<select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                            name="33"
+                                            data-msg-required="This field is required.">
+                                        <option value="">{{ 'front.estate.status'|trans }}</option>
+                                        {% for estateStatut in estateStatus %}
+                                            <option value="{{ estateStatut.id }}">{{ estateStatut.code|lower|trans }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    #}
+                                    <span>{{ 'front.estate.status'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                    {% for estateStatut in estateStatus %}
+                                        <li>
+                                            <label class="input-checkbox">
+                                                <input type="checkbox" name="status[]" class="get-sorted" id="status_{{ estateStatut.id }}" value="{{ estateStatut.id }}" {% if estateStatut.id in app.request.get('status') %} checked {% endif %}>
+                                                <span><span>{{ estateStatut.code|lower|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                    <span>{{ 'front.floor'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                        <li>
+                                            <label class="input-checkbox">
+                                                <input type="checkbox" name="floor[]" id="floor_0" value="0" class="get-sorted" {% if 0 in app.request.get('floor') %} checked {% endif %}>
+                                                <span><span>{{ 'front.floor.start'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="input-checkbox">
+                                                <input type="checkbox" name="floor[]" id="floor_1" value="5" class="get-sorted" {% if 5 in app.request.get('floor') %} checked {% endif %}>
+                                                <span><span>{{ 'front.floor.middle'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="input-checkbox">
+                                                <input type="checkbox" name="floor[]" id="floor_2" value="10" class="get-sorted" {% if 10 in app.request.get('floor') %} checked {% endif %}>
+                                                <span><span>{{ 'front.floor.end'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+
+                                    <span>{{ 'front.bathrooms'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="bathrooms[]" id="bathrooms_1" class="get-sorted" value="1" {% if 1 in app.request.get('bathrooms') %} checked {% endif %}><span><span>{{ 'front.bathrooms1'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="bathrooms[]" id="bathrooms_2" class="get-sorted" value="2" {% if 2 in app.request.get('bathrooms') %} checked {% endif %}><span><span>{{ 'front.bathrooms2'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="bathrooms[]" id="bathrooms_3" class="get-sorted" value="3" {% if 3 in app.request.get('bathrooms') %} checked {% endif %}><span><span>{{ 'front.bathrooms3'|trans }} </span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="bathrooms[]" id="bathrooms_4" class="get-sorted" value="4" {% if 4 in app.request.get('bathrooms') %} checked {% endif %}><span><span>{{ 'front.bathrooms4'|trans }}</span></span></label> </li>
+                                        <li> <label class="input-checkbox"> <input type="checkbox" name="bathrooms[]" id="bathrooms_5" class="get-sorted" value="5" {% if 5 in app.request.get('bathrooms') %} checked {% endif %}><span><span>{{ 'front.bathrooms5'|trans }}</span></span></label> </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+
+                                    <span>{{ 'front.advert.characteristic'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                        {% for char in chars %}
+                                        <li>
+                                            <label class="input-checkbox"> <input type="checkbox" name="chars[]" id="char_{{ char.id }}" class="get-sorted" value="{{ char.id }}"
+                                                        {% if char.id in app.request.get('chars') %} checked {% endif %}>
+                                                <span><span>{{ char.code|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        {% endfor %}
+                                     </ul>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+
+                                    <span>{{ 'front.publication.date'|trans }}</span>
+                                    <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
+                                        <li>
+                                            <label class="input-radio">
+                                                <input type="radio" name="publication" id="publication_0" value="0" class="get-sorted" {% if 0 in app.request.get('publication') or app.request.get('publication') is empty %} checked {% endif %}>
+                                                <span><span>{{ 'front.publication.none'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="input-radio">
+                                                <input type="radio" name="publication" id="publication_1" value="1" class="get-sorted" {% if 1 in app.request.get('publication') %} checked {% endif %}>
+                                                <span><span>{{ 'front.publication.day'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="input-radio">
+                                                <input type="radio" name="publication" id="publication_2" value="7" class="get-sorted" {% if 7 in app.request.get('publication') %} checked {% endif %}>
+                                                <span><span>{{ 'front.publication.week'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="input-radio">
+                                                <input type="radio" name="publication" id="publication_2" value="30" class="get-sorted" {% if 30 in app.request.get('publication') %} checked {% endif %}>
+                                                <span><span>{{ 'front.publication.month'|trans }}</span></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12  mb-3">
+                                    <input type="hidden" name="sorted" id="input-sorted" value="{{ app.request.get('sorted') }}" class="sorted">
+                                    <input type="hidden" name="page" id="input-paged" value="{{ app.request.get('page') }}" class="page">
+                                    {#<input type="submit" value="{{ 'front.search'|trans }}"
+                                           class="btn btn-secondary btn-lg text-uppercase text-3"
+                                           name="search">#}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<select id="price-sell" hidden style="display: none;">
+    <option value=""  data-price="0">{{ 'front.price.max'|trans }}</option>
+    <option value="100000" data-price="100000">{{ 100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="200000" data-price="200000" >{{ 200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="300000" data-price="300000">{{ 300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="400000" data-price="400000">{{ 400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="500000" data-price="500000">{{ 500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="600000" data-price="600000">{{ 600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="700000" data-price="700000">{{ 700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="800000" data-price="800000">{{ 800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="900000" data-price="900000">{{ 900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1000000" data-price="1000000">{{ 1000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1100000" data-price="1100000">{{ 1100000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1200000" data-price="1200000">{{ 1200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1300000" data-price="1300000">{{ 1300000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1400000" data-price="1400000">{{ 1400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1500000" data-price="1500000">{{ 1500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1600000" data-price="1600000">{{ 1600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1700000" data-price="1700000">{{ 1700000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1800000" data-price="1800000">{{ 1800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="1900000" data-price="1900000">{{ 1900000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="2000000" data-price="2000000">{{ 2000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="2200000" data-price="2200000">{{ 2200000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="2400000" data-price="2400000">{{ 2400000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="2600000" data-price="2600000">{{ 2600000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="2800000" data-price="2800000">{{ 2800000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="3250000" data-price="3250000">{{ 3250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="3500000" data-price="3500000">{{ 3500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="3750000" data-price="3750000">{{ 3750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="4000000" data-price="4000000">{{ 4000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="4250000" data-price="4250000">{{ 4250000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="4500000" data-price="4500000">{{ 4500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="4750000" data-price="4750000">{{ 4750000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="5000000" data-price="5000000">{{ 5000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="5500000" data-price="5500000">{{ 5500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="6000000" data-price="6000000">{{ 6000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="6500000" data-price="6500000">{{ 6500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="7000000" data-price="7000000">{{ 7000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="7500000" data-price="7500000">{{ 7500000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="8000000" data-price="8000000">{{ 8000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="9000000" data-price="9000000">{{ 9000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="10000000" data-price="10000000">{{ 10000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="20000000" data-price="20000000">{{ 20000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="30000000" data-price="30000000">{{ 30000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="40000000" data-price="40000000">{{ 40000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+    <option value="50000000" data-price="50000000">{{ 50000000|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}</option>
+</select>
+<select id="rent-month" style="display: none;" hidden>
+    <option value="" data-price="0">{{ 'front.price.max'|trans }}</option>
+    <option value="100" data-price="100"> 100 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="500" data-price="500"> 500 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="1000" data-price="1000"> 1,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="1500" data-price="1500"> 1,500 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="2000" data-price="2000"> 2,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="2500" data-price="2500"> 2,500 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="3000" data-price="3000"> 3,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="3500" data-price="3500"> 3,500 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="4000" data-price="4000"> 4,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="5000" data-price="5000"> 5,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="6000" data-price="6000"> 6,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="7000" data-price="7000"> 7,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="8000" data-price="8000"> 8,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="9000" data-price="9000"> 9,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="10000" data-price="10000"> 10,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="20000" data-price="20000"> 20,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="30000" data-price="30000"> 30,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="40000" data-price="40000"> 40,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="50000" data-price="50000"> 50,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="60000" data-price="60000"> 60,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="70000" data-price="70000"> 70,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="80000" data-price="80000"> 80,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="90000" data-price="90000"> 90,000 {{ 'front.currency.dh.month'|trans }}</option>
+    <option value="100000" data-price="100000"> 100,000 {{ 'front.currency.dh.month'|trans }}</option>
+</select>
+<select id="rent-day" style="display: none;" hidden>
+    <option value="" data-price="0">{{ 'front.price.max'|trans }}</option>
+    <option value="100" data-price="100"> 100 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="200" data-price="200"> 200 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="300" data-price="300"> 300 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="400" data-price="400"> 400 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="500" data-price="500"> 500 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="600" data-price="600"> 600 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="700" data-price="700"> 700 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="800" data-price="800"> 800 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="900" data-price="900"> 900 {{ 'front.currency.dh.day'|trans }}</option>
+    <option value="1000" data-price="1000"> 1,000 {{ 'front.currency.dh.day'|trans }}</option>
+</select>
+<select id="rent-year" style="display: none;" hidden>
+    <option value="" data-price="0">{{ 'front.price.min'|trans }}</option>
+    <option value="100000" data-price="100000"> 100,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="150000" data-price="150000"> 150,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="200000" data-price="200000"> 200,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="250000" data-price="250000"> 250,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="300000" data-price="300000"> 300,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="350000" data-price="350000"> 350,000 {{ 'front.currency.dh.year'|trans }}</option>
+    <option value="400000" data-price="400000"> 400,000 {{ 'front.currency.dh.year'|trans }}</option>
+</select>
+<select id="adverts-rooms" style="display: none;" hidden>
+    <option value="" data-room="0">{{ 'front.bedrooms.max'|trans }}</option>
+    <option value="1" data-room="1">{{ 'front.bedrooms1'|trans }}</option>
+    <option value="2" data-room="2">{{ 'front.bedrooms2'|trans }}</option>
+    <option value="3" data-room="3">{{ 'front.bedrooms3'|trans }}</option>
+    <option value="4" data-room="4">{{ 'front.bedrooms4'|trans }}</option>
+    <option value="5" data-room="5">{{ 'front.bedrooms5'|trans }}</option>
+    <option value="6" data-room="6">{{ 'front.bedrooms6'|trans }}</option>
+    <option value="7" data-room="7">{{ 'front.bedrooms7'|trans }}</option>
+    <option value="8" data-room="8">{{ 'front.bedrooms8'|trans }}</option>
+    <option value="9" data-room="9">{{ 'front.bedrooms9'|trans }}</option>
+    <option value="10" data-room="10">{{ 'front.bedrooms10'|trans }}</option>
+</select>
+<select id="adverts-area" style="display: none;" hidden>
+    <option value="" data-area="0">{{ 'front.area.min'|trans }}</option>
+    <option value="50" data-area="50">50 {{ 'front.metre.carre'|trans }}</option>
+    <option value="100" data-area="100">100 {{ 'front.metre.carre'|trans }}</option>
+    <option value="150" data-area="150">150 {{ 'front.metre.carre'|trans }}</option>
+    <option value="200" data-area="200">200 {{ 'front.metre.carre'|trans }}</option>
+    <option value="250" data-area="250">250 {{ 'front.metre.carre'|trans }}</option>
+    <option value="300" data-area="300">300 {{ 'front.metre.carre'|trans }}</option>
+    <option value="350" data-area="350">350 {{ 'front.metre.carre'|trans }}</option>
+    <option value="400" data-area="400">400 {{ 'front.metre.carre'|trans }}</option>
+    <option value="450" data-area="450">450 {{ 'front.metre.carre'|trans }}</option>
+    <option value="500" data-area="500">500 {{ 'front.metre.carre'|trans }}</option>
+    <option value="550" data-area="550">550 {{ 'front.metre.carre'|trans }}</option>
+    <option value="600" data-area="600">600 {{ 'front.metre.carre'|trans }}</option>
+    <option value="650" data-area="650">650 {{ 'front.metre.carre'|trans }}</option>
+    <option value="700" data-area="700">700 {{ 'front.metre.carre'|trans }}</option>
+    <option value="750" data-area="750">750 {{ 'front.metre.carre'|trans }}</option>
+    <option value="800" data-area="800">800 {{ 'front.metre.carre'|trans }}</option>
+    <option value="850" data-area="850">850 {{ 'front.metre.carre'|trans }}</option>
+    <option value="900" data-area="900">900 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1000" data-area="1000">1000 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1100" data-area="1100">1100 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1200" data-area="1200">1200 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1300" data-area="1300">1300 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1400" data-area="1400">1400 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1500" data-area="1500">1500 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1600" data-area="1600">1600 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1700" data-area="1700">1700 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1800" data-area="1800">1800 {{ 'front.metre.carre'|trans }}</option>
+    <option value="1900" data-area="1900">1900 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2000" data-area="2000">2000 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2100" data-area="2100">2100 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2200" data-area="2200">2200 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2300" data-area="2300">2300 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2400" data-area="2400">2400 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2500" data-area="2500">2500 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2600" data-area="2600">2600 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2700" data-area="2700">2700 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2800" data-area="2800">2800 {{ 'front.metre.carre'|trans }}</option>
+    <option value="2900" data-area="2900">2900 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3000" data-area="3000">3000 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3100" data-area="3100">3100 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3200" data-area="3200">3200 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3300" data-area="3300">3300 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3400" data-area="3400">3400 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3500" data-area="3500">3500 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3600" data-area="3600">3600 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3700" data-area="3700">3700 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3800" data-area="3800">3800 {{ 'front.metre.carre'|trans }}</option>
+    <option value="3900" data-area="3900">3900 {{ 'front.metre.carre'|trans }}</option>
+    <option value="4000" data-area="4000">4000 {{ 'front.metre.carre'|trans }}</option>
+</select>

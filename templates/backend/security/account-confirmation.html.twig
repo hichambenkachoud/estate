@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+    {% block stylesheets %}
+        {% include('backend/includes/include-css.html.twig') %}
+    {% endblock %}
+
+</head>
+<body>
+<!-- start: page -->
+<section class="body-sign">
+    <div class="center-sign">
+        <a href="#" class="logo float-left">
+            <img src="{{ asset('img/logo.png') }}" height="54" alt="Porto Admin" />
+        </a>
+
+        <div class="panel card-sign">
+            <div class="card-title-sign text-right">
+                <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> {{ 'admin.account.confirmation'|trans }}</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                    {{ include('backend/includes/include-flash.html.twig') }}
+                </div>
+            </div>
+            <div class="card-footer">
+                <p class="text-center"><a href="{{ path('security_login') }}">{{ 'admin.signin' |trans }}</a></p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% block javascripts %}
+    {% include('backend/includes/include-js.html.twig') %}
+{% endblock %}
+</body>
+</html>

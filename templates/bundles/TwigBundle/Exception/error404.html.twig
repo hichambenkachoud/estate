@@ -1,0 +1,36 @@
+{% extends ('management' in app.request.pathInfo) ? 'base-back.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <div class="new_arrivals_agile_w3ls_info">
+        <div class="container">
+            <h3 class="wthree_text_info">Page <span> Non </span> Trouvée</h3>
+            <div id="horizontalTab">
+                <ul class="resp-tabs-list">
+                    <li style="width: 100%;"> </li>
+                </ul>
+                <div class="resp-tabs-container">
+                    <!--/tab_one-->
+                    <div class="tab1">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12 product-men">
+                                <div class="simpleCart_shelfItem" style="padding-top: 30px; padding-right: 30px;">
+                                   <p style="text-align: center">
+                                       La page demandée est introuvable.
+                                       Vérifer l'URL saisie ou retourner  à la
+                                       <a href="{{ path('front_index') }}"> page d'accueil </a>.
+                                   </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//tab_one-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover"
+                                                                             style="opacity: 1;"> </span></a>
+{% endblock body %}

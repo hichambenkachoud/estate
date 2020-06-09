@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="sidebar-left-big-icons">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+    {% block stylesheets %}
+        {% include('backend/includes/include-css.html.twig') %}
+    {% endblock %}
+</head>
+<body>
+<section class="body">
+
+    {% block header %}
+        {% include('backend/includes/include-header.html.twig') %}
+    {% endblock %}
+
+    <div class="inner-wrapper">
+        {% block sidebar %}
+            {% include('backend/includes/include-sidebar.html.twig') %}
+        {% endblock %}
+        <section role="main" class="content-body">
+        {% block body %}{% endblock %}
+        </section>
+    </div>
+
+</section>
+{% block javascripts %}
+    {% include('backend/includes/include-js.html.twig') %}
+{% endblock %}
+</body>
+</html>

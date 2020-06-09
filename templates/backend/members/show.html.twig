@@ -1,0 +1,98 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.members.management' | trans }}
+{% endblock %}
+
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.members.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.members' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id'|trans }}</th>
+                            <td>{{ member.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.firstname'|trans }}</th>
+                            <td>{{ member.firstName }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.lastname'|trans }}</th>
+                            <td>{{ member.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.email'|trans }}</th>
+                            <td>{{ member.email }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{ 'admin.username'|trans }}</th>
+                            <td>{{ member.userName }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.mobileNumber'|trans }}</th>
+                            <td>{{ member.mobileNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.enabled'|trans }}</th>
+                            <td>{{ member.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.birthday'|trans }}</th>
+                            <td>{{ member.birthDay ? member.birthDay|date('Y-m-d') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date'|trans }}</th>
+                            <td>{{ member.createDate ? member.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.genre'|trans }}</th>
+                            <td>{{ member.genre }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('members_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('members_edit', {'id': member.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/members/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

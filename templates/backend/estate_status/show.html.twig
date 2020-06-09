@@ -1,0 +1,76 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.estates.status.management' | trans }}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.estates.status.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-list-alt"></i></span>
+                </li>
+                <li><span>{{ 'admin.estates.status' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id' | trans }}</th>
+                            <td>{{ estate_status.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.code' | trans }}</th>
+                            <td>{{ estate_status.code }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <td>{{ estate_status.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            <td>{{ estate_status.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <td>{{ estate_status.createDate ? estate_status.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('estate_status_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('estate_status_edit', {'id': estate_status.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/estate_status/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

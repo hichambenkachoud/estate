@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div role="main" class="main">
+
+            <section class="page-header page-header-classic">
+                <div class="container">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col p-static">
+                            <h1 data-title-border>{{ 'front.register.confirmation'|trans }}</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="featured-boxes">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="featured-box featured-box-primary text-left mt-5 register">
+                                        <div class="box-content">
+                                            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">{{ 'front.confirmation'|trans }}</h4>
+                                            <div class="form-row">
+                                                <div class="form-group col">
+                                                    {{ include('frontend/includes/include-flash.html.twig') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock body %}

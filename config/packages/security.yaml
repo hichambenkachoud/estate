@@ -1,14 +1,64 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\Members:
+            algorithm: bcrypt
+        App\Entity\User:
+            algorithm: bcrypt
+
+
     providers:
-        users_in_memory: { memory: null }
+        members:
+            entity:
+                class: App\Entity\Members
+                property: username_email
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin:
+            pattern:            /management
+            context:            user
+            form_login:
+                provider:       app_user_provider
+                login_path:     /management/login
+                use_forward:    false
+                check_path:     /management/login_check
+                failure_path:   null
+                csrf_token_generator: security.csrf.token_manager
+            guard:
+                authenticators:
+                    - App\Security\LoginFormBackAuthenticator
+                provider: app_user_provider
+            logout:
+                path:           /management/logout
+                target:         /management/login
+            anonymous:          true
+
         main:
-            anonymous: lazy
-            provider: users_in_memory
+            pattern: ^/
+            context: members
+            form_login:
+                provider:       members
+                login_path:     front_security_login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                csrf_token_generator: security.csrf.token_manager
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+                provider: members
+            logout:
+                path:           front_security_logout
+                target:         front_index
+            anonymous:          true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -18,6 +68,25 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_USER,ROLE_ADMIN,ROLE_SUPER_ADMIN]
+        ROLE_ADMIN: [ROLE_USER,ROLE_ADMIN]
+        ROLE_USER: [ROLE_USER]
+
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/(%locales%)/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/(%locales%)/my-profile/*, allow_if: "is_fully_authenticated()" }
+        - { path: ^/(%locales%)/mon_profil/*, allow_if: "is_fully_authenticated()" }
+        #- { path: ^/(%locales%)/صفحتي/*, allow_if: "is_fully_authenticated()" }
+        #- { path: ^/(%locales%)/add-new-advert/*, allow_if: "is_fully_authenticated()" }
+        - { path: ^/(%locales%)/ajouter-nouvelle-annonce, allow_if: "is_fully_authenticated()" }
+        #- { path: ^/(%locales%)/أضف-إعلان-جديد/*, allow_if: "is_fully_authenticated()" }
+        - { path: ^/management/password-recover, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/reset-password/*, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/login, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/register, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/account-confirm/*, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/ajax/generate-password, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management/ajax/reset-password, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/management, allow_if: "is_fully_authenticated()" }
+        - { path: ^/management/ajax, allow_if: "is_fully_authenticated()" }

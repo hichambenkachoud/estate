@@ -1,0 +1,39 @@
+<div class="col-sm-12 order-2 order-sm-2 align-self-center p-static search-estate">
+    <div class="overflow-hidden">
+        {#<ul class="custom-fullwidth-dropdown-menu ml-0">
+
+        </ul>#}
+        <li style="list-style-type: none;padding: 12px 0;">
+            <div class="dropdown-mega-content mt-3 ml-3 mr-3">
+                <form id="agencyForm" action="{{ path('front_agency_index') }}"
+                      method="GET">
+                    <div class="container p-0">
+                        <div class="form-row {% if app.request.locale == 'ar' %} arabe-home {% endif %}">
+                            <div class="col-lg-4 col-md-4 col-sm-12 mb-1">
+                                <select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
+                                        name="city"
+                                        data-msg-required="This field is required."
+                                        id="city">
+                                    <option value="">{{ 'front.choose.option'|trans }}</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.code }}" data-code="{{ city.code|lower }}" {% if app.request.get('city') == city.code %} selected {% endif %}>{{ city.code|lower|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-12 mb-1">
+                                <div class="btn-submit-home" style="display: flex;">
+                                    <input type="text" class="form-control text-uppercase text-3"
+                                           placeholder="{{ 'front.agency.name'|trans }}" name="name" value="{{ app.request.get('name') }}">
+                                    <input type="submit" value="{{ 'front.search'|trans }}"
+                                           class="btn btn-secondary btn-sm text-uppercase text-3" >
+                                    <input type="hidden" id="input-paged" value="{{ current_page }}" name="page">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </div>
+</div>

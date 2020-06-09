@@ -1,0 +1,74 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.users.management' | trans }}
+{% endblock %}
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.users.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.users' | trans }}</span></li>
+                <li><span>{{ 'admin.list' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title"></h2>
+                </header>
+                <div class="card-body">
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <a class="btn btn-primary btn-sm" href="{{ path('user_new') }}">{{ 'admin.add'|trans }} <i class="fas fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                        <thead>
+                        <tr>
+                            <th>{{ 'admin.email' | trans }}</th>
+                            <th>{{ 'admin.roles' | trans }}</th>
+                            <th>{{ 'admin.firstname' | trans }}</th>
+                            <th>{{ 'admin.lastname' | trans }}</th>
+                            <th>{{ 'admin.mobileNumber' | trans }}</th>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <th>{{ 'admin.enabled' | trans }}</th>
+                            <th>{{ 'admin.actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.simpleRole |trans }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.mobileNumber }}</td>
+                                <td>{{ user.createDate ? user.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ user.enabled ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>' }}</td>
+                                <td>
+                                    <a href="{{ path('user_show', {'id': user.id}) }}"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">{{ 'admin.no_records_found' | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

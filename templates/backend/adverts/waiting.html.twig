@@ -1,0 +1,75 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.adverts.management' | trans }}
+{% endblock %}
+
+{% block body %}
+
+    <header class="page-header">
+        <h2>{{ 'admin.adverts.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.adverts' | trans }}</span></li>
+                <li><span>{{ 'admin.list' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.adverts.waiting' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                        <thead>
+                        <tr>
+                            <th>{{ 'admin.title' | trans }}</th>
+                            <th>{{ 'admin.adverts.type' | trans }}</th>
+                            <th>{{ 'admin.estates.type' | trans }}</th>
+                            <th>{{ 'admin.address' | trans }}</th>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <th>{{ 'admin.valid' | trans }}</th>
+                            <th>{{ 'admin.refused' | trans }}</th>
+                            <th>{{ 'admin.actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for advert in adverts %}
+                            <tr>
+                                <td>{{ advert.title }}</td>
+                                <td>{{ advert.advertType ? advert.advertType.name : '' }}</td>
+                                <td>{{ advert.estateType ? advert.estateType.name : '' }}</td>
+                                <td>{{ advert.address }}</td>
+                                <td>{{ advert.createDate ? advert.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ advert.valid ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>' }}</td>
+                                <td>{{ advert.refused ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>' }}</td>
+                                <td>
+                                    <a href="{{ path('adverts_show', {'id': advert.id}) }}"><i class="fas fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">{{ 'admin.no_records_found' | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+{% endblock %}

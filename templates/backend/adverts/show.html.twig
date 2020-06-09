@@ -1,0 +1,662 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.adverts.management' | trans }}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.adverts.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.adverts' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% if advert.valid %}
+            <div class="alert alert-success">
+                {{ 'admin.advert.valid' |trans }}
+                <a class="btn btn-danger btn-sm modal-basic pull-right" href="#advert-refused">{{ 'admin.torefuse'|trans }}</a>
+            </div>
+            {% elseif advert.refused %}
+                <div class="alert alert-danger">
+                    {{ 'admin.advert.refused' |trans }}
+                    <a class="btn btn-success btn-sm modal-basic pull-right" href="#advert-valid">{{ 'admin.tovalid'|trans }}</a>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    {{ 'admin.advert.notvalid' |trans }}
+                    <div class="pull-right">
+                        <a class="btn btn-success btn-sm modal-basic" href="#advert-valid">{{ 'admin.tovalid'|trans }}</a>
+                        &nbsp;
+                        &nbsp;
+                        <a class="btn btn-danger btn-sm modal-basic" href="#advert-refused">{{ 'admin.torefuse'|trans }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-4 mb-2">
+            <section class="card card-primary">
+                <header class="card-header portlet-handler">
+                    <h3 class="card-title">{{ 'front.title'|trans }}</h3>
+                </header>
+                <div class="card-body">
+                    {{ advert.title|nl2br }}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-8 mb-2">
+            <section class="card card-primary">
+                <header class="card-header portlet-handler">
+                    <h3 class="card-title">{{ 'front.description'|trans }}</h3>
+                </header>
+                <div class="card-body">
+                    {{ advert.description|nl2br }}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 mb-2">
+            <section class="card card-success">
+                <header class="card-header portlet-handler">
+                    <h3 class="card-title">{{ 'front.adverts.type'|trans }}</h3>
+                </header>
+                <div class="card-body">
+                    {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 mb-2">
+            <section class="card card-info">
+                <header class="card-header portlet-handler">
+                    <h3 class="card-title">{{ 'front.estates.type'|trans }}</h3>
+                </header>
+                <div class="card-body">
+                    {{ advert.estateType ? advert.estateType.code|lower|trans : '' }}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 mb-2">
+            <section class="card card-warning">
+                <header class="card-header portlet-handler">
+                    <h3 class="card-title">{{ 'front.estate.status'|trans }}</h3>
+                </header>
+                <div class="card-body">
+                    {{ advert.estateStatus ? advert.estateStatus.code|lower|trans : '' }}
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-secondary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-secondary">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.price'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.price }} <span>{{ 'front.currency.dh'|trans }}</span></strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a class="text-muted text-uppercase"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-secondary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-secondary">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.area'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.price }} <span>{{ 'front.metre.carre'|trans }}</span></strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a class="text-muted text-uppercase"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-primary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-primary">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.age'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ ('front.age.'~advert.age)|trans }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2" >
+            <section class="card card-featured-left card-featured-info mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-info">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.rooms'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.rooms }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-warning mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-warning">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.bedrooms'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.bedrooms }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-success mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-success">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.bathrooms'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.bathrooms }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-success mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-success">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.floor'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ ('front.floor' ~ advert.floor)|trans }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-info mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-info">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.soil.type'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ ('front.'~advert.soilType)|trans }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-warning mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-warning">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.capacity'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.capacity }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <section class="card card-featured-left card-featured-secondary  mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-secondary">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">{{ 'front.min_night'|trans }}</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ advert.minNight }}</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-8 mb-2">
+            <div class="card-body">
+                <table class="table table-responsive-md table-striped mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ 'front.region'|trans }}</th>
+                        <th>{{ 'front.city'|trans }}</th>
+                        <th>{{ 'front.province'|trans }}</th>
+                        <th>{{ 'front.quartier'|trans }}</th>
+                        <th>{{ 'front.address'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ advert.region ? advert.region.code|lower|trans : '-' }}</td>
+                        <td>{{ advert.city ? advert.city.code|lower|trans : '-' }}</td>
+                        <td>{{ advert.province ? advert.province.code|lower|trans : '-' }}</td>
+                        <td>{{ advert.address ? advert.address|lower : '-' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4" id="characteristics">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'front.advert.characteristic'|trans }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                    {% if characteristics is not null %}
+                        {% for characteristic in characteristics %}
+                            <div class="col-md-2">
+                                <a class="chooseIcon">
+                                    <div class="estate-icon-show">
+                                        <i class="{{ characteristic.icon }} estate-icon" style="text-align: center; font-size: 30px"></i>
+                                        <span>{{ characteristic.code|lower|trans }}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        no resilts
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2">
+            <div class="card card-warning">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'front.advert.author'|trans }}</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>{{ 'admin.firstname'|trans }}</td>
+                            <td>{{ advert.member ? advert.member.firstName : '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'admin.lastname'|trans }}</td>
+                            <td>{{ advert.member ? advert.member.lastName : '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'admin.email'|trans }}</td>
+                            <td>{{ advert.member ? advert.member.email : '-' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2">
+            <div class="card card-warning">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'front.advert.contact'|trans }}</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>{{ 'admin.mobileNumber'|trans }}</td>
+                            <td>{{ advert.mobileNumber }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'admin.email'|trans }}</td>
+                            <td>{{ advert.member ? advert.member.email : '-' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="card card-info">
+                <header class="card-header">
+
+                    <h2 class="card-title">{{ "front.images"|trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <div class="popup-gallery">
+                        {% for image in images %}
+                            <a class="float-left mb-1 mr-1" href="{{ asset('uploads/'~advert.images~'/'~image) }}" title="{{ image }}">
+                                <div class="img-fluid">
+                                    <img src="{{ asset('uploads/'~advert.images~'/'~image) }}" width="105">
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('adverts_index') }}" class="btn btn-info btn-sm">{{ 'admin.backtolist'|trans }}</a>
+    <a href="#advert-delete" class="btn btn-danger btn-sm modal-basic">{{ 'admin.delete'|trans }}</a>
+    <input type="hidden" value="{{ advert.id }}" id="advertId">
+    {# Modals #}
+    <div id="advert-valid" class="modal-block modal-block-success mfp-hide">
+        <section class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'admin.sure'|trans }}</h2>
+            </header>
+            <div class="card-body">
+                <div class="alert alert-danger" id="valid-errors" style="display: none;">
+
+                </div>
+                <div class="alert alert-success" id="valid-success" style="display: none;">
+
+                </div>
+                <div class="modal-wrapper">
+                    <div class="modal-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <p class="mb-0">{{ 'admin.sure.valid.advert'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-primary modal-confirm valid">{{ 'admin.confirm'|trans }}</button>
+                        <button class="btn btn-default modal-dismiss">{{ 'admin.cancel'|trans }}</button>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <div id="advert-refused" class="modal-block modal-block-warning mfp-hide">
+        <section class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'admin.sure'|trans }}</h2>
+            </header>
+            <div class="card-body">
+                <div class="alert alert-danger" id="refused-errors" style="display: none;">
+
+                </div>
+                <div class="alert alert-success" id="refused-success" style="display: none;">
+
+                </div>
+                <div class="modal-wrapper">
+                    <div class="modal-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <p class="mb-0">{{ 'admin.sure.refuse.advert'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-primary modal-confirm refuse">{{ 'admin.confirm'|trans }}</button>
+                        <button class="btn btn-default modal-dismiss">{{ 'admin.cancel'|trans }}</button>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <div id="advert-delete" class="modal-block modal-block-danger mfp-hide">
+        <section class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'admin.sure'|trans }}</h2>
+            </header>
+            <div class="card-body">
+                <div class="alert alert-danger" id="delete-errors" style="display: none;">
+
+                </div>
+                <div class="alert alert-success" id="delete-success" style="display: none;">
+
+                </div>
+                <div class="modal-wrapper">
+                    <div class="modal-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <p class="mb-0">{{ 'admin.sure.delete.advert'|trans }}</p>
+                    </div>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
+                </div>
+            </div>
+            <footer class="card-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-primary modal-confirm delete">{{ 'admin.confirm'|trans }}</button>
+                        <button class="btn btn-default modal-dismiss">{{ 'admin.cancel'|trans }}</button>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //valid advert
+            $('.valid').on('click', function (e) {
+               let errorDiv = $('#valid-errors');
+               let successDiv = $('#valid-success');
+               let advertId = $('#advertId').val();
+               $.ajax({
+                   url: "{{ path('ajax_adverts_valid') }}",
+                   data: JSON.stringify({advertId: advertId}),
+                   dataType: "json",
+                   method: "POST",
+                   contentType: "application/json",
+                   success: function (data) {
+                       if (data.code == '0'){
+                           successDiv.show();
+                           successDiv.html("<ul><li>"+ data.response.message +"</li></ul>");
+                           setTimeout(function(){
+                               location.reload();
+                           }, 4000);
+                       }else{
+                           errorDiv.show();
+                           errorDiv.html("<ul><li>"+ data.response.message +"</li></ul>")
+                       }
+                   },
+                   error: function (a, b ,c) {
+                       console.error(a, b ,c);
+                   }
+               });
+               e.preventDefault();
+            });
+
+            //refuse advert
+            $('.refuse').on('click', function (e) {
+                let errorDiv = $('#refused-errors');
+                let successDiv = $('#refused-success');
+                let advertId = $('#advertId').val();
+                $.ajax({
+                    url: "{{ path('ajax_adverts_refuse') }}",
+                    data: JSON.stringify({advertId: advertId}),
+                    dataType: "json",
+                    method: "POST",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.code == '0'){
+                            successDiv.show();
+                            successDiv.html("<ul><li>"+ data.response.message +"</li></ul>");
+                            setTimeout(function(){
+                                location.reload();
+                            }, 4000);
+                        }else{
+                            errorDiv.show();
+                            errorDiv.html("<ul><li>"+ data.response.message +"</li></ul>")
+                        }
+                    },
+                    error: function (a, b ,c) {
+                        console.error(a, b ,c);
+                    }
+                });
+                e.preventDefault();
+            });
+            //refuse advert
+            $('.delete').on('click', function (e) {
+                let errorDiv = $('#delete-errors');
+                let successDiv = $('#delete-success');
+                let advertId = $('#advertId').val();
+                let token = $('#_token').val();
+                $.ajax({
+                    url: "{{ path('ajax_adverts_delete') }}",
+                    data: JSON.stringify({advertId: advertId, token: token}),
+                    dataType: "json",
+                    method: "DELETE",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.code == '0'){
+                            successDiv.show();
+                            successDiv.html("<ul><li>"+ data.response.message +"</li></ul>");
+                            setTimeout(function(){
+                                window.location.href = "{{ path('adverts_index') }}";
+                            }, 4000);
+                        }else{
+                            errorDiv.show();
+                            errorDiv.html("<ul><li>"+ data.response.message +"</li></ul>")
+                        }
+                    },
+                    error: function (a, b ,c) {
+                        console.error(a, b ,c);
+                    }
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+{% endblock%}

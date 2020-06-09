@@ -1,0 +1,78 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}{{ 'admin.provinces.management' | trans }}{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.provinces.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-map-marker-alt"></i></span>
+                </li>
+                <li><span>{{ 'admin.provinces' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id' | trans }}</th>
+                            <td>{{ province.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.code' | trans }}</th>
+                            <td>{{ province.code }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <td>{{ province.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.city' | trans }}</th>
+                            <td>{{ province.city.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            <td>{{ province.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <td>{{ province.createDate ? province.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('province_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('province_edit', {'id': province.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/province/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+
+{% endblock %}

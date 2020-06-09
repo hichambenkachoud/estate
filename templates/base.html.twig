@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html {% if app.request.locale == 'ar' %} dir="rtl" {% endif %}>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+    {% block stylesheets %}
+        {% include('frontend/includes/include-css.html.twig') %}
+    {% endblock %}
+</head>
+<body >
+
+<div class="body">
+
+    {% block header %}
+        {% include('frontend/includes/include-header.html.twig') %}
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    {% block footer %}
+        {% include('frontend/includes/include-footer.html.twig') %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include('frontend/includes/include-js.html.twig') %}
+    {% endblock %}
+
+</div>
+</body>
 </html>

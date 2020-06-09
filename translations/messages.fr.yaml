@@ -1,0 +1,578 @@
+title: Site Immobilier
+hello: Bonjour
+enjoy: prendre plaisir!
+admin:
+  id: ID
+  code: Code
+  name: Nom
+  status: Statut
+  enabled: Activé
+  disabled: Désactivé
+  save: Enregistrer
+  update: Modifier
+  create_date: Date de Création
+  actions: Actions
+  delete: Supprimer
+  no_records_found: Aucun enregistrement trouvé
+  create: Créer
+  add: Ajouter
+  isdefault: Par Défaut
+  countries.management: Gestion des pays
+  countries: Pays
+  regions: Régions
+  cities: Villes
+  provinces: Arrondissements
+  quartiers: Quartiers
+  list: Liste
+  dashboard: Tableau de board
+  users: Utilisateurs
+  members: Agents
+  administrations: Administrateurs
+  localisation: Localisation
+  adverts: Annonces
+  adverts.list: Liste des Annonces
+  adverts.waiting: Annonces en attentes
+  adverts.refused: Annonces Réfusées
+  adverts.type: Type d'annonce
+  estates: Propriétés
+  estates.type: Type de Propriétée
+  estates.characteristic: Characteristiques des biens
+  mails: Emails
+  backtolist: Retour au liste
+  informations: Information
+  details: Détails
+  images: Photos
+  country: pays
+  region: Région
+  city: Ville
+  province: Arrondissement
+  quartier: Quartier
+  regions.management: Gestion des régions
+  cities.management: Gestion des villes
+  provinces.management: Gestion des arrondissements
+  quartiers.management: Gestion des quartiers
+  choose.options: Choisir une option
+  frensh: Français
+  english: Anglais
+  languages: Les Langues
+  estate: Propriété
+  estates.type.management: Gestion des Types des Propriétés
+  adverts.type.management: Gestion des Types d'annonces
+  estates.status: Etat des biens
+  estates.status.management: Gestion des Etats des biens
+  delete.sure: Êtes-vous sûre de vouloir supprimer cet item?
+  type: Type
+  characteristic.general: Caractéristiques générales
+  characteristic.interior: Caractéristiques Intérieurs
+  characteristic.additional: Caractéristiques supplémentaires
+  icon: Icon
+  signin: Se connecter
+  signup: S'inscrire
+  email: Email
+  password: Mot de passe
+  password.change: Changer le Mot de passe
+  password.notblank: Mot de passe ne peut pas être vide
+  password.recover: Récupérer Mot de passe
+  forget.password: Mot de passe oublié?
+  password.message_form: Entrez votre e-mail ci-dessous et nous vous enverrons des instructions de réinitialisation!
+  password.reset.email: Un lien de réinitialisation de mot de passe a été envoyé à votre boite email.
+  password.reset.success: Votre mot de passe a bien été réinisialisé
+  password.reset: Réinitialisation du mot de passe
+  password.email.content: tu as oublié ton mot de passe tu vas pouvoir le réinisialiser en suivant ce lien
+  rememberme: Sevenir de moi
+  already.have_account: Avez-vous déjà un compte?
+  register: Inscription
+  confirm_password: Confirmer mot de passe
+  credentials.invalid: Les données sont invalides
+  role.super_admin: Super Administrateur
+  role.admin: Administrateur
+  role.user: Utilisateur Simple
+  user.notfound: Nous ne pouvons trouver un compte avec les informations fournies
+  my_profile: Mon Profil
+  screen_lock: Verrouillage d'écran
+  logout: Déconnexion
+  profile.completion: Achèvement du profil
+  firstname: Nom
+  lastname: Prénom
+  mobileNumber: N° Téléphone
+  firstname.update: Remplir le Nom
+  lastname.update: Remplir le Prénom
+  mobileNumber.update: Remplir le N° Téléphone
+  profile.information: Note d'information
+  users.profile: Profil Utilisateur
+  profile: Profil
+  role.super_admin.information: Vous avez le droit de gérer ce site
+  overview: Aperçu
+  password.not_match: Les deux mots de passe ne sont pas identiques
+  mobilenumber.format: Le format de N° Téléphone est invalide
+  profile.update.message: Le profil a bien été mis à jour
+  reset: Réinitialiser
+  remembered: Tu te souviens
+  form.empty: Veuillez remplir le formulaire
+  email.exist: Un compte avec adresse mail existe déjà
+  account.nothave: Vous n'avez pas un compte?
+  email.registration: Confirmer votre inscription
+  register.email.content: Bienvenue sur notre plateforme, pour confirmer votre inscription veuillez cliquer sur le lien suivant
+  registration.confirm: Confirmation de compte
+  user.notconfirm: Veuillez confirmer votre inscription
+  account.confirmation.success: Votre inscription est valide, vous pouvez maintenant se connecter.
+  members.management: Gestion des agents
+  birthday: Date de naissance
+  username: Nom d'utilisateur
+  genre: Civilité
+  mr: Homme
+  mme: Femme
+  users.management: Gestion des utilisateurs
+  title: Titre
+  address: Adresse
+  valid: Validé
+  refused: Refusé
+  tovalid: Valider
+  torefuse: Refuser
+  adverts.management: Gestion des Annonces
+  advert.valid: Cette annonce est déjà publiée
+  advert.notvalid: Cette annonce n'est pas encore validée
+  advert.refused: Cette annonce est refusée
+  confirm: Confirmer
+  cancel: Annuler
+  sure: Êtes-vous sûr?
+  sure.valid.advert: Êtes-vous sûr de vouloir valider cette annonce?
+  sure.refuse.advert: Êtes-vous sûr de vouloir refuser cette annonce?
+  sure.delete.advert: Êtes-vous sûr de vouloir supprimer cette annonce?
+  advert.notfound: L'annonce est introuvable
+  advert.valid.success: L'annonce est validé avec succès, et un email a été envoyé au propriétaire
+  advert.refuse.success: L'annonce est refusé avec succès
+  advert.delete.success: L'annonce est supprimé avec succès
+  form.invalid: Le formulaire est invalide, veuillez rafraîchir la page
+  roles: Rôles
+  agency: Agence
+  agency.management: Gestion des agences
+  url: URL
+  image: Image
+  url.format: Le format URL n'est pas valide
+  daddress.format: L'adresse doit contenir au moins 20 charactéres
+
+front:
+  home: Accuiel
+  aboutus: A propos
+  property: Propriété
+  agent.found: Trouver une agence
+  blog: Blog
+  contactus: Contactez-nous
+  advert.add: Diffusez une annonce
+  signin: Se connecter
+  property.rent: A Louer
+  property.sale: A Vendre
+  terms-and-condition: Termes & conditions
+  confidente: Confidentialité
+  already.have.account: Je suis un client fidèle
+  login.username.email: Nom d'utilisateur ou Adresse e-mail
+  password: Mot de passe
+  password.forget: Mot de passe perdu?
+  rememberme: Se Sevenir de moi
+  register.new: Créer un compte
+  password.confirm: Retaper le mot de passe
+  register: S'inscrire
+  read.agree.tc: j'ai lu et accepté les
+  terms.service: conditions d'utilisation
+  email: Adresse E-mail
+  frensh: Français
+  english: Anglais
+  arabe: Arabe
+  account: Compte
+  register.message.success: Un lien d'activation vous a été envoyé à votre email.
+  lastName: Nom
+  firstName: Prénom
+  password.format: Le Mot de passe doit être un minimum de 8 caractères, contenir au moins 1 chiffre, contenir au moins un caractère majuscule, contenir au moins un caractère minuscule
+  credentials.invalid: Les donnés invalides
+  myaccount: Mon Profil
+  register.confirmation.success: Votre inscription est valide, veuillez se connecter à votre espace membre.
+  register.confirmation.failed: Le lien de confirmation n'est plus valide, veuillez contacter l'administrateur de site pour un autre lien d'activation.
+  register.confirmation: Confirmation d'inscription
+  confirmation: Confirmation
+  getintouch: Entrer en contact
+  logout: Déconnexion
+  password.forget.indice: Entrez votre adresse e-mail ci-dessous et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+  submit: Envoyer
+  password.reset: Réinitialiser le mot de passe
+  reset: Réinitialiser
+  member.notfound: Nous ne pouvons pas trouver un compte liée avec cette adresse e-mail.
+  member.not.confirm: Votre compte n'est active, veuillez l'activer en utilisant le lien d'activation envoyer à votre adresse e-mail.
+  error.505: Opps! Un erreur est surevenu, nous essayons de le corriger rapidement
+  password.reset.email: Un lien de réinitialisation de votre mot de passe vous a été envoyé à votre e-mail.
+  password.reset.success: Votre mot de passe a bien été réinitialisé, vous pouvez vous connecter dès maintenant.
+  password.reset.failed: Le lien de réinitialisation n'est plus valide, veuillez générer un autre lien.
+  password.not_match: Les deux mots de passe ne sont pas identiques
+  myinfo: Mes informations personnelles
+  profile: Mon profil
+  mobilenumber: Numéro de téléphone
+  birthday: Date de naissance
+  username: Nom d'utilisateur
+  save: Enregistrer
+  profile.update.success: Votre profile a bien été modifié.
+  profile.update.email: Si vous changez votre email, vous allez être déconnecté afin de valider votre nouveau email.
+  mobileNumber.format: Le format de N° Téléphone est invalide
+  email.exist: Un compte avec cette adresse e-mail est déjà existe
+  username.exist: Un compte avec ce nom d'utilisateur est déjà existe
+  advert.information: Informations
+  advert.characteristic: Caractéristiques
+  advert.image.emplacement: Images et emplacement
+  advert.description: Description
+  previous: Précédant
+  next: Suivant
+  finish: Terminer
+  adverts.type: Type d'annonce
+  estates.type: Type de bien
+  choose.option: Choisir une option
+  estate.status: État de bien
+  emplacement: Emplacement
+  region: Région
+  city: Ville
+  province: Arrondissement
+  quartier: Quartier
+  images: Images
+  metre.carre: m²
+  currency.dh: DH
+  area: Surface
+  price: Prix
+  rooms: Pièces
+  bedrooms: Chambres
+  bathrooms: Salles de bains
+  bathrooms1: 1 Salle de bains
+  bathrooms2: 2 Salles de bains
+  bathrooms3: 3 Salles de bains
+  bathrooms4: 4 Salles de bains
+  bathrooms5: 5 Salles de bains
+  floor: Étage de la propriété
+  age: Âge du bien
+  soil.type: Type du sol
+  floor0: Rez-de-chaussée
+  floor1: Premier étage
+  floor2: Deuxième étage
+  floor3: Troisième étage
+  floor4: Quatrième étage
+  floor5: Cinquième étage
+  floor6: Sixième étage
+  floor7: Septième étage
+  floor8: Huitième étage
+  floor9: Neuvième étage
+  floor10: Dixième étage
+  floor11: Onzième étage
+  floor12: Douzième étage
+  floor13: Treizième étage
+  floor14: Quatorzième étage
+  floor15: Quinzième étage
+  floor16: Seizième étage
+  floor17: Dix-septième étage
+  floor18: Dix-huitième étage
+  floor19: Dix-neuvième étage
+  floor20: Vingtième étage
+  floor.start: Rez-de-chaussée
+  floor.middle: Étages intermédiaires
+  floor.end: Dernier étage
+  age.1: Moins d'un an
+  age.1-5: D'un an à 5 ans
+  age.5-10: De 5 ans à 10 ans
+  age.10-20: De 10 ans à 20 ans
+  age.20-30: De 20 ans à 30 ans
+  age.30-40: De 30 ans à 40 ans
+  age.40-50: De 40 ans à 50 ans
+  age.50-60: De 50 ans à 60 ans
+  age.60-70: De 60 ans à 70 ans
+  age.70-80: De 70 ans à 80 ans
+  age.80-90: De 80 ans à 90 ans
+  age.90-100: De 90 ans à 100 ans
+  age.100: Plus de 100 ans
+  parquet: Parquet
+  marble: Marble
+  tile: TILE
+  other: Autre
+  min_night: Minimum de nuitées
+  capacity: Capacité
+  description: Description
+  title: Titre
+  images.invalid: Le format des images est invalide
+  image.extension.invalid: L'extension des images sont invalides
+  advert.author: L'auteur de l'annonce
+  advert.contact: Contacter l'annonceur
+  address: Adresse
+  advert.add.success: L'annonce a bien été enregistré, veuillez attendre la confirmation de l'administrateur
+  contact: Information de contact
+  bedrooms.min: Min. Chambres
+  bedrooms.max: Max. Chambres
+  area.min: Min. Surface
+  area.max: Max. Surface
+  bedrooms0: 0 Chambre (Studio)
+  bedrooms1: 1 Chambre
+  bedrooms2: 2 Chambres
+  bedrooms3: 3 Chambres
+  bedrooms4: 4 Chambres
+  bedrooms5: 5 Chambres
+  bedrooms6: 6 Chambres
+  bedrooms7: 7 Chambres
+  bedrooms8: 8 Chambres
+  bedrooms9: 9 Chambres
+  bedrooms10: 10 Chambres
+  price.min: Min. Prix
+  price.max: Max. Prix
+  search: Chercher
+  rent.day: Par jour
+  rent.month: Par mois
+  rent.year: Par année
+  currency.dh.day: DH/jour
+  currency.dh.month: DH/mois
+  currency.dh.year: DH/année
+  listingfor: Annonce à
+  rent: Louer
+  sale: Vendre
+  or: ou
+  phone_agent: Appel
+  send_mail: E-mail
+  contact_agent: Envoyez un courriel à l'agent
+  cancel: Annuler
+  send: Envoyer
+  fullname: Nom complet
+  agent: Agent
+  form.contatc.content: Bonjour, j'ai trouvé votre bien Réf %reference%. Sur le %site%. Merci de bien vouloir me contacter. Merci
+  adverts.contact.success: Votre email a bien été envoyeé au propriétaire de bien immobilier
+  contact-agent: Demande d'information
+  contact-agent.email.content: Un visiteur vous a envoyé  ce mail à propos d'une de vos annonces, vous trouvez ci-dessous le contenu du message
+  contact-agency.email.content: Un visiteur vous a envoyé  ce mail, vous trouvez ci-dessous le contenu du message
+  message: Message
+  advert.confirm: Confirmation d'ajout d'annonce
+  advert.confirm.email.content: Votre annonce a bien été validé, veuillez cliquer sur le lien suivant pour la voir
+  exclusive.locations: Emplacements exclusifs
+  special.offers: Offres spéciales
+  our-agent: Nos agents
+  newsletter: Newsletter
+  newsletter.content: Abonnez-vous et soyez les premiers informés de nos meilleures offres
+  success: Succès!
+  newsletter.success: Vous avez été ajouté à notre liste de diffusion
+  subscribe: Souscrire
+  reference: Référence
+  features: Caractéristiques
+  request.information: Demande d'informations
+  request.information.content: Contactez-nous ou appelez-nous pour demander plus d'informations
+  message.sent: Un message nous a été envoyé.
+  subject: Sujet
+  property.agent: propriétaire de bien
+  most.searchable: Recherches populaires
+  rent.apartment.casablanca: Appartement à louer à Casablanca
+  rent.apartment.marrakech: Appartement à louer à Marrakech
+  rent.apartment.rabat: Appartement à louer à Rabat
+  rent.apartment.tanger: Appartement à louer à Tanger
+  rent.apartment.agadir: Appartement à louer à Agadir
+  sell.apartment.casablanca: Appartement à vendre à Casablanca
+  sell.house.casablanca: Maison à vendre à Casablanca
+  sell.apartment.marrakech: Appartement à vendre à Marrakech
+  sell.house.marrakech: Maison à vendre à Marrakech
+  sell.apartment.rabat: Appartement à vendre à Rabat
+  sell.villa.rabat: Villa à vendre à Rabat
+  sell.apartment.tanger: Appartement à vendre à Tanger
+  sell.villa.tanger: Villa à vendre à Tanger
+  sell.apartment.agadir: Appartement à vendre à Agadir
+  sell.house.agadir: Maison à vendre à Agadir
+  followus: Suivez nous
+  publication.date: Date de publication
+  publication.none: Indifférent
+  publication.day: Au cours des dernières 24h
+  publication.week: La dernière semaine
+  publication.month: Le dernier mois
+  rent.type: Type de location
+  sort.important: Importance
+  sort.price.asc: Prix croissant
+  sort.price.desc: Prix décroissant
+  sort.date.asc: Les plus récentes
+  sort.date.desc: Les plus anciennes
+  sort.area.asc: Grande surface
+  sort.area.desc: Petite surface
+  sort.plus: Plus
+  image.upload.success: Votre photo a bien été téléchargée
+  agency: Agence
+  agencies: Agences
+  agency.name: Nom de l'agence
+  view.site: Voir le site
+  faq: FAQ
+  send_message: Envoyer un message
+  message_description: Contactez nous pour savoir plus d'information sur notre plateforme
+  contact.success: Succès!
+  contact.success.message: Votre message nous a été envoyé.
+  office: Bureau
+  business_hours: Heures de travail
+  monday: Lundi
+  friday: Vendredi
+  satuday: Samedi
+  sunday: Dimanche
+  9am: 9h
+  to: à
+  5pm: 17h
+  2pm: 14h
+  closed: Fermé
+  contact-us: Nouveau Message
+  contact-us.email.content: Vous avez reçu un nouveau message d'un utilisateur de site immobilier
+  linkedin: LinkedIn
+  facebook: Facebook
+  contact_agency: Contacter l'agence
+  agency.contact.success: Votre message nous a été envoyé à l'agence
+  agency.not-available: L'agence n'est plus disponible
+
+
+
+sell: À vendre
+rent: À louer
+apartment: Appartement
+house: Maison
+riad: Riad
+villa: Villa
+office: Bureau
+commercial: Local commercial
+terrain: Terrain
+ferme: Ferme
+building: Bâtiment
+duplex: Duplex
+studio: Studio
+new: Nouveau
+renovate: à rénover
+good-condition: Bon état
+furnished: Meublée
+unfurnished: Non meublée
+partially-furnished: Partiellement meublée
+tanger: Tanger
+assilah: Assilah
+mdiq: M'diq
+fnideq: Fnideq
+tetouan: Tétouan
+fahs: Fahs
+anjra: Anjra
+larache: Larache
+alhoceïma: Al Hoceïma
+chefchaouen: Chefchaouen
+ouezzane: Ouezzane
+
+oujda: Oujda
+angad: Angad
+nador: Nador
+driouch: Driouch
+jerada: Jerada
+berkane: Berkane
+taourirt: Taourirt
+guercif: Guercif
+figuig: Figuig
+
+fes: Fès
+meknes: Meknès
+taza: Taza
+elhajeb: El Hajeb
+ifrane: Ifrane
+moulay-yaacoub: Moulay Yaâcoub
+sefrou: Séfrou
+boulemane: Boulemane
+taounate: Taounate
+
+rabat: Rabat
+sale: Salé
+skhirate: Skhirate
+temara: Témara
+kenitra: Kénitra
+khemisset: Khémisset
+sidi-kacem: Sidi Kacem
+sidi-slimane: Sidi Slimane
+
+beni-mellal: Béni-Mellal
+azilal: Azilal
+fquih-ben-salah: Fquih Ben Salah
+khenifra: Khénifra
+khouribga: Khouribga
+
+mohammedia: Mohammédia
+el-jadida: El Jadida
+nouaceur: Nouaceur
+mediouna: Médiouna
+benslimane: Benslimane
+berrechid: Berrechid
+settat: Settat
+sidi-bennour: Sidi Bennour
+
+marrakech: Marrakech
+chichaoua: Chichaoua
+elhaouz: Al Haouz
+Sraghna: El Kelaâ des Sraghna
+essaouira: Essaouira
+rehamna: Rehamna
+safi: Safi
+youssoufia: Youssoufia
+
+errachidia: Errachidia
+ouarzazate: Ouarzazate
+midelt: Midelt
+tinghir: Tinghir
+zagora: Zagora
+
+agadir: Agadir
+ida-outanane: Ida-Outanane
+ait-melloul: Aït Melloul
+inezgane: Inezgane
+ait-baha: Aït Baha
+chtouka: Chtouka
+taroudant: Taroudant
+tiznit: Tiznit
+tata: Tata
+
+guelmim: Guelmim
+assa-zag: Assa-Zag
+tan-tan: Tan-Tan
+sidi-ifni: Sidi Ifni
+
+laayoune: Laâyoune
+boujdour: Boujdour
+tarfaya: Tarfaya
+es-semara: Es-Semara
+
+oued-ed-dahab: Oued Ed-Dahab
+aousserd: Aousserd
+dakhla: Dakhla
+Llgouira: Lagouira
+casablanca: Casablanca
+الدار البيضاء: casablanca
+
+
+casablanca-settat: Casablanca-Settat
+tanger-tetouan-hoceima: Tanger-Tétouan-Al Hoceïma
+oriental: Oriental
+fes-meknes: Fès-Meknès
+rabat-sale-kenitra: Rabat-Salé-Kénitra
+benimellal-khenifra: Béni Mellal-Khénifra
+marrakech-safi:  	Marrakech-Safi
+draa-tafilalet: Drâa-Tafilalet
+souss-massa:  	Souss-Massa
+guelmim-ouednoun: Guelmim-Oued Noun
+laayoune-sakia-elhamra: Laâyoune-Sakia El Hamra
+dakhla-oued-eddahab: Dakhla-Oued Ed-Dahab
+
+properties: Propriétés
+
+garage: Garage
+garden: Jardin
+terrace: Terrasse
+elevator: Ascenseur
+sea: Mer
+mountainside: Flanc de montagne
+pool: Bassin
+concierge: Concierge
+storage: Espace de rangement
+parabolic_antenna: Antenne parabolique
+fireplace: Cheminée
+air_conditioner: Climatisation
+heating: Chauffage
+security_camera: Caméra de sécurité
+door: Double porte
+fridge_appliance: Appareil frigo
+oven: Four
+tv: La télé
+washing_machine: Machine à laver
+microwave: Four micro onde
+internet: Internet
+search.result: Résultat de Recherche
+advert.found: Une propriété trouvé
+adverts.found: Propriétés trouvés
+advert.none: Aucune propriété trouvé

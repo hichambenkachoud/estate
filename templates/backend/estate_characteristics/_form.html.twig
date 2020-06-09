@@ -1,0 +1,184 @@
+{{ form_start(form) }}
+
+{{ form_errors(form) }}
+<div class="form-group">
+    {{ form_label(form.code) }}
+    {{ form_widget(form.code) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.enabled) }}
+    {{ form_widget(form.enabled) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.type) }}
+    {{ form_widget(form.type) }}
+</div>
+<div class="form-group">
+    <label for="estate_characteristics_icon" class="required">{{ 'admin.icon' |trans }}</label>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_garden" {% if estate_characteristic.icon == 'i_garden' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_garden estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_garage" {% if estate_characteristic.icon == 'i_garage' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_garage estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_x_terrace" {% if estate_characteristic.icon == 'i_x_terrace' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_x_terrace estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_elevator" {% if estate_characteristic.icon == 'i_elevator' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_elevator estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_sea" {% if estate_characteristic.icon == 'i_sea' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_sea estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_mountainside" {% if estate_characteristic.icon == 'i_mountainside' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_mountainside estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_pool" {% if estate_characteristic.icon == 'i_pool' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_pool estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_concierge" {% if estate_characteristic.icon == 'i_concierge' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_concierge estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_storage" {% if estate_characteristic.icon == 'i_storage' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_storage estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_executive_lounge" {% if estate_characteristic.icon == 'i_executive_lounge' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_executive_lounge estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_parabolic_antenna" {% if estate_characteristic.icon == 'i_parabolic_antenna' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_parabolic_antenna estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_fireplace" {% if estate_characteristic.icon == 'i_fireplace' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_fireplace estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_air_conditioner" {% if estate_characteristic.icon == 'i_air_conditioner' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_air_conditioner estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_heating" {% if estate_characteristic.icon == 'i_heating' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_heating estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_security_camera" {% if estate_characteristic.icon == 'i_security_camera' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_security_camera estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_door" {% if estate_characteristic.icon == 'i_door' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_door estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_fridge_appliance" {% if estate_characteristic.icon == 'i_fridge_appliance' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_fridge_appliance estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_oven" {% if estate_characteristic.icon == 'i_oven' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_oven estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_tv" {% if estate_characteristic.icon == 'i_tv' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_tv estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_washing_machine" {% if estate_characteristic.icon == 'i_washing_machine' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_washing_machine estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_microwave" {% if estate_characteristic.icon == 'i_microwave' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_microwave estate-icon"></i></label>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="radio-custom">
+                <input type="radio" class="estate-radio" value="i_internet" {% if estate_characteristic.icon == 'i_internet' %} checked {% endif %}>
+                <label for="radioExample1"><i class="i_internet estate-icon"></i></label>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="form-group">
+    <button class="btn btn-success btn-sm">{{ button_label|default('admin.save')|trans }}</button>
+</div>
+
+{{ form_end(form) }}

@@ -1,0 +1,27 @@
+.estate-icon{
+    font-size: 20px;
+    color: #2eb8c9;
+}
+.estate-icon-show{
+    text-align: center;
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 45px;
+    width: max-content;
+    margin-left: 43%;
+    margin-bottom: 20px;
+}
+
+.widget-summary .summary .amount{
+    font-size: 1.2rem;
+}
+
+.form-group ul li{
+    color: #df6900;
+}
+
+.agency{
+    text-align: center;
+    width: initial;
+    margin-bottom: 20px;
+}

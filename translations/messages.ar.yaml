@@ -1,0 +1,427 @@
+title:  الموقع العقاري
+hello: أهلا
+enjoy: استمتع!
+front:
+  home: إستقبال
+  aboutus: معلومات عنا
+  property: عقار
+  agent.found: ابحث عن وكالة
+  blog: مدونة
+  contactus: اتصل بنا
+  advert.add: أضف إعلان
+  signin: تسجيل الدخول
+  property.rent: للإيجار
+  property.sale: للبيع
+  terms-and-condition: الشروط والأحكام
+  confidente: السرية
+  already.have.account: أنا عميل عائد
+  login.username.email: اسم المستخدم أو البريد الالكتروني
+  password: كلمة المرور
+  password.forget: كلمة المرور مفقودة؟
+  rememberme: تذكرنى
+  register.new: انشاء حساب جديد
+  password.confirm: إعادة إدخال كلمة المرور
+  register: تسجيل
+  read.agree.tc: لقد قرات ووافقت على ال
+  terms.service: شروط الخدمة
+  email: البريد الالكتروني
+  frensh: الفرنسية
+  english: الإنجليزية
+  arabe: العربية
+  account: الدخول
+  lastName: الاسم العائلي
+  firstName: الاسم الاول
+  password.format:  كلمة المرور يجب ألا تقل عن 8 أحرف, أن تحتوي على رقم واحد على الأقل, أن تحتوي على حرف كبير واحد على الأقل, أن تحتوي على حرف صغير واحد على الأقل
+  credentials.invalid: البريد الالكتروني أو كلمة المرور غير صحيحة
+  myaccount: صفحتي
+  register.confirmation.success: لقد تم تفعيل حسابك, يرجى الدخول اليه
+  register.confirmation.failed: لم يعد رابط التأكيد صالحًا ، يُرجى الاتصال بمسؤول الموقع للحصول على رابط تنشيط آخر.
+  register.message.success: تم إرسال رابط التفعيل إلى بريدك الإلكتروني.
+  register.confirmation: تأكيد التسجيل
+  confirmation: تأكيد
+  getintouch: ابقى على تواصل
+  logout: تسجيل الخروج
+  password.forget.indice: أدخل عنوان بريدك الإلكتروني أدناه وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.
+  submit: إرسال
+  password.reset: إعادة تعيين كلمة المرور
+  reset:  إعادة تعيين
+  member.notfound: لا يمكننا العثور على حساب مرتبط بعنوان البريد الإلكتروني هذا.
+  member.not.confirm: حسابك غير نشط ، يرجى تنشيطه باستخدام الرابط الذي تم إرساله إلى عنوان بريدك الإلكتروني.
+  error.505: عذراً! حدث خطأ ، نحاول تصحيحه بسرعة
+  password.reset.email: تم إرسال الرابط لإعادة تعيين كلمة المرور إلى بريدك الإلكتروني.
+  password.reset.success: تم إعادة تعيين كلمة المرور الخاصة بك ، يمكنك تسجيل الدخول الآن.
+  password.reset.failed: لم يعد رابط إعادة التعيين صالحًا ، يرجى إنشاء رابط آخر.
+  password.not_match: كلمتا المرور غير متطابقتين
+  myinfo: معلوماتي الشخصية
+  profile: صفحتي
+  mobilenumber: رقم الهاتف
+  birthday: تاريخ الميلاد
+  username: اسم المستخدم
+  save: حفظ
+  profile.update.success: تم تعديل ملفك الشخصي بنجاح.
+  profile.update.email: إذا قمت بتغيير بريدك الإلكتروني ، فسيتم تسجيل خروجك للتحقق من بريدك الإلكتروني الجديد.
+  mobileNumber.format:  رقم الهاتف المحمول غير صالح
+  email.exist: حساب مع هذا البريد الإلكتروني  موجود
+  username.exist: حساب باسم المستخدم هذا موجود
+  advert.information: المعلومات
+  advert.characteristic: الميزات
+  advert.image.emplacement: الصور والموقع
+  advert.description: الوصف
+  previous: السابق
+  next: التالي
+  finish: إنهاء
+  adverts.type: نوع الإعلان
+  estates.type: نوع العقار
+  choose.option: حدد خيارًا
+  estate.status: حالة العقار
+  emplacement: الموقع
+  region: الجهة
+  city: المدينة
+  province: الاقليم
+  quartier: الجوار
+  images: الصور
+  metre.carre: متر مربع
+  currency.dh: درهم
+  area: المساحة
+  price: الثمن
+  rooms: القطع
+  bedrooms: الغرف
+  bathrooms: الحمامات
+  bathrooms1: حمام واحد
+  bathrooms2: حمامين
+  bathrooms3: ثلاثة حمامات
+  bathrooms4: أربعة حمامات
+  bathrooms5: خمسة حمامات
+  floor: طابق العقار
+  age:  عمر العقار
+  soil.type: نوع الأرضية
+  floor0: الطابق الأرضي
+  floor1: الطابق الأول
+  floor2: الطابق الثاني
+  floor3: الطابق الثالث
+  floor4: الطابق الرابع
+  floor5: الطابق الخامس
+  floor6: الطابق السادس
+  floor7: الطابق السابع
+  floor8: الطابق الثامن
+  floor9: الطابق التاسع
+  floor10: الطابق العاشر
+  floor11: الطابق الحادي عشر
+  floor12: الطابق الثاني عشر
+  floor13: الطابق الثالث عشر
+  floor14: الطابق الرابع عشر
+  floor15: الطابق الخامس عشر
+  floor16: الطابق السادس عشر
+  floor17: الطابق السابع عشر
+  floor18: الطابق الثامن عشر
+  floor19: الطابق التاسع عشر
+  floor20: الطابق العشرون
+  floor.start: الطابق الأرضي
+  floor.middle: طوابق وسيطة
+  floor.end: الطابق الأخير
+  age.1: أقل من عام
+  age.1-5: من سنة إلى 5 سنوات
+  age.5-10: من 5 إلى 10 سنوات
+  age.10-20: من 5 إلى 10 سنوات
+  age.20-30: من 20 إلى 30 سنة
+  age.30-40: من 30 إلى 40 سنة
+  age.40-50: من 40 إلى 50 عامًا
+  age.50-60: من 50 إلى 60 عامًا
+  age.60-70: من 60 إلى 70 عامًا
+  age.70-80: من 70 إلى 80 سنة
+  age.80-90: من 80 إلى 90 عامًا
+  age.90-100:  إلى 100 سنة
+  age.100: أكثر من 100 عام
+  parquet: باركيه
+  marble: رخام
+  tile: بلاط
+  other: أخرى
+  min_night: الحد الأدنى من الليالي
+  capacity: القدرة
+  description: الوصف
+  title: عنوان الإعلان
+  images.invalid: تنسيق الصورة غير صالح
+  image.extension.invalid: ملحق الصورة غير صالح
+  advert.author: كاتب الإعلان
+  advert.contact: اتصل بالمعلن
+  address: العنوان
+  advert.add.success: تم حفظ الإعلان ، يرجى الانتظار للتأكيد من المسؤول
+  contact: معلومات الاتصال
+  bedrooms.min:  غرف نوم من
+  bedrooms.max: غرف نوم إلى
+  area.min: المساحة من
+  area.max: المساحة إلى
+  price.min:  الثمن من
+  price.max: الثمن إلى
+  search: بحث
+  bedrooms0: 0 غرفة (ستوديو)
+  bedrooms1: غرفة واحدة
+  bedrooms2: غرفتين
+  bedrooms3: ثلاث غرف
+  bedrooms4: اربع غرف
+  bedrooms5: خمسة غرف
+  bedrooms6: ست غرف
+  bedrooms7: سبع غرف
+  bedrooms8: ثماني غرف
+  bedrooms9: تسع غرف
+  bedrooms10: عشر غرف
+  rent.day: يوميا
+  rent.month: شهرياً
+  rent.year: سنويا
+  currency.dh.day: درهم/يوميا
+  currency.dh.month: درهم/شهرياً
+  currency.dh.year: درهم/سنويا
+  listingfor: قائمة
+  rent: البيع
+  sale: الإيجار
+  or: أو
+  phone_agent: إتصل الآن
+  send_mail:  راسل الآن
+  contact_agent: ارسل بريد الكتروني للوكيل
+  cancel: إلغاء
+  send: إرسال
+  fullname: الاسم الكامل
+  agent: الوكيل
+  form.contatc.content: مرحبًا، لقد عثرت على عقارك مرجع رقم %reference%. على %site%. الرجاء التواصل معي.  شكرًا ً
+  adverts.contact.success: تم إرسال بريدك الإلكتروني إلى مالك العقار
+  contact-agent: طلب معلومات
+  contact-agent.email.content: أرسل إليك أحد الزائرين هذه الرسالة الإلكترونية حول أحد إعلاناتك ، تجد أدناه محتوى الرسالة
+  contact-agency.email.content: أرسل إليك أحد الزائرين هذه الرسالة الإلكترونية ، تجد أدناه محتوى الرسالة
+  message: رسالة
+  advert.confirm: تأكيد إضافة إعلان
+  advert.confirm.email.content: تم التحقق من صحة إعلانك ، يرجى النقر على الرابط التالي لعرضه
+  exclusive.locations: مواقع حصرية
+  special.offers: عروض خاصة
+  our-agent: وكلائنا
+  newsletter: النشرة الإخبارية
+  newsletter.content: اشترك وكن أول من يعرف أفضل عروضنا
+  success: نجاح!
+  newsletter.success: لقد تمت إضافتك إلى قائمة البريد الإلكتروني لدينا
+  subscribe: الإشتراك
+  reference: مرجع
+  features: الميزات
+  request.information: طلب معلومات
+  request.information.content: اتصل بنا أو راسلنا لطلب المزيد من المعلومات
+  message.sent: تم إرسال الرسالة إلينا.
+  subject: موضوع
+  property.agent: صاحب العقار
+  most.searchable: عمليات البحث الشائعة
+  rent.apartment.casablanca: شقق للإيجار بالدار البيضاء
+  rent.apartment.marrakech: شقق للإيجار بمراكش
+  rent.apartment.rabat: شقق للإيجار بالرباط
+  rent.apartment.tanger: شقق للايجار في طنجة
+  rent.apartment.agadir: شقق للايجار في أكادير
+  sell.apartment.casablanca: شقق للبيع بالدار البيضاء
+  sell.house.casablanca: منازل للبيع في الدار البيضاء
+  sell.apartment.marrakech: شقق للبيع بمراكش
+  sell.house.marrakech: منازل للبيع في مراكش
+  sell.apartment.rabat: شقق للبيع بالرباط
+  sell.villa.rabat: فيلا للبيع بالرباط
+  sell.apartment.tanger: شقق للبيع بطنجة
+  sell.villa.tanger: فيلا للبيع بطنجة
+  sell.apartment.agadir: شقق للبيع في أكادير
+  sell.house.agadir: منازل للبيع في أكادير
+  followus: تابعنا
+  publication.date: تاريخ النشر
+  publication.none: غير مبال
+  publication.day: في الـ 24 ساعة الماضية
+  publication.week: الاسبوع الماضى
+  publication.month: الشهر الاخير
+  rent.type: نوع الإيجار
+  sort.important: أكثر أهمية
+  sort.price.asc: سعر تصاعدي
+  sort.price.desc: سعر تناقصي
+  sort.date.asc: نشرت سابقا
+  sort.date.desc: نشرت مؤخرا
+  sort.area.asc: مساحة كبيرة
+  sort.area.desc: مساحة صغيرة
+  sort.plus: أكثر
+  image.upload.success: تم تحميل صورتك بنجاح
+  agency: وكالة
+  agencies: وكالات
+  agency.name: اسم الوكالة
+  view.site: انظر الموقع
+  faq: التعليمات
+  send_message: إبعث رسالة
+  message_description: اتصل بنا للحصول على مزيد من المعلومات حول منصتنا
+  contact.success: نجاح!
+  contact.success.message: تم إرسال رسالتك إلينا.
+  office: مكتب
+  business_hours: ساعات العمل
+  monday: الإثنين
+  friday: الجمعة
+  satuday: السبت
+  sunday: الأحد
+  9am: 9 صباحا
+  to: الى
+  5pm: 5 مساءً
+  2pm: 2 مساءً
+  closed: مغلق
+  contact-us: رسالة جديدة
+  contact-us.email.content: لقد تلقيت رسالة جديدة من مستخدم موقع عقارات
+  linkedin: لينكد إن
+  facebook: فيسبوك
+  contact_agency: اتصل بالوكالة
+  agency.contact.success: تم إرسال رسالتك إلى الوكالة
+  agency.not-available: الوكالة لم تعد متاحة
+
+
+
+
+sell: للبيع
+rent: للإيجار
+apartment: شقة
+house: منزل
+riad: رياض
+villa: فيلا
+office: مكتب
+commercial:  محل تجاري
+terrain: أرض
+ferme: مزرعة
+building: مبنى
+duplex: شقة بطابقين
+studio: الاستوديو
+new: جديد
+renovate: لتجديد
+good-condition: بحالة جيدة
+furnished: مفروش
+unfurnished: غير مفروش
+partially-furnished: مفروش جزئيا
+
+tanger: طنجة
+assilah: أصيلة
+mdiq: المضيق
+fnideq: الفنيدق
+tetouan: تطوان
+fahs: فحص
+anjra: أنجرا
+larache: العرائش
+alhoceïma: الحسيمة
+chefchaouen: شفشاون
+ouezzane: وزان
+
+oujda: وجدة
+angad: أنجاد
+nador: أنجاد
+driouch: دريوش
+jerada: جرادة
+berkane: بركان
+taourirt: تاوريرت
+guercif: جرسيف
+figuig: فكيك
+
+fes: فاس
+meknes: مكناس
+taza: تازة
+elhajeb: الحاجب
+ifrane: إفران
+moulay-yaacoub: مولاي يعقوب
+sefrou: صفرو
+boulemane: بولمان
+taounate: تاونات
+
+rabat: الرباط
+sale: سلا
+skhirate: الصخيرات
+temara: تمارة
+kenitra: القنيطرة
+khemisset: الخميسات
+sidi-kacem: سيدي قاسم
+sidi-slimane: سيدي سليمان
+
+beni-mellal: بني ملال
+azilal: أزيلال
+fquih-ben-salah: فقيه بن صلاح
+khenifra: خنيفرة
+khouribga: خريبكة
+
+casablanca: الدار البيضاء
+mohammedia: المحمدية
+el-jadida: الجديدة
+nouaceur: النواصر
+mediouna: مديونة
+benslimane: بن سليمان
+berrechid: برشيد
+settat: سطات
+sidi-bennour: سيدي بنور
+
+marrakech: مراكش
+chichaoua: شيشاوة
+elhaouz: الحوز
+Sraghna: قلعة السراغنة
+essaouira: الصويرة
+rehamna: رحامنا
+safi: اسفي
+youssoufia: اليوسفية
+
+errachidia: الرشيدية
+ouarzazate: ورزازات
+midelt: ميدلت
+tinghir: تنغير
+zagora: زاكورة
+
+agadir: أكادير
+ida-outanane: إيدا أوتنان
+ait-melloul: آيت ملول
+inezgane: إنزكان
+ait-baha: آيت بها
+chtouka: شتوكة
+taroudant: تارودانت
+tiznit: تزنيت
+tata: طاطا
+
+guelmim: كلميم
+assa-zag: آسا زاك
+tan-tan: طان طان
+sidi-ifni: سيدي إفني
+
+laayoune: العيون
+boujdour: بوجدور
+tarfaya: طرفاية
+es-semara: السمارة
+
+oued-ed-dahab: واد الذهب
+aousserd: أوسرد
+dakhla: الداخلة
+Llgouira: لكويرة
+
+casablanca-settat: الدار البيضاء-سطات
+tanger-tetouan-hoceima: طنجة - تطوان - الحسيمة
+oriental: شرقي
+fes-meknes: فاس-مكناس
+rabat-sale-kenitra: الرباط-سلا-القنيطرة
+benimellal-khenifra: بني ملال - خنيفرة
+marrakech-safi:  	مراكش-آسفي
+draa-tafilalet: درعة-تافيلالت
+souss-massa:  	سوس ماسة
+guelmim-ouednoun: كلميم-واد نون
+laayoune-sakia-elhamra: العيون الساقية-الحمراء
+dakhla-oued-eddahab: الداخلة-وادي الذهب
+
+properties: عقارات
+
+garage: مرآب
+garden: حديقة
+terrace: شرفة
+elevator: مصعد
+sea: البحر
+mountainside: سفح الجبل
+pool: حوض السباحة
+concierge: بواب
+storage: وضع التخزين
+parabolic_antenna: هوائي
+fireplace: المدفأة
+air_conditioner: مكيف هواء
+heating: تدفئة
+security_camera: كاميرا الأمن
+door: باب مزدوج
+fridge_appliance: جهاز الثلاجة
+oven: فرن
+tv: تلفزيون
+washing_machine: غسالة
+microwave: الميكروويف
+internet: الإنترنت
+search.result: نتيجة البحث
+advert.found:  عقار واحد
+adverts.found: عقارات
+advert.none: لم يتم العثور على اي عقار

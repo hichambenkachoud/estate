@@ -1,0 +1,94 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}
+    {{ 'admin.agency.management' | trans }}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h2>{{ 'admin.agency.management' | trans }}</h2>
+
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <span><i class="fas fa-tasks"></i></span>
+                </li>
+                <li><span>{{ 'admin.agency' | trans }}</span></li>
+                <li><span>{{ 'admin.details' | trans }}</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" href="#"></a>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col-md-8">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.informations' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <div class="form-group agency">
+                        <img src="{{ asset('uploads/agency/' ~ agency.image ) }}" width="200" class="profile-picture">
+                    </div>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'admin.id' | trans }}</th>
+                            <td>{{ agency.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.code' | trans }}</th>
+                            <td>{{ agency.code }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <td>{{ agency.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            <td>{{ agency.enabled ? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.create_date' | trans }}</th>
+                            <td>{{ agency.createDate ? agency.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.url' | trans }}</th>
+                            <td><a href="{{ agency.url }}" target="_blank">{{ agency.url }}</a> </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.mobileNumber' | trans }}</th>
+                            <td>{{ agency.mobileNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.city' | trans }}</th>
+                            <td>{{ agency.city ? agency.city.name : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'admin.address' | trans }}</th>
+                            <td>{{ agency.address }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'admin.actions' | trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('agency_index') }}"
+                       class="btn btn-info btn-sm">{{ 'admin.backtolist' | trans }}</a>
+
+                    <a href="{{ path('agency_edit', {'id': agency.id}) }}"
+                       class="btn btn-success btn-sm">{{ 'admin.update' | trans }}</a>
+
+                    {{ include('backend/agency/_delete_form.html.twig') }}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

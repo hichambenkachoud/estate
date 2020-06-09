@@ -4,6 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locales: en|fr|ar
+    uploads_directory: '%kernel.project_dir%/public/uploads/'
+    uploads_directory_members: '%kernel.project_dir%/public/uploads/members/'
+    uploads_directory_agency: '%kernel.project_dir%/public/uploads/agency/'
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +29,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventSubscriber\LocaleSubscriber:
+        arguments: ['%kernel.default_locale%']

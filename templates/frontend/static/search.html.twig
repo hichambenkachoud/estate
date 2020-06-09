@@ -1,0 +1,262 @@
+<script type="text/javascript"  >
+    $(document).ready(function () {
+        var $rentType = $('#rent-type');
+        var $forSell = $('.for-sell');
+        var $forRent = $("[class*='for-rent']");
+
+        let $type = $('.advertTypeRadio:checked').data('code');
+        let $rentTypeSelected = $('#adverts-rent').children("option:selected").val();
+        if ($type == 'rent'){
+            $('#adverts-rent').attr('disabled', false);
+            $rentType.show();
+            showPriceDiv($rentTypeSelected ? undefined : 'day');
+            $forSell.hide();
+        } else{
+            $('#adverts-rent').attr('disabled', true);
+            $forRent.hide();
+            $rentType.hide();
+            $forSell.show();
+        }
+        // change advert type: sell or rent
+        $('.new-radio-button input').on('change', function () {
+
+            let $type = $(this).data('code');
+            let $rentTypeSelected = $('#adverts-rent').children("option:selected").val();
+            if ($type == 'rent'){
+                $('#adverts-rent').attr('disabled', false);
+                $rentType.show();
+                showPriceDiv($rentTypeSelected);
+                $forSell.hide();
+            } else{
+                $('#adverts-rent').attr('disabled', true);
+                $forRent.hide();
+                $rentType.hide();
+                $forSell.show();
+            }
+        });
+
+        // change rent type: day or month or year
+        $('#adverts-rent').on('change', function () {
+            let $type = $(this).children("option:selected").val();
+            showPriceDiv($type);
+        });
+
+        // filter by price sell min to max
+        $("#adverts-price-min").on('change', function () {
+            filterMinToMax($(this), '#adverts-price-max', $("#price-sell option"));
+        });
+
+        // filter by price sell max to min
+        $("#adverts-price-max").on('change', function () {
+            filterMaxToMin($(this), '#adverts-price-min', $("#price-sell option"));
+        });
+
+        // filter by price rent day min to max
+        $("#adverts-price-min-day").on('change', function () {
+            filterMinToMax($(this), '#adverts-price-max-day', $("#rent-day option"));
+        });
+
+        // filter by price rent day max to min
+        $("#adverts-price-max-day").on('change', function () {
+            filterMaxToMin($(this), '#adverts-price-min-day', $("#rent-day option"));
+        });
+
+        // filter by price rent month min to max
+        $("#adverts-price-min-month").on('change', function () {
+            filterMinToMax($(this), '#adverts-price-max-month', $("#rent-month option"));
+        });
+
+        // filter by price rent month max to min
+        $("#adverts-price-max-month").on('change', function () {
+            filterMaxToMin($(this), '#adverts-price-min-month', $("#rent-month option"));
+        });
+
+        // filter by price rent year min to max
+        $("#adverts-price-min-year").on('change', function () {
+            filterMinToMax($(this), '#adverts-price-max-year', $("#rent-year option"));
+        });
+
+        // filter by price rent year max to min
+        $("#adverts-price-max-year").on('change', function () {
+            filterMaxToMin($(this), '#adverts-price-min-year', $("#rent-year option"));
+        });
+
+        /*// filter by rooms  min to max
+        $("#adverts-rooms-min").on('change', function () {
+            filterRoomsMinToMax($(this), '#adverts-rooms-max', $("#adverts-rooms option"));
+        });
+
+        // filter by roomsmax to min
+        $("#adverts-rooms-max").on('change', function () {
+            filterRoomsMaxToMin($(this), '#adverts-rooms-min', $("#adverts-rooms option"));
+        });*/
+
+        // filter by rooms  min to max
+        $("#adverts-area-min").on('change', function () {
+            filterAreaMinToMax($(this), '#adverts-area-max', $("#adverts-area option"));
+        });
+
+        // filter by roomsmax to min
+        $("#adverts-area-max").on('change', function () {
+            filterAreaMaxToMin($(this), '#adverts-area-min', $("#adverts-area option"));
+        });
+
+        $('.get-sorted').on('click', function (e) {
+            let $dataSorted = $(this).data('sort');
+            if ($dataSorted != null && $dataSorted != undefined){
+
+                $('#input-sorted').val($dataSorted);
+            }
+            $('#propertiesFormHeader').submit();
+            e.preventDefault();
+        });
+
+        $('.get-sorted').on('change', function (e) {
+            let $dataSorted = $(this).data('sort');
+            if ($dataSorted != undefined && $dataSorted != null){
+                $('#input-sorted').val($dataSorted);
+            }
+            $('#propertiesFormHeader').submit();
+            e.preventDefault();
+        });
+
+        $('.paginate').on('click', function (e) {
+            let $page = $(this).data('page');
+            $('#input-paged').val($page);
+            $('#propertiesFormHeader').submit();
+            e.preventDefault();
+        })
+    });
+
+    function filterMaxToMin($selectorMax, $selectorMin, $initialList) {
+        let $maxPrice = $selectorMax.children("option:selected").val();
+        let $minPrice = $($selectorMin).children("option:selected").val();
+        if ($selectorMax.data('options') === undefined) {
+            $selectorMax.data('options', $initialList.clone());
+        }
+
+        var options =  $selectorMax.data('options').filter(function(){
+            return $maxPrice > 0 ? ($(this).data('price') <= $maxPrice) || ($(this).data('price') == '0') : ($(this).data('price') > '0');
+        });
+
+        $($selectorMin).html(options);
+        let first = $($selectorMin).find('option:eq(0)');
+        first.html('{{ 'front.price.min'|trans }}');
+        $($selectorMin+" option[value='"+$minPrice+"']").prop("selected", true);
+    }
+
+    function filterMinToMax($selectorMin, $selectorMax, $initialList) {
+        let $minPrice = $selectorMin.children("option:selected").val();
+        let $maxPrice = $($selectorMax).children("option:selected").val();
+
+        if ($selectorMin.data('options') === undefined) {
+            $selectorMin.data('options', $initialList.clone());
+        }
+        //$selectorMin.data('options', $initialList.clone());
+
+        var options =  $selectorMin.data('options').filter(function(){
+            return $minPrice > 0 ? ($(this).data('price') >= $minPrice) || ($(this).data('price') == '0') : ($(this).data('price') > '0');
+        });
+
+        $($selectorMax).html(options);
+        let first = $($selectorMax).find('option:eq(0)');
+        first.html('{{ 'front.price.max'|trans }}');
+        $($selectorMax+" option[value='"+$maxPrice+"']").prop("selected", true);
+
+    }
+
+    function filterRoomsMaxToMin($selectorMax, $selectorMin, $initialList) {
+        let $maxRoom = $selectorMax.children("option:selected").val();
+        let $minRoom = $($selectorMin).children("option:selected").val();
+        if ($selectorMax.data('options') === undefined) {
+            $selectorMax.data('options', $initialList.clone());
+        }
+
+        var options =  $selectorMax.data('options').filter(function(){
+            return $maxRoom > 0 ? ($(this).data('room') <= $maxRoom) || ($(this).data('room') == '0') : ($(this).data('room') > '0');
+        });
+
+        $($selectorMin).html(options);
+        let first = $($selectorMin).find('option:eq(0)');
+        first.html('{{ 'front.bedrooms.min'|trans }}');
+        $($selectorMin+" option[value='"+$minRoom+"']").prop("selected", true);
+    }
+
+    function filterRoomsMinToMax($selectorMin, $selectorMax, $initialList) {
+        let $minRoom = $selectorMin.children("option:selected").val();
+        let $maxRoom = $($selectorMax).children("option:selected").val();
+
+        if ($selectorMin.data('options') === undefined) {
+            $selectorMin.data('options', $initialList.clone());
+        }
+        //$selectorMin.data('options', $initialList.clone());
+
+        var options =  $selectorMin.data('options').filter(function(){
+            return $minRoom > 0 ? ($(this).data('room') >= $minRoom) || ($(this).data('room') == '0') : ($(this).data('room') > '0');
+        });
+
+        $($selectorMax).html(options);
+        let first = $($selectorMax).find('option:eq(0)');
+        first.html('{{ 'front.bedrooms.max'|trans }}');
+        $($selectorMax+" option[value='"+$maxRoom+"']").prop("selected", true);
+
+    }
+
+    function filterAreaMaxToMin($selectorMax, $selectorMin, $initialList) {
+        let $maxArea = $selectorMax.children("option:selected").val();
+        let $minArea = $($selectorMin).children("option:selected").val();
+        if ($selectorMax.data('options') === undefined) {
+            $selectorMax.data('options', $initialList.clone());
+        }
+
+        var options =  $selectorMax.data('options').filter(function(){
+            return $maxArea > 0 ? ($(this).data('area') <= $maxArea) || ($(this).data('area') == '0') : ($(this).data('area') > '0');
+        });
+
+        $($selectorMin).html(options);
+        let first = $($selectorMin).find('option:eq(0)');
+        first.html('{{ 'front.area.min'|trans }}');
+        $($selectorMin+" option[value='"+$minArea+"']").prop("selected", true);
+    }
+
+    function filterAreaMinToMax($selectorMin, $selectorMax, $initialList) {
+        let $minArea = $selectorMin.children("option:selected").val();
+        let $maxArea = $($selectorMax).children("option:selected").val();
+
+        if ($selectorMin.data('options') === undefined) {
+            $selectorMin.data('options', $initialList.clone());
+        }
+        //$selectorMin.data('options', $initialList.clone());
+
+        var options =  $selectorMin.data('options').filter(function(){
+            return $minArea > 0 ? ($(this).data('area') >= $minArea) || ($(this).data('area') == '0') : ($(this).data('area') > '0');
+        });
+
+        $($selectorMax).html(options);
+        let first = $($selectorMax).find('option:eq(0)');
+        first.html('{{ 'front.area.max'|trans }}');
+        $($selectorMax+" option[value='"+$maxArea+"']").prop("selected", true);
+
+    }
+
+    function showPriceDiv($type) {
+        var $rentDay = $('.for-rent-day');
+        var $rentMonth = $('.for-rent-month');
+        var $rentYear = $('.for-rent-year');
+
+        if ($type == 'day'){
+            $rentMonth.hide();
+            $rentYear.hide();
+            $rentDay.show();
+        } else if ($type == 'month'){
+            $rentDay.hide();
+            $rentYear.hide();
+            $rentMonth.show();
+        } else if ($type == 'year'){
+            $rentDay.hide();
+            $rentMonth.hide();
+            $rentYear.show();
+        }
+    }
+
+</script>

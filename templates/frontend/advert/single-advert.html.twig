@@ -1,0 +1,438 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .search-estate {
+            background: #413c46;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <div role="main" class="main">
+
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md" style="padding: 30px 0;">
+            <div class="container">
+                <div class="row search-home">
+                    {{ include('frontend/static/block-search-home.html.twig') }}
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+
+            <div class="row pb-5">
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <h4 class="mt-3 mb-3" style="letter-spacing: 0;color: #08c;">{{ advert.title }}</h4>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-7">
+
+                            <span class="thumb-info-listing-type thumb-info-listing-type-detail bg-color-secondary text-uppercase text-color-light font-weight-semibold p-2 pl-3 pr-3">
+                                {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
+                            </span>
+
+                            <div class="thumb-gallery">
+                                <div class="lightbox"
+                                     data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}}">
+                                    <div class="owl-carousel owl-theme manual thumb-gallery-detail show-nav-hover"
+                                         id="thumbGalleryDetail">
+                                        {% for image in images %}
+                                            <div>
+                                                <a href="{{ asset('uploads/'~ advert.images ~ '/' ~ image) }}">
+                                                <span class="thumb-info thumb-info-centered-info thumb-info-no-borders text-4">
+                                                    <span class="thumb-info-wrapper text-4">
+                                                        <img alt="Property Detail"
+                                                             src="{{ asset('uploads/'~ advert.images ~ '/' ~ image) }}"
+                                                             class="img-fluid">
+                                                        <span class="thumb-info-title text-4">
+                                                            <span class="thumb-info-inner text-4"><i
+                                                                        class="icon-magnifier icons text-4"></i></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="owl-carousel owl-theme manual thumb-gallery-thumbs mt"
+                                     id="thumbGalleryThumbs">
+                                    {% for image in images %}
+                                        <div>
+                                            <img alt="Property Detail"
+                                                 src="{{ asset('uploads/'~ advert.images ~ '/' ~ image) }}"
+                                                 class="img-fluid cur-pointer">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-5">
+
+                            <table class="table table-striped">
+                                <colgroup>
+                                    <col width="35%">
+                                    <col width="65%">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <td class="bg-color-primary text-light align-middle">
+                                        {{ 'front.price'|trans }}
+                                    </td>
+                                    <td class="text-4 font-weight-bold align-middle bg-color-primary text-light">
+                                        {% if advert.advertType.code == 'sell' %}
+                                            {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}
+                                        {% elseif advert.advertType.code == 'rent' %}
+                                            {% if advert.rentType == 'year' %}
+                                                {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.year'|trans }}
+                                            {% elseif advert.rentType == 'month' %}
+                                                {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.month'|trans }}
+                                            {% else %}
+                                                {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh.day'|trans }}
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ 'front.reference'|trans }}
+                                    </td>
+                                    <td>
+                                        #{{ advert.reference }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    {% if advert.address is not empty %}
+                                        <td>
+                                            {{ 'front.address'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ advert.address }}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ 'front.city'|trans }}
+                                    </td>
+                                    <td>
+                                        {{ advert.city.code|lower|trans }}
+                                    </td>
+                                </tr>
+                                {% if advert.age is not empty %}
+                                    <tr>
+                                        <td>
+                                            {{ 'front.age'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ ('front.age.'~advert.age)|trans }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
+                                {% if advert.rooms is not empty %}
+                                    <tr>
+                                        <td>
+                                            {{ 'front.rooms'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ advert.rooms }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if advert.bedrooms is not empty %}
+                                    <tr>
+                                        <td>
+                                            {{ 'front.bedrooms'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ ('front.bedrooms'~advert.bedrooms)|trans }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if advert.bathrooms is not empty %}
+                                    <tr>
+                                        <td>
+                                            {{ 'front.bathrooms'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ advert.bedrooms }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if advert.floor is not empty %}
+                                    <tr>
+                                        <td>
+                                            {{ 'front.floor'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ ('front.floor'~advert.floor)|trans }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if advert.advertType.code == 'rent' %}
+                                    {% if advert.capacity is not empty %}
+                                        <tr>
+                                            <td>
+                                                {{ 'front.capacity'|trans }}
+                                            </td>
+                                            <td>
+                                                {{ advert.capacity }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if advert.minNight is not empty %}
+                                        <tr>
+                                            <td>
+                                                {{ 'front.min_night'|trans }}
+                                            </td>
+                                            <td>
+                                                {{ advert.minNight }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+                            <h4 class="mt-3 mb-3">Description</h4>
+                            <p>{{ advert.description|nl2br }}</p>
+
+                            <hr class="solid my-5">
+
+                            <h4 class="mt-3 mb-3">{{ 'front.features'|trans }}</h4>
+
+                            <ul class="list list-icons list-secondary row m-0">
+                                {% for feature in features %}
+                                    <li class="col-sm-6 col-lg-4 {% if feature.id not in charIds %} custom-list-item-disabled {% endif %}"><i class="fas fa-check"></i> {{ feature.code|lower|trans }}</li>
+                                {% endfor %}
+                                <!--<li class="col-sm-6 col-lg-4"><i class="fas fa-check"></i> Air conditioning
+                                    <a href="#" data-plugin-tooltip data-toggle="tooltip" data-placement="top" title="+ Central Heating">
+                                        <i class="fas fa-info-circle"></i></a>
+
+                                        custom-list-item-disabled
+                                </li>-->
+
+                            </ul>
+
+                            <hr class="solid my-5">
+
+                            <h4 class="mt-3 mb-3" id="map"></h4>
+                            <input type="hidden" id="lat" value="{{ advert.latitude }}">
+                            <input type="hidden" id="long" value="{{ advert.longitude }}">
+                            <div id="mapContainer" class="google-map mb-0"></div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-3">
+                    <aside class="sidebar">
+                        <div class="agents text-color-light text-center" style="background: #0c525d;">
+                            <h4 class="text-light pt-5 m-0">{{ 'front.property.agent'|trans }}</h4>
+                            <div class="owl-carousel owl-theme nav-bottom rounded-nav pl-1 pr-1 pt-3 m-0"
+                                 data-plugin-options="{'items': 1, 'loop': false, 'dots': false, 'nav': true}">
+                                <div class="pr-2 pl-2">
+                                    <a href="#" class="text-decoration-none">
+												<span class="agent-thumb">
+													<img class="img-fluid rounded-circle"
+                                                         src="{{ asset('images/agents/' ~ advert.images ) }}"
+                                                         alt/>
+												</span>
+                                        <span class="agent-infos text-light pt-3 mb-4">
+													<strong class="text-uppercase font-weight-bold">{{ advert.member.firstName ~' '~ advert.member.lastName }}</strong>
+													<span class="font-weight-light">{{ advert.member.mobileNumber }}</span>
+													<span class="font-weight-light">{{ advert.member.email }}</span>
+												</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="pt-4 mb-3 text-color-dark">{{ 'front.request.information'|trans }}</h4>
+                        <p>{{ 'front.request.information.content'|trans }}</p>
+
+                        <form class="contact-form mb-4">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label>{{ 'front.fullname'|trans }} *</label>
+                                    <input type="text" id="name" value=""
+                                           maxlength="100" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label>{{ 'front.email'|trans }} *</label>
+                                    <input type="email" id="email" value="" data-msg-required="Please enter your email address."
+                                           data-msg-email="Please enter a valid email address." maxlength="100"
+                                           class="form-control" name="email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label>{{ 'front.subject'|trans }}</label>
+                                    <input type="text" id="subject" value=""
+                                           maxlength="100" class="form-control" name="subject" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label>{{ 'front.message'|trans }} *</label>
+                                    <textarea maxlength="5000" rows="6" id="message"
+                                              class="form-control" name="message" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <button type="button"
+                                           class="btn btn-secondary mb-lg-5"
+                                           data-loading-text="Loading..." id="request-info">{{ 'front.send'|trans }}</button>
+                                    {{ include('frontend/includes/include-ajax-loader.html.twig') }}
+                                    <div class="contact-form-success alert alert-success d-none">
+                                        {{ 'front.message.sent'|trans }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </aside>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ include('/frontend/static/search.html.twig') }}
+    <script type="text/javascript" src="http://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script type="text/javascript" src="http://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script type="text/javascript" src="http://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="http://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://js.hereapi.cn/v3/3.0/mapsjs-ui.css" />
+    <script type="text/javascript">
+
+        $('.phone_agent').on('click', function (e) {
+            let $tel = $(this).data('tel');
+            $(this).children('.ws-nowrap').html($tel);
+            e.preventDefault();
+        });
+
+        $('#request-info').on('click', function (e) {
+            let btn = $(this);
+            let name = $('#name').val();
+            let subject = $('#subject').val();
+            let email = $('#email').val();
+            let message = $('#message').val();
+            let advertId = '{{ advert.id }}';
+
+            let loader = $('.loader');
+            let successDiv = $('.contact-form-success');
+            successDiv.removeClass('d-none');
+            //loader.css('opacity', 1);
+            btn.prop('disabled', true);
+            $.ajax({
+                url: "{{ path('ajax_request_info') }}",
+                data: JSON.stringify({advertId: advertId, name: name, email: email, subject: subject, message: message}),
+                dataType: "json",
+                method : "POST",
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.code == 0){
+                        successDiv.show();
+                    }
+                },
+                error: function (a, b, c) {
+                    console.log(a, b, c);
+                },
+                complete:function () {
+                    loader.css('opacity', 0);
+                    btn.prop('disabled', false);
+                    setTimeout(function(){
+                        successDiv.addClass('d-none');
+                    }, 3000);
+                }
+            });
+
+            e.preventDefault();
+        });
+
+        $('#regions').on('change', function () {
+            let region = $(this).val();
+            let citySelect = $('#cities');
+            let cityDev = $('#city-list');
+            $.ajax({
+                url: "{{ path('ajax_get_city_of_region') }}",
+                data: JSON.stringify({region: region}),
+                dataType: "json",
+                method : "POST",
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.response.cities.length > 0){
+                        cityDev.show();
+                        citySelect.prop('disabled', false);
+                        citySelect.prop('required', true);
+                        citySelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
+                        $.each(data.response.cities, function ($i, $v) {
+                            citySelect.append('<option value="' + $v["id"] + '">' + $v["code"] + '</option>');
+                        });
+                    }
+
+                },
+                error: function (a, b, c) {
+                    console.log(a, b, c);
+                },
+                complete:function () {
+                }
+            });
+        });
+    </script>
+
+    <script>
+        var lat = $('#lat').val();
+        var long = $('#long').val();
+
+        // Initialize the platform object:
+        var platform = new H.service.Platform({
+            'apikey': 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
+        });
+
+        var maptypes = platform.createDefaultLayers();
+
+        // Instantiate (and display) a map object:
+        var map = new H.Map(
+            document.getElementById('mapContainer'),
+            maptypes.vector.normal.map,
+            {
+                zoom: 8,
+                center: { lng: long, lat: lat },
+                pixelRatio: window.devicePixelRatio || 1
+            }
+        );
+        window.addEventListener('resize', () => map.getViewPort().resize());
+
+        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+        // Create the default UI components
+        var ui = H.ui.UI.createDefault(map, maptypes, 'fr-FR');
+
+        //ui.getControl('zoom').setEnabled(fals
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+<script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.appear.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.cookie.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/common.min.js') }}"></script>
+
+<script src="{{ asset('js/jquery/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.easypiechart.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.gmap.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.lazyload.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.isotope.min.js') }}"></script>
+
+<script src="{{ asset('js/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.vide.min.js') }}"></script>
+<script src="{{ asset('js/vivus.min.js') }}"></script>
+
+<script src="{{ asset('js/theme.js') }}"></script>
+
+<script src="{{ asset('js/jquery/jquery.themepunch.tools.min.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.themepunch.revolution.min.js') }}"></script>
+
+<script src="{{ asset('js/real-estate.js') }}"></script>
+
+<script src="{{ asset('js/custom.js') }}"></script>
+
+<script src="{{ asset('js/theme.init.js') }}"></script>
+<script src="{{ asset('js/back/select2.min.js') }}"></script>
+<script src="{{ asset('js/back/bootstrap-multiselect.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+{% if app.request.locale == 'ar' %}
+    <script src="{{ asset('js/jquery/translate/messages_ar.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.ar.min.js') }}"></script>
+{% elseif app.request.locale == 'fr' %}
+    <script src="{{ asset('js/jquery/translate/messages_fr.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.fr.min.js') }}"></script>
+{% endif %}
+
+<script src="{{ asset('js/spinner.js') }}"></script>
+<script src="{{ asset('js/back/examples.advanced.form.js') }}"></script>
+<script src="{{ asset('js/intlTelInput-jquery.min.js') }}"></script>
+
+<script>
+    $('.email_agent').on('click', function (e) {
+        let $advertId = $(this).data('id');
+
+        $('#advertId').val($advertId);
+        $('.contact-form-title').html($('#advert-title-'+$advertId).text());
+        $('.contact-form-price').html($('#advert-price-'+$advertId).text());
+        $('.contact-form-agent-content').html($('#advert-agent-'+$advertId).text());
+        $('.contact-form-img').attr("src", $('#advert-img-'+$advertId).attr('src'));
+        $('.contact-form-content').val($('#advert-content-'+$advertId).text());
+        e.preventDefault();
+    });
+
+    $(".telephone").intlTelInput({
+        preferredCountries: [ "ma", "fr" ],
+        autoHideDialCode: true,
+        separateDialCode: true,
+        nationalMode: true,
+        setCountry: "ma",
+        utilsScript: "{{ asset('js/utils.js') }}"
+    });
+
+    $('#send-email-contact').on('click', function (e) {
+        let btn = $(this);
+        let indicative = $('.iti__selected-dial-code').text();
+        let tel = indicative+$('#telephone').val();
+        let message = $('#contact-message').val();
+        let email = $('#contact-email').val();
+        let name = $('#contact-name').val();
+        let advertId = $('#advertId').val();
+
+        let errorsDiv = $('#errors_div');
+        let successDiv = $('#success_div');
+        let loader = $('.loader');
+
+        loader.css('opacity', 1);
+        btn.prop('disabled', true);
+        $.ajax({
+            url: "{{ path('ajax_contact_agent') }}",
+            data: JSON.stringify({email: email, tel: tel, fullName: name, message: message, advertId: advertId}),
+            dataType: "json",
+            method : "POST",
+            contentType: 'application/json',
+            success: function (data) {
+                if(data.code == '0'){
+                    successDiv.show();
+                    successDiv.html(' ');
+                    successDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                    setTimeout(function(){
+                        $('#email_agent').modal('hide');
+                        successDiv.hide();
+                    }, 4000);
+                }
+                else if (data.code == '-1'){
+                    errorsDiv.show();
+                    errorsDiv.html(' ');
+                    errorsDiv.append("<p class='m-0'>"+data.response.message+"</p>");
+                    setTimeout(function(){
+                        errorsDiv.hide();
+                    }, 3000);
+                }
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            },
+            complete:function () {
+                loader.css('opacity', 0);
+                btn.prop('disabled', false);
+            }
+        });
+
+        e.preventDefault();
+    });
+
+</script>
