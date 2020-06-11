@@ -147,17 +147,17 @@ class AdvertsRepository extends ServiceEntityRepository
         if (count($rooms) > 0 && is_array($rooms)){
             //var_dump($rooms);die();
             if (!in_array(5, $rooms)){
-                $query->andwhere('(a.rooms IN (:bathrooms))')->setParameter('bathrooms', $rooms);
+                $query->andwhere('(a.bedrooms IN (:rooms))')->setParameter('rooms', $rooms);
             }else{
-                $query->andwhere('(a.rooms IN (:bathrooms)) OR a.rooms >= :minBathrooms')->setParameter('rooms', $rooms)->setParameter('minBathrooms', 5);
+                $query->andwhere('(a.bedrooms IN (:rooms)) OR a.bedrooms >= :minRooms')->setParameter('rooms', $rooms)->setParameter('minRooms', 5);
             }
         }
         if (count($bathrooms) > 0 && is_array($bathrooms)){
             //var_dump($rooms);die();
             if (!in_array(5, $bathrooms)){
-                $query->andwhere('(a.rooms IN (:rooms))')->setParameter('rooms', $bathrooms);
+                $query->andwhere('(a.bathrooms IN (:bathrooms))')->setParameter('bathrooms', $bathrooms);
             }else{
-                $query->andwhere('(a.rooms IN (:rooms)) OR a.rooms >= :minRooms')->setParameter('rooms', $bathrooms)->setParameter('minRooms', 5);
+                $query->andwhere('(a.bathrooms IN (:bathrooms)) OR a.rooms >= :minBathrooms')->setParameter('rooms', $bathrooms)->setParameter('minBathrooms', 5);
             }
         }
         if (count($floors) > 0 && is_array($floors)){
@@ -240,17 +240,17 @@ class AdvertsRepository extends ServiceEntityRepository
         if (count($rooms) > 0 && is_array($rooms)){
             //var_dump($rooms);die();
             if (!in_array(5, $rooms)){
-                $query->andwhere('(a.rooms IN (:rooms))')->setParameter('rooms', $rooms);
+                $query->andwhere('(a.bedrooms IN (:rooms))')->setParameter('rooms', $rooms);
             }else{
-                $query->andwhere('(a.rooms IN (:rooms)) OR a.rooms >= :minRooms')->setParameter('rooms', $rooms)->setParameter('minRooms', 5);
+                $query->andwhere('(a.bedrooms IN (:rooms)) OR a.bedrooms >= :minRooms')->setParameter('rooms', $rooms)->setParameter('minRooms', 5);
             }
         }
         if (count($bathrooms) > 0 && is_array($bathrooms)){
             //var_dump($rooms);die();
             if (!in_array(5, $bathrooms)){
-                $query->andwhere('(a.rooms IN (:rooms))')->setParameter('rooms', $bathrooms);
+                $query->andwhere('(a.bathrooms IN (:bathrooms))')->setParameter('bathrooms', $bathrooms);
             }else{
-                $query->andwhere('(a.rooms IN (:rooms)) OR a.rooms >= :minRooms')->setParameter('rooms', $bathrooms)->setParameter('minRooms', 5);
+                $query->andwhere('(a.bathrooms IN (:bathrooms)) OR a.rooms >= :minBathrooms')->setParameter('rooms', $bathrooms)->setParameter('minBathrooms', 5);
             }
         }
         if (count($floors) > 0 && is_array($floors)){

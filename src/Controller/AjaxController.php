@@ -88,7 +88,6 @@ class AjaxController extends AbstractController
         $url = $this->generateUrl('front_security_password_reset', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
         exec("php ../bin/console app:send-front-email --subject=resetPassword --email=".$members->getEmail()." --url=$url --lang=".$request->getLocale()." >> ../var/log/email.log&");
-
         $response["code"] = 0;
         $response["response"] = ["message"=> $this->trans->trans('front.password.reset.email')];
         return new Response(json_encode($response));

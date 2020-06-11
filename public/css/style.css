@@ -1,6 +1,29 @@
 .search-estate{
     background-color: #413c46;
 }
+.home .advert{
+    height: 490px;
+}
+.thumb-info-inner.title{
+    height: 50px;
+    overflow: auto;
+}
+.wishlist-icon{
+    color: white;
+    position: absolute !important;
+    right: 10px;
+    top: 6px;
+    left: auto !important;
+    font-size: 26px;
+    padding: 5px;
+}
+.wishlist-icon i{
+    color: #d01212;
+}
+
+#tel-error{
+    position: absolute;
+}
 .page-header-background:before{
     opacity: 0.3 !important;
 }
@@ -918,15 +941,15 @@ html.dark .wizard-progress .wizard-steps li a span {
 
 html .wizard-progress .wizard-steps li.completed a span,
 html.dark .wizard-progress .wizard-steps li.completed a span {
-    border-color: #0088cc;
-    background: #0088cc;
+    border-color: #d01212;
+    background: #d01212;
 }
 
 html .wizard-progress .wizard-steps li.active a span,
 html.dark .wizard-progress .wizard-steps li.active a span {
     background: #FFF;
-    color: #0088cc;
-    border-color: #0088cc;
+    color: #d01212;
+    border-color: #d01212;
 }
 
 html .wizard-progress.wizard-progress-lg,
@@ -1151,7 +1174,7 @@ html.dark .form-wizard .pager .disabled > a, html.dark .form-wizard .pager .disa
     display: none !important;
 }
 html .wizard-progress .steps-progress .progress-indicator, html.dark .wizard-progress .steps-progress .progress-indicator{
-    background: #0088cc;
+    background: #d01212;
 }
 .radio-custom{
     position: relative;

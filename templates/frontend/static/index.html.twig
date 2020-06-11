@@ -34,7 +34,7 @@
                          data-total-pages="2">
 
                         {% for advert in adverts %}
-                        <div class="col-md-6 col-lg-6 col-sm-12 p-3 isotope-item">
+                        <div class="col-md-6 col-lg-6 col-sm-12 p-3 isotope-item home">
                             <div class="listing-item">
                                 <a href="{{ path('front_advert_single', {id: advert.id}) }}" class="text-decoration-none">
                                     <div class="thumb-info thumb-info-lighten border advert">
@@ -44,6 +44,9 @@
                                                  class="img-fluid" alt="{{ advert.title }}" id="advert-img-{{ advert.id }}">
                                             <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3">
                                                 {{ advert.advertType.code|trans }}
+                                            </div>
+                                            <div class="thumb-info-listing-type wishlist-icon">
+                                                <i class="far fa-heart" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                         <div class="thumb-info-price bg-color-dark text-color-light text-4 p-2 pl-4 pr-4" id="advert-price-{{ advert.id }}">
@@ -187,10 +190,10 @@
                                         {% for member in members %}
 
                                             <div class="pr-2 pl-2">
-                                                <a href="demo-real-estate-agents-detail.html" class="text-decoration-none">
+                                                <a href="#" class="text-decoration-none">
 														<span class="agent-thumb">
 															<img class="img-fluid rounded-circle"
-                                                                 src="../../../public/img/team/team-11.jpg" alt/>
+                                                                 src="{{ asset('uploads/members/'~member.image) }}" alt/>
 														</span>
                                                     <span class="agent-infos text-light pt-3 mb-2">
 															<strong class="text-uppercase font-weight-bold">{{ member.firstName ~' '~ member.lastName }}</strong>
@@ -251,5 +254,20 @@
             $(this).children('.ws-nowrap').html($tel);
             e.preventDefault();
         });
+
+        $('.wishlist-icon').on('click', function (e) {
+            let $div = $(this);
+            let $icon = $div.find('i');
+
+            if ($icon.hasClass('fas fa-heart')){
+                $icon.removeClass('fas fa-heart');
+                $icon.addClass('far fa-heart');
+            } else if ($icon.hasClass('far fa-heart')) {
+                $icon.removeClass('far fa-heart');
+                $icon.addClass('fas fa-heart');
+            }
+            e.preventDefault();
+
+        })
     </script>
 {% endblock %}
