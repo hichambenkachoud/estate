@@ -49,7 +49,7 @@
                                             id="estate-type">
                                             <option value="">{{ 'front.estates.type'|trans }}</option>
                                         {% for estateType in estateTypes %}
-                                            <option value="{{ estateType.id }}" {% if app.request.get('estateType') == estateType.id %} selected="selected" {% endif %}>{{ estateType.code|lower|trans }}</option>
+                                            <option value="{{ estateType.id }}" data-code="{{ estateType.code }}" {% if app.request.get('estateType') == estateType.id %} selected="selected" {% endif %}>{{ estateType.code|lower|trans }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -502,7 +502,7 @@
                                     <span>{{ 'front.advert.characteristic'|trans }}</span>
                                     <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
                                         {% for char in chars %}
-                                        <li>
+                                        <li id="{{ char.code|lower }}" style="display: none;">
                                             <label class="input-checkbox"> <input type="checkbox" name="chars[]" id="char_{{ char.id }}" class="get-sorted" value="{{ char.id }}"
                                                         {% if char.id in app.request.get('chars') %} checked {% endif %}>
                                                 <span><span>{{ char.code|trans }}</span></span>

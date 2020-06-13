@@ -35,7 +35,7 @@
                                             id="estate-type">
                                         <option value="">{{ 'front.estates.type'|trans }}</option>
                                         {% for estateType in estateTypes %}
-                                            <option value="{{ estateType.id }}">{{ estateType.code|lower|trans }}</option>
+                                            <option value="{{ estateType.id }}" data-code="{{ estateType.code }}">{{ estateType.code|lower|trans }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
