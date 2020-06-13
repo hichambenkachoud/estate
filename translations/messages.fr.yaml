@@ -566,7 +566,7 @@ air_conditioner: Climatisation
 heating: Chauffage
 security_camera: Caméra de sécurité
 door: Double porte
-fridge_appliance: Appareil frigo
+fridge_appliance: Cuisine équipée
 oven: Four
 tv: La télé
 washing_machine: Machine à laver
@@ -576,3 +576,16 @@ search.result: Résultat de Recherche
 advert.found: Une propriété trouvé
 adverts.found: Propriétés trouvés
 advert.none: Aucune propriété trouvé
+urbain: En zone urbaine
+agricole: En zone agricole
+tourbain: En zone à urbaniser
+montagne: En montagne
+comercial: Commercial
+route: Accès sur route.
+puits: Puits
+emplacement: Bien situé
+boulevard: Sur grand boulevard
+coproprie: En copropriété
+charge: Monte charge
+alarm: Système d'alarme
+lotissement: En lotissement

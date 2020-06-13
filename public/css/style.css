@@ -5,7 +5,7 @@
     height: 490px;
 }
 .thumb-info-inner.title{
-    height: 50px;
+    height: 54px;
     overflow: auto;
 }
 .wishlist-icon{
@@ -694,6 +694,10 @@
 
     .pagination.justify-content-center{
         margin-top: 0;
+    }
+
+    .phone_agent, .email_agent{
+        width: 50%;
     }
 }
 

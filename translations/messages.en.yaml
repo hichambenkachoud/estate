@@ -565,7 +565,7 @@ air_conditioner: Air-Conditioner
 heating: Heating
 security_camera: Security camera
 door: Double door
-fridge_appliance: Fridge Appliance
+fridge_appliance: Equipped kitchen
 oven: Oven
 tv: TV
 washing_machine: Washing machine
@@ -575,3 +575,16 @@ search.result: Résultat de Recherche
 advert.found: One property found
 adverts.found: Proprties found
 advert.none: No properties found
+urbain: In urban areas
+agricole: In agricultural area
+tourbain: In an area to be urbanized
+montagne: In the mountains
+comercial: Commercial
+route: Road access
+puits: Puits
+emplacement: Well located
+boulevard: On the main boulevard
+coproprie: In co-ownership
+charge: Freight elevator
+alarm: Alarm system
+lotissement: In subdivision

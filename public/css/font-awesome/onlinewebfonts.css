@@ -10,10 +10,10 @@
 	font-family: "onlinewebfonts";
 	src:url("onlinewebfonts.eot");
 	src:url("onlinewebfonts.eot?#iefix") format("embedded-opentype"),
-		url("onlinewebfonts.woff2") format("woff2"),
-		url("onlinewebfonts.woff") format("woff"),
-		url("onlinewebfonts.ttf") format("truetype"),
-		url("onlinewebfonts.svg#onlinewebfonts") format("svg");
+	url("onlinewebfonts.woff2") format("woff2"),
+	url("onlinewebfonts.woff") format("woff"),
+	url("onlinewebfonts.ttf") format("truetype"),
+	url("onlinewebfonts.svg#onlinewebfonts") format("svg");
 	font-weight: normal;
 	font-style: normal;
 }
@@ -27,74 +27,119 @@
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 }
-.i_garden:before {
-	content: "\e010";
-}
-.i_garage:before {
+
+.i_in:before {
 	content: "\e011";
 }
-.i_x_terrace:before {
+.i_independent_stall:before {
 	content: "\e012";
 }
-.i_elevator:before {
+.i_area:before {
 	content: "\e013";
 }
-.i_sea:before {
+.i_agricultural:before {
 	content: "\e014";
 }
-.i_mountainside:before {
+.i_urban:before {
 	content: "\e015";
 }
-.i_pool:before {
+.i_to:before {
 	content: "\e016";
 }
-.i_concierge:before {
+.i_mountains:before {
 	content: "\e017";
 }
-.i_storage:before {
+.i_commercial:before {
 	content: "\e018";
 }
-.i_executive_lounge:before {
+.i_road:before {
 	content: "\e019";
 }
-.i_parabolic_antenna:before {
+.i_well:before {
 	content: "\e01a";
 }
-.i_fireplace:before {
+.i_geolocated_place:before {
 	content: "\e01b";
 }
-.i_air_conditioner:before {
+.i_highway_road:before {
 	content: "\e01c";
 }
-.i_heating:before {
+.i_co:before {
 	content: "\e01d";
 }
-.i_security_camera:before {
+.i_elevator_2:before {
 	content: "\e01e";
 }
-.i_door:before {
+.i_elevator:before {
+	content: "\e01e";
+}
+.i_garden:before {
 	content: "\e01f";
 }
-.i_fridge_appliance:before {
+.i_garage:before {
 	content: "\e020";
 }
-.i_oven:before {
+.i_x_terrace:before {
 	content: "\e021";
 }
-.i_tv:before {
+.i_elevator_19:before {
 	content: "\e022";
 }
-.i_washing_machine:before {
+.i_sea:before {
 	content: "\e023";
 }
-.i_microwave:before {
+.i_mountainside:before {
 	content: "\e024";
 }
-.i_internet:before {
+.i_pool:before {
 	content: "\e025";
 }
-
+.i_concierge:before {
+	content: "\e026";
+}
+.i_storage:before {
+	content: "\e027";
+}
+.i_executive_lounge:before {
+	content: "\e028";
+}
+.i_parabolic_antenna:before {
+	content: "\e029";
+}
+.i_fireplace:before {
+	content: "\e02a";
+}
+.i_air_conditioner:before {
+	content: "\e02b";
+}
+.i_heating:before {
+	content: "\e02c";
+}
+.i_security_camera:before {
+	content: "\e02d";
+}
+.i_door:before {
+	content: "\e02e";
+}
+.i_fridge_appliance:before {
+	content: "\e02f";
+}
+.i_oven:before {
+	content: "\e030";
+}
+.i_washing_machine:before {
+	content: "\e031";
+}
+.i_tv:before {
+	content: "\e032";
+}
+.i_microwave:before {
+	content: "\e033";
+}
+.i_internet:before {
+	content: "\e034";
+}
 .i_antique_balcony:before {
-	content: "\e012";
+	content: "\e035";
 }
 

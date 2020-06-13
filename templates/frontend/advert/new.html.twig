@@ -86,7 +86,7 @@
                                                     </div>
                                                     {% for i, estateType in estateTypes %}
                                                         <div class="col-md-6 col-6">
-                                                            <input type="radio" id="adverts_estateType_{{ estateType.id  }}" name="adverts[estateType]" value="{{ estateType.id }}" required {% if i==0 %}checked{% endif %}>
+                                                            <input type="radio" class="estateType" id="adverts_estateType_{{ estateType.id  }}" name="adverts[estateType]" data-code="{{ estateType.code|lower }}" value="{{ estateType.id }}" required {% if i==0 %}checked{% endif %}>
                                                             <label for="adverts_estateType_{{ estateType.id  }}">{{ estateType.code|lower|trans  }}</label>
                                                         </div>
                                                     {% endfor %}
@@ -299,7 +299,7 @@
                                             <div class="card-body">
                                                 <div class="form-group row">
                                                     {% for character in characteristics %}
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-3" id="{{ character.code|lower }}" style="display: none;">
                                                             <a class="chooseIcon">
                                                                 <div class="estate-icon-show">
                                                                     <i class="{{ character.icon }} estate-icon" style="text-align: center; font-size: 30px"></i>
@@ -699,6 +699,92 @@
                     }
                 });
             }
+
+
+            /*   characteristics */
+
+            let $apartment = "#air_conditioner, #balcon, #concierge, #door, #heating, #elevator, #fireplace, #fridge_appliance, #garage, #internet, #microwave, #parabolic_antenna, #sea, #security_camera, #storage, #terrace, #washing_machine, #tv";
+            let $house = "#air_conditioner, #balcon, #mountainside, #elevator, #heating, #fireplace, #fridge_appliance, #garage, #garden, #internet, #parabolic_antenna, #sea, #security_camera, #terrace";
+            let $office = "#air_conditioner, #elevator, #fireplace, #garage,  #heating, #internet, #parabolic_antenna, #security_camera, #concierge";
+            let $villa = "#air_conditioner, #pool, #fireplace, #garage, #puits, #mountainside, #heating, #parabolic_antenna, #security_camera, #terrace, #garden";
+            let $terrain = "#agricole, #commercial, #lotissement, #montagne, #route, #sea, #tourbain, #urbain, #terrace, #garden";
+            let $commercial = "#emplacement, #boulevard, #coproprie, #garage, #security_camera, #route, #alarm, #charge, #air_conditioner, #heating";
+
+
+            let $type = $('.estateType').data('code');
+
+            if ($type == 'apartment'){
+                $($apartment).show();
+            }else if ($type == 'office') {
+                $($office).show();
+            }else if ($type == 'house'){
+                $($house).show();
+            }else if ($type == 'villa'){
+                $($villa).show();
+            }else if ($type == 'terrain'){
+                $($terrain).show();
+            }else if ($type == 'commercial'){
+                $($commercial).show();
+            }else{
+                $($apartment).show();
+            }
+
+            $('.estateType').on('change', function () {
+               let $type = $(this).data('code');
+
+               if ($type == 'apartment'){
+                   $($house).hide();
+                   $($office).hide();
+                   $($villa).hide();
+                   $($terrain).hide();
+                   $($commercial).hide();
+                   $($apartment).show();
+               }else if ($type == 'office') {
+                   $($house).hide();
+                   $($villa).hide();
+                   $($terrain).hide();
+                   $($commercial).hide();
+                   $($apartment).hide();
+                   $($office).show();
+               }else if ($type == 'house'){
+                   $($villa).hide();
+                   $($commercial).hide();
+                   $($terrain).hide();
+                   $($apartment).hide();
+                   $($office).hide();
+                   $($house).show();
+               }else if ($type == 'villa'){
+                   $($terrain).hide();
+                   $($apartment).hide();
+                   $($commercial).hide();
+                   $($office).hide();
+                   $($house).hide();
+                   $($villa).show();
+               }else if ($type == 'terrain'){
+                   $($apartment).hide();
+                   $($office).hide();
+                   $($commercial).hide();
+                   $($house).hide();
+                   $($villa).hide();
+                   $($terrain).show();
+               }else if ($type == 'commercial'){
+                   $($house).hide();
+                   $($office).hide();
+                   $($villa).hide();
+                   $($terrain).hide();
+                   $($apartment).hide();
+                   $($commercial).show();
+               }else{
+                   $($commercial).hide();
+                   $($house).hide();
+                   $($office).hide();
+                   $($villa).hide();
+                   $($terrain).hide();
+                   $($apartment).show();
+               }
+
+               //alert($type);
+            });
         });
     </script>
 {% endblock %}

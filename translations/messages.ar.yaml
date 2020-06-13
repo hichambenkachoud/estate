@@ -415,7 +415,7 @@ air_conditioner: مكيف هواء
 heating: تدفئة
 security_camera: كاميرا الأمن
 door: باب مزدوج
-fridge_appliance: جهاز الثلاجة
+fridge_appliance: مطبخ مجهز
 oven: فرن
 tv: تلفزيون
 washing_machine: غسالة
@@ -425,3 +425,16 @@ search.result: نتيجة البحث
 advert.found:  عقار واحد
 adverts.found: عقارات
 advert.none: لم يتم العثور على اي عقار
+urbain: في المناطق الحضرية
+agricole: في المجال الزراعي
+tourbain: في المنطقة التي سيتم تحضرها
+montagne: في الجبل
+comercial: تجاري
+route: الوصول إلى الطريق
+puits: بئر ماء
+emplacement: موقع جيد
+boulevard: في الجادة الرئيسية
+coproprie: في الملكية المشتركة
+charge: مصعد الشحن
+alarm: نظام إنذار
+lotissement: في التقسيم
