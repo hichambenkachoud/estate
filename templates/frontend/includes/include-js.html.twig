@@ -43,6 +43,13 @@
 <script src="{{ asset('js/back/examples.advanced.form.js') }}"></script>
 <script src="{{ asset('js/intlTelInput-jquery.min.js') }}"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.properties-listing').css('height', 'auto');
+    });
+</script>
+
+
 <script>
     $('.email_agent').on('click', function (e) {
         let $advertId = $(this).data('id');
