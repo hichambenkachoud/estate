@@ -36,7 +36,7 @@
                             <th>{{ 'admin.code' | trans }}</th>
                             <th>{{ 'admin.name' | trans }}</th>
                             <th>{{ 'admin.status' | trans }}</th>
-                            <th>{{ 'admin.province' | trans }}</th>
+                            <th>{{ 'admin.city' | trans }}</th>
                             <th>{{ 'admin.create_date' | trans }}</th>
                             <th>{{ 'admin.actions' | trans }}</th>
                         </tr>
@@ -47,7 +47,7 @@
                                 <td>{{ quartier.code }}</td>
                                 <td>{{ quartier.name }}</td>
                                 <td>{{ quartier.enabled ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>' }}</td>
-                                <td>{{ quartier.province.name }}</td>
+                                <td>{{ quartier.city.name }}</td>
                                 <td>{{ quartier.createDate ? quartier.createDate|date('Y-m-d H:i:s') : '' }}</td>
                                 <td>
                                     <a href="{{ path('quartier_show', {'id': quartier.id}) }}"><i class="fas fa-eye"></i></a>

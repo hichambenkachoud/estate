@@ -86,6 +86,8 @@ front:
   price: الثمن
   rooms: القطع
   bedrooms: الغرف
+  bedroom: غرفة
+  bathroom: حمام
   bathrooms: الحمامات
   bathrooms1: حمام واحد
   bathrooms2: حمامين
@@ -146,6 +148,7 @@ front:
   advert.contact: اتصل بالمعلن
   address: العنوان
   advert.add.success: تم حفظ الإعلان ، يرجى الانتظار للتأكيد من المسؤول
+  advert.update.success: تم حفظ الإعلان
   contact: معلومات الاتصال
   bedrooms.min:  غرف نوم من
   bedrooms.max: غرف نوم إلى
@@ -264,10 +267,18 @@ front:
   contact_agency: اتصل بالوكالة
   agency.contact.success: تم إرسال رسالتك إلى الوكالة
   agency.not-available: الوكالة لم تعد متاحة
+  no_result: ليس لدينا اي عقار في الوقت الحالي يطابق بحثك
+  rent.time: وقت الإيجار
+  rent.holiday: تأجير خاص بالعطل
+  estate.neuf: عقار جديد
+  neuf: جديد
+  my_adverts: إعلاناتي
+  wish.list: الإعلانات المسجلة
 
 
 
-
+yes: نعم
+no: لا
 sell: للبيع
 rent: للإيجار
 apartment: شقة
@@ -287,117 +298,6 @@ good-condition: بحالة جيدة
 furnished: مفروش
 unfurnished: غير مفروش
 partially-furnished: مفروش جزئيا
-
-tanger: طنجة
-assilah: أصيلة
-mdiq: المضيق
-fnideq: الفنيدق
-tetouan: تطوان
-fahs: فحص
-anjra: أنجرا
-larache: العرائش
-alhoceïma: الحسيمة
-chefchaouen: شفشاون
-ouezzane: وزان
-
-oujda: وجدة
-angad: أنجاد
-nador: أنجاد
-driouch: دريوش
-jerada: جرادة
-berkane: بركان
-taourirt: تاوريرت
-guercif: جرسيف
-figuig: فكيك
-
-fes: فاس
-meknes: مكناس
-taza: تازة
-elhajeb: الحاجب
-ifrane: إفران
-moulay-yaacoub: مولاي يعقوب
-sefrou: صفرو
-boulemane: بولمان
-taounate: تاونات
-
-rabat: الرباط
-sale: سلا
-skhirate: الصخيرات
-temara: تمارة
-kenitra: القنيطرة
-khemisset: الخميسات
-sidi-kacem: سيدي قاسم
-sidi-slimane: سيدي سليمان
-
-beni-mellal: بني ملال
-azilal: أزيلال
-fquih-ben-salah: فقيه بن صلاح
-khenifra: خنيفرة
-khouribga: خريبكة
-
-casablanca: الدار البيضاء
-mohammedia: المحمدية
-el-jadida: الجديدة
-nouaceur: النواصر
-mediouna: مديونة
-benslimane: بن سليمان
-berrechid: برشيد
-settat: سطات
-sidi-bennour: سيدي بنور
-
-marrakech: مراكش
-chichaoua: شيشاوة
-elhaouz: الحوز
-Sraghna: قلعة السراغنة
-essaouira: الصويرة
-rehamna: رحامنا
-safi: اسفي
-youssoufia: اليوسفية
-
-errachidia: الرشيدية
-ouarzazate: ورزازات
-midelt: ميدلت
-tinghir: تنغير
-zagora: زاكورة
-
-agadir: أكادير
-ida-outanane: إيدا أوتنان
-ait-melloul: آيت ملول
-inezgane: إنزكان
-ait-baha: آيت بها
-chtouka: شتوكة
-taroudant: تارودانت
-tiznit: تزنيت
-tata: طاطا
-
-guelmim: كلميم
-assa-zag: آسا زاك
-tan-tan: طان طان
-sidi-ifni: سيدي إفني
-
-laayoune: العيون
-boujdour: بوجدور
-tarfaya: طرفاية
-es-semara: السمارة
-
-oued-ed-dahab: واد الذهب
-aousserd: أوسرد
-dakhla: الداخلة
-Llgouira: لكويرة
-
-casablanca-settat: الدار البيضاء-سطات
-tanger-tetouan-hoceima: طنجة - تطوان - الحسيمة
-oriental: شرقي
-fes-meknes: فاس-مكناس
-rabat-sale-kenitra: الرباط-سلا-القنيطرة
-benimellal-khenifra: بني ملال - خنيفرة
-marrakech-safi:  	مراكش-آسفي
-draa-tafilalet: درعة-تافيلالت
-souss-massa:  	سوس ماسة
-guelmim-ouednoun: كلميم-واد نون
-laayoune-sakia-elhamra: العيون الساقية-الحمراء
-dakhla-oued-eddahab: الداخلة-وادي الذهب
-
 properties: عقارات
 
 garage: مرآب
@@ -459,3 +359,348 @@ materiel: المواد / المعدات
 meuble: مفروشة
 hammam: الحمام
 pergola: العريشة
+
+tanger: طنجة
+assilah: أصيلة
+mdiq: المضيق
+fnideq: الفنيدق
+tetouan: تطوان
+fahs: فحص
+anjra: أنجرا
+larache: العرائش
+alhoceïma: الحسيمة
+al-hoceima: الحسيمة
+chefchaouen: شفشاون
+ouezzane: وزان
+oujda: وجدة
+angad: أنجاد
+nador: أنجاد
+driouch: دريوش
+jerada: جرادة
+berkane: بركان
+taourirt: تاوريرت
+guercif: جرسيف
+figuig: فكيك
+fes: فاس
+meknes: مكناس
+taza: تازة
+elhajeb: الحاجب
+ifrane: إفران
+moulay-yaacoub: مولاي يعقوب
+sefrou: صفرو
+boulemane: بولمان
+taounate: تاونات
+rabat: الرباط
+sale: سلا
+skhirate: الصخيرات
+temara: تمارة
+kenitra: القنيطرة
+khemisset: الخميسات
+sidi-kacem: سيدي قاسم
+sidi-slimane: سيدي سليمان
+beni-mellal: بني ملال
+azilal: أزيلال
+fquih-ben-salah: فقيه بن صلاح
+khenifra: خنيفرة
+khouribga: خريبكة
+casablanca: الدار البيضاء
+mohammedia: المحمدية
+el-jadida: الجديدة
+nouaceur: النواصر
+mediouna: مديونة
+benslimane: بن سليمان
+berrechid: برشيد
+settat: سطات
+sidi-bennour: سيدي بنور
+marrakech: مراكش
+chichaoua: شيشاوة
+elhaouz: الحوز
+Sraghna: قلعة السراغنة
+essaouira: الصويرة
+rehamna: رحامنا
+safi: اسفي
+youssoufia: اليوسفية
+errachidia: الرشيدية
+ouarzazate: ورزازات
+midelt: ميدلت
+tinghir: تنغير
+zagora: زاكورة
+agadir: أكادير
+ida-outanane: إيدا أوتنان
+ait-melloul: آيت ملول
+inezgane: إنزكان
+ait-baha: آيت بها
+chtouka: شتوكة
+taroudant: تارودانت
+tiznit: تزنيت
+tata: طاطا
+guelmim: كلميم
+assa-zag: آسا زاك
+tan-tan: طان طان
+sidi-ifni: سيدي إفني
+laayoune: العيون
+boujdour: بوجدور
+tarfaya: طرفاية
+es-semara: السمارة
+oued-ed-dahab: واد الذهب
+aousserd: أوسرد
+dakhla: الداخلة
+Llgouira: لكويرة
+casablanca-settat: الدار البيضاء-سطات
+tanger-tetouan-hoceima: طنجة - تطوان - الحسيمة
+oriental: شرقي
+fes-meknes: فاس-مكناس
+rabat-sale-kenitra: الرباط-سلا-القنيطرة
+benimellal-khenifra: بني ملال - خنيفرة
+marrakech-safi:  	مراكش-آسفي
+draa-tafilalet: درعة-تافيلالت
+souss-massa:  	سوس ماسة
+guelmim-ouednoun: كلميم-واد نون
+laayoune-sakia-elhamra: العيون الساقية-الحمراء
+dakhla-oued-eddahab: الداخلة-وادي الذهب
+
+ouazzane: وزان
+fahs-anjra: فحص-أنجرا
+al-hoceïma: الحسيمة
+mdiq-fnideq: المضيق-الفنيدق
+tanger-asilah: طنجة-أصيلة
+berkan: بركان
+oujda-angad: وجدة-أنجاد
+skhirat-temara: الصخيرات - تمارة
+sidi-sliman: سيدي سليمان
+khouribga​: خريبكة
+al-haouz: الحوز
+el-kelaa-des-sraghna: القلعة السراغنة
+zagora​: زاكورة
+chtouka-ait-baha: شتوكة آيت باها
+agadir-ida-outanane: أكادير إدا أوتنان
+inezgane-ait-melloul: إنزكان-آيت ملول
+es-semara​: السمارة
+boujdour​​: بوجدور
+allyene: عليين
+cabo-negro: كابو نيغرو
+msick: مسيك
+martil: مرتيل
+aquouass-briech: أقواس بريش
+asilah: أصيلة
+azzinate: عزة
+boukhalef: بوخالف
+gueznaia: ڭزناية
+boufkrane: بوفكران
+dkhissa: دخيسا
+mhaya: المهاية
+moulay-driss-zerhoun: مولاي ادريس زرهون
+mrhassiyine: مرسيسين
+oued-jdida: واد جديدة
+ain-bida: عين بيدا
+mechouar-fes-jdid: مشوار فاس جديد
+oulad-tayeb: أولاد طيب
+sidi-harazem: سيدي حرازم
+skhinate: السخينات
+Arbaoua: عرباوة
+mehdia: المهدية
+moulay-bousselham: مولاي بوسلهام
+sidi-taibi: سيدي طيبي
+souk-tlet-el-gharb: سوق تلة الغرب
+agdal-riyad: أكدال الرياض
+el-youssoufia: اليوسفية
+hassan: حسان
+souissi: السويسي
+touarga: طوارقة
+yacoub-el-mansour: يعقوب المنصور
+sidi-bouknadel: سيدي بوقنادل
+ain-aouda: عين عودة
+ain-attig: عين عتيق
+el-menzeh: المنزه
+harhoura: هرهورة
+mers-el-kheir: البحار الخير
+sabbah: صباح
+skhirat: الصخيرات
+tamesna: تامسنا
+bouskoura: بوسكورة
+dar-bouazza: دار بوعزة
+errahma: الرحمة
+oulad-salah: ولاد صلاح
+al-fida: الفداء
+anfa: أنفا
+ain-chock: عين الشق
+ain-sebaa: عين السبع
+ben-msick: بن مسيك
+bernoussi: برنوصي
+hay-hassani: حي الحسني
+hay-mohammadi: حي محمدي
+maarif: المعاريف
+mers-sultan: البحار سلطان
+moulay-rachid: مولاي رشيد
+roches-noires: روش نوار
+sbata: سباتة
+sidi-belyout: سيدي بليوط
+sidi-moumen: سيدي مومن
+sidi-othmane: سيدي عثمان
+ain-harrouda: عين حرودة
+beni-yakhlef: بني يخلف
+chellalate: شالات
+sidi-moussa-ben-ali: سيدي موسى بن علي
+sidi-moussa-el-majdoub: سيدي موسى المجدوب
+Zenata: زناتة
+deroua: الدروة
+el-gara: الجارة
+had-soualem: كان سوالم
+lakhiaita: الخيايطة
+oulad-abbou: أولاد عبو
+oulad-zidane: أولاد زيدان
+sahel-oulad-hriz: سهل ولاد حريز
+sidi-rahal: سيدي رحال
+sidi-rahal-chatai: سيدي رحال شاتي
+had-dra: حد درعا
+mouarid: موارد
+agafay: تمزكدة أوفتاس
+ait-imour: آيت إيمور
+alouidane: الويدان
+harbil: هاربيل
+kattara: قطارة
+loudaya: الوداية
+ouahat-sidi-brahim: واحة سيدي ابراهيم
+oulad-hassoune: ولاد حسون
+saada: صعدة
+sid-zouine: سيد زوين
+tassoultante: تاسلطانت
+aourir: أورير
+drargua: درارجا
+imouzzer: إيموزار
+imsouane: إمسوان
+taghazout: تغازوت
+Tamri: تمري
+bni-makada: بني مكادا
+charf-mghougha: مغاغة الشريف
+charf-souani: شرف صواني
+tanger-medina: مدينة طنجة
+fes-medina: مدينة فاس
+jnane-el-ouard: جنان الورد
+les-merinides: المرينيديس
+mechouar-fes-el-jadid: مشور فاس الجديد
+saiss: صايس
+zouagha: زواغة
+agdal: أكدال
+al-irfane: العرفان
+guich-oudaya: غويش الوداية
+haut-agdal: أوت أكدال
+les-orangers: أشجار البرتقال
+riyad:  الرياض
+riyad-extension: ملحق الرياض
+bab-lamrissa: باب لامريسا
+bettana: بيتانا
+hssaine: حسين
+laayayda: العيايدة
+tabriquet: تبريكت
+al-aalia: العلياء
+al-qods: القدس
+centre-ville: وسط المدينة
+derb-lfath: درب لفات
+diour-dokala: ديور دكالة
+Hassania: حسنية
+hay-al-amal: حي الأمل
+hay-al-falah: حي الفلاح
+hay-al-horria: حي الحرية
+hay-al-wahda: حي الوحدة
+hay-annasr: حي أناصر
+hay-chabab: حي الشباب
+hay-essalama: حي السلامه
+hay-mesk-lil: حي ماسك الليل
+hay-salam: حي السلام
+hay-saada: حي سعادة
+kasbah: القصبة
+la-colline: الهضبة
+la-siesta: لا سيستا
+les-cretes: القمم
+mannesmann: مانيسمان
+monica: مونيكا
+nassim: نسيم
+le-port: ميناء
+quartier-du-soleil: منطقة الشمس
+quartier-du-parc: منطقة المنتزه
+rachidia: رشيدية
+tenoukchet: تينوكشت
+wafa: وفاء
+zone-industrielle: المنطقة الصناعية
+les-abattoirs: المسالخ
+agadir-oufella: أكادير أوفيلا
+al-wifaq: الوفاق
+amicales: اميكال
+amsernate: امسنرات
+anahda: النهضة
+anza: انزة
+assaka: اساكا
+ben-serguaou: بن سيرجواو
+bouargane: بواركان
+boutchakat: بوتشاكات
+charaf: شرف
+cite-adrar: سيتي أدرار
+extension-dakhla: امتداد الداخلة
+founti: فونتي
+haut-anza: توب انزا
+ain-diab: عين دياب
+ain-diab-extension: امتداد عين دياب
+anfa-supérieur: أنفا سوبريور
+bourgogne-ouest: غرب بوركون
+elmanar-elhank: المنار - الحنك
+hay-tasahol: حي تصاهول
+racine: راسين
+racine-extension:  امتداد راسين
+triangle-dOr: المثلث الذهبي
+al-andalous: الأندلس
+al-osra: الأسرة
+californie: كاليفورنيا
+hay-al-fadl: حي الفضل
+hay-al-fath: حي الفتح
+hay-chrifa: هاي شريفة
+hay-haddaouia: حي الحداوية
+hay-inara: Hay Inara
+hay-lmkansa: حي إنارة
+hay-moulay-abdellah: حي مولاي عبد الله
+hay-rmila: حي رميلة
+lekrimat: لكريمات
+mandarona: ماندارونا
+miamar: ميامار
+beausejour: بوسيجور
+cil-hay-salam: CIL حي السلام
+casablanca-finance-city: مدينة الدار البيضاء المالية
+city-dar-es-salaam: مدينة دار السلام
+ferme-bretonne-hay-arraha: مزرعة بريتون حي الراحه
+hay-al-qods: حي القدس
+hay-zobir: حي الزبير
+la-floride: فلوريدا
+laymoune: ليمون
+lissasfa: ليسافسة
+longchamps-hay-al-hanaa: لونج تشامبس حي الهنا
+oulfa: الولفة
+sidi-el-khadir: سيدي الخضر
+burger: برجر
+derb-ghalef: درب غلف
+franceville: فرانسفيل
+hermitage: الأرميتاج
+les-hopitaux: المستشفيات
+les-princesses : الأميرات
+maarif-extension: امتداد المعاريف
+oasis: وازيس
+palmier:  بالميراي
+plateau-al-batha: هضبة البطحاء
+polo: بولو
+quartier-bachkou: فضاء باتشو
+riviera: ريفييرا
+val-fleury: فال فلوري
+ennakhil-palmeraie: النخيل - بالميراي
+gueliz: جيليز
+kasba: القصبة
+marrakech-medina: مراكش المدينة
+michouar: مشوار
+menara: المنارة
+route-amizmiz: طريق أمزميز
+route-casablanca: طريق الدار البيضاء
+route-dagadir-essaouira: طريق أغادير - الصويرة
+route-de-fes: طريق فاس
+route-de-ouarzazate: طريق ورزازات
+route-de-safi: طريق أسفي
+route-de-ourika: طريق أوريكا
+sidi-youssef-ben-ali: سيدي يوسف بن علي
+

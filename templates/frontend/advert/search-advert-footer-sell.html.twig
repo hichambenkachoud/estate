@@ -88,6 +88,13 @@
                                     <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3 {% if app.request.locale == 'ar' %} advertType {% endif %}">
                                         {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
                                     </div>
+                                    <div class="thumb-info-listing-type wishlist-icon">
+                                        {% if advert.id in app.user.allWishes %}
+                                            <i class="fas fa-heart" aria-hidden="true"></i>
+                                        {% else %}
+                                            <i class="far fa-heart" aria-hidden="true"></i>
+                                        {% endif %}
+                                    </div>
 
                                 </div>
                                 <div class="details" style="width: 50%;">
@@ -114,6 +121,12 @@
                                             {{ advert.estateType ? advert.estateType.code | trans : ' '}}
                                             <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
                                         </div>
+                                        {% if advert.estateType.code in ['apartment', 'studio', 'duplex', 'villa', 'house', 'riad'] %}
+                                            <div class="thumb-info-inner text-2">
+                                                {% if advert.bedrooms %}<span><b>{{ advert.bedrooms }}</b> {{ advert.bedrooms > 1 ? 'front.bedrooms'|trans :  'front.bedroom'|trans}}</span>{% endif %}
+                                                {% if advert.bathrooms %}<span><b>{{ advert.bathrooms }}</b> {{ advert.bathrooms > 1 ? 'front.bathrooms'|trans : 'front.bathroom'|trans }}</span>{% endif %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     <div class="custom-thumb-info-title p-4 col-md-12" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
                                         <div class="col-md-6 phone_agent" data-tel="00000000">
@@ -127,6 +140,10 @@
                             </div>
                         </a>
                         </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12 mb-4 text-center">
+                        {{ 'front.no_result'|trans }}
                     </div>
                 {% endfor %}
                 </div>

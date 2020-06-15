@@ -118,7 +118,7 @@
                                                         <label class="required">{{ 'front.area'|trans }}</label>
                                                         <div class="input-group mb-3">
                                                             <input type="text" class="form-control" name="adverts[area]"
-                                                                   aria-label="{{ 'front.advert.area.label'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                   aria-label="{{ 'front.area'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">{{ 'front.metre.carre'|trans }}</span>
                                                             </div>
@@ -128,10 +128,17 @@
                                                         <label class="required">{{ 'front.price'|trans }}</label>
                                                         <div class="input-group mb-3">
                                                             <input type="text" class="form-control" name="adverts[price]"
-                                                                   aria-label="{{ 'front.advert.price.label'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                   aria-label="{{ 'front.price'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">{{ 'front.currency.dh'|trans }}</span>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-3 forRent">
+                                                        <label class="required">{{ 'front.rent.time'|trans }}</label>
+                                                        <div class="mb-3">
+                                                            <input type="checkbox" class="estateType" id="for-rent-holiday" name="adverts[rentHoliday]" value="1">
+                                                            <label for="for-rent-holiday">{{ 'front.rent.holiday'|trans }}</label>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-sm-3 forRent">
@@ -142,6 +149,14 @@
                                                                 <option value="month">{{ 'front.rent.month'|trans }}</option>
                                                                 <option value="year">{{ 'front.rent.year'|trans }}</option>
                                                             </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-sm-3 forSell">
+                                                        <label class="required">{{ 'front.estate.neuf'|trans }}</label>
+                                                        <div class="mb-3">
+                                                            <input type="checkbox" class="estateType" id="for-sell-neuf" name="adverts[neuf]" value="1">
+                                                            <label for="for-sell-neuf">{{ 'front.neuf'|trans }}</label>
                                                         </div>
                                                     </div>
 
@@ -337,15 +352,15 @@
                                                                 {% endfor %}
                                                             </select>
                                                         </div>
-                                                        <div class="form-group" id="city-list">
-                                                            <label class="required">{{ 'front.city'|trans }}</label>
-                                                            <select name="adverts[city]" class="form-control" class="form-control populate" data-plugin-selectTwo id="cities" disabled>
-                                                                <option>{{ 'front.choose.option'|trans }}</option>
-                                                            </select>
-                                                        </div>
                                                         <div class="form-group" id="province-list">
                                                             <label class="required">{{ 'front.province'|trans }}</label>
                                                             <select name="adverts[province]" class="form-control" class="form-control populate" data-plugin-selectTwo id="provinces" disabled>
+                                                                <option>{{ 'front.choose.option'|trans }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group" id="city-list">
+                                                            <label class="required">{{ 'front.city'|trans }}</label>
+                                                            <select name="adverts[city]" class="form-control" class="form-control populate" data-plugin-selectTwo id="cities" disabled>
                                                                 <option>{{ 'front.choose.option'|trans }}</option>
                                                             </select>
                                                         </div>
@@ -530,61 +545,34 @@
     <script type="text/javascript">
         $(document).ready(function () {
             let $forRent = $('.forRent');
+            let $forSell = $('.forSell');
             let $forRentId = $('[id^="for-rent"]');
+            let $forSellId = $('[id^="for-sell"]');
             $('#advert-type').on('change', function () {
                 let $rentTypeSelected = $(this).children("option:selected").data('code');
                 if ($rentTypeSelected == 'rent'){
                     $forRent.show();
                     $forRentId.prop('disabled', false);
-                } else{
+                    $forSell.hide();
+                    $forSellId.prop('disabled', true);
+                } else if ($rentTypeSelected == 'sell') {
                     $forRent.hide();
                     $forRentId.prop('disabled', true);
+                    $forSell.show();
+                    $forSellId.prop('disabled', false);
                 }
             });
-           //get city of region
+           //get provinces of region
            $('#regions').on('change', function () {
               let region = $(this).val();
                getLongAndLatByState( $(this).children("option:selected").data('code'));
-              let citySelect = $('#cities');
-              let cityDev = $('#city-list');
-               $('#province-list').prop('disabled', true);
-               $('#quartier-list').prop('disabled', true);;
-               $.ajax({
-                   url: "{{ path('ajax_get_city_of_region') }}",
-                   data: JSON.stringify({region: region}),
-                   dataType: "json",
-                   method : "POST",
-                   contentType: 'application/json',
-                   success: function (data) {
-                       if (data.response.cities.length > 0){
-                           cityDev.show();
-                           citySelect.prop('disabled', false);
-                           citySelect.prop('required', true);
-                           citySelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
-                           $.each(data.response.cities, function ($i, $v) {
-                               citySelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
-                           });
-                       }
-
-                   },
-                   error: function (a, b, c) {
-                       console.log(a, b, c);
-                   },
-                   complete:function () {
-                   }
-               });
-           });
-
-           //get province of city
-           $('#cities').on('change', function () {
-              let city = $(this).val();
-               getLongAndLatByCity($(this).children("option:selected").data('code'));
               let provinceSelect = $('#provinces');
               let provinceDev = $('#province-list');
-              let quartiereDev = $('#quartier-list');
+               $('#city-list').prop('disabled', true);
+               $('#quartier-list').prop('disabled', true);;
                $.ajax({
-                   url: "{{ path('ajax_get_province_of_city') }}",
-                   data: JSON.stringify({city: city}),
+                   url: "{{ path('ajax_get_province_of_region') }}",
+                   data: JSON.stringify({region: region}),
                    dataType: "json",
                    method : "POST",
                    contentType: 'application/json',
@@ -597,9 +585,6 @@
                            $.each(data.response.provinces, function ($i, $v) {
                                provinceSelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
                            });
-                       }else{
-                           provinceDev.hide();
-                           quartiereDev.hide();
                        }
 
                    },
@@ -611,20 +596,21 @@
                });
            });
 
-           //get quartier of province
-           $('#provinces').on('change', function () {
-              let province = $(this).val();
+           //get quartier of city
+           $('#cities').on('change', function () {
+              let city = $(this).val();
+               getLongAndLatByCity($(this).children("option:selected").data('code'));
               let quartierSelect = $('#quartiers');
-              let quartiereDev = $('#quartier-list');
+              let quartierDev = $('#quartier-list');
                $.ajax({
-                   url: "{{ path('ajax_get_quartier_of_province') }}",
-                   data: JSON.stringify({province: province}),
+                   url: "{{ path('ajax_get_quartier_of_city') }}",
+                   data: JSON.stringify({city: city}),
                    dataType: "json",
                    method : "POST",
                    contentType: 'application/json',
                    success: function (data) {
                        if (data.response.quartiers.length > 0){
-                           quartiereDev.show();
+                           quartierDev.show();
                            quartierSelect.prop('disabled', false);
                            quartierSelect.prop('required', true);
                            quartierSelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
@@ -632,6 +618,41 @@
                                quartierSelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
                            });
                        }else{
+                           quartierDev.hide();
+                       }
+
+                   },
+                   error: function (a, b, c) {
+                       console.log(a, b, c);
+                   },
+                   complete:function () {
+                   }
+               });
+           });
+
+           //get city of province
+           $('#provinces').on('change', function () {
+              let province = $(this).val();
+              let citySelect = $('#cities');
+              let cityDev = $('#city-list');
+               let quartiereDev = $('#quartier-list');
+               $.ajax({
+                   url: "{{ path('ajax_get_city_of_province') }}",
+                   data: JSON.stringify({province: province}),
+                   dataType: "json",
+                   method : "POST",
+                   contentType: 'application/json',
+                   success: function (data) {
+                       if (data.response.cities.length > 0){
+                           cityDev.show();
+                           citySelect.prop('disabled', false);
+                           citySelect.prop('required', true);
+                           citySelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
+                           $.each(data.response.cities, function ($i, $v) {
+                               citySelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                           });
+                       }else{
+                           cityDev.hide();
                            quartiereDev.hide();
                        }
 

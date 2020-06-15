@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col p-static">
-                        <h1 data-title-border="">{{ 'front.search'|lower|trans }}</h1>
+                        <h1 data-title-border="">{{ 'front.estate.neuf'|trans }}</h1>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 search-portal">
-                    {{ include('/frontend/static/block-search.html.twig') }}
+                    {{ include('/frontend/static/block-search-neuf.html.twig') }}
                 </div>
                 <div class="col-md-9 row advert-portal">
                     {% for advert in adverts %}
@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="thumb-info-listing-type wishlist-icon">
                                             {% if advert.id in app.user.allWishes %}
-                                                <i class="fas fa-heart" aria-hidden="true"></i>
+                                            <i class="fas fa-heart" aria-hidden="true"></i>
                                             {% else %}
                                                 <i class="far fa-heart" aria-hidden="true"></i>
                                             {% endif %}

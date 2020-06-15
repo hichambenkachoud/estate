@@ -1,0 +1,979 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://js.hereapi.cn/v3/3.0/mapsjs-ui.css" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-fileinput/fileinput.min.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .krajee-default .file-caption-info, .krajee-default .file-size-info{
+            height: 20px;
+        }
+        .fileinput-remove,
+        .fileinput-upload{
+            display: none;
+        }
+
+    </style>
+{% endblock %}
+{% block body %}
+
+        <div role="main" class="main">
+
+            <section class="page-header page-header-classic">
+                <div class="container">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col p-static">
+                            <h1 data-title-border>{{ 'front.my_adverts'|trans }}</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container py-2">
+
+                <div class="row">
+                    <div class="col-lg-3 mt-4 mt-lg-0">
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="profile-image-outer-container">
+                                    <div class="profile-image-inner-container bg-color-primary">
+                                        <img src="{{ asset('uploads/members/'~app.user.image) }}" id="picture">
+                                    </div>
+                            </div>
+                        </div>
+
+                        <aside class="sidebar mt-2" id="sidebar">
+                            <ul class="nav nav-list flex-column mb-5">
+                                <li class="nav-item"><a class="nav-link" href="{{ path('front_security_profile') }}">{{ 'front.myinfo'|trans }}</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark active" href="{{ path('front_profile_adverts') }}">{{ 'front.my_adverts'|trans }}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ path('front_profile_wishes') }}">{{ 'front.wish.list'|trans }}</a></li>
+                            </ul>
+                        </aside>
+
+                    </div>
+                    <div class="col-lg-9 col-md-9" id="response">
+                        <div class="overflow-hidden mb-1">
+                            <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">{{ 'front.my_adverts'|trans }}</strong></h2>
+                        </div>
+                        <div class="overflow-hidden mb-4 pb-3">
+                            <p class="mb-0"></p>
+                        </div>
+
+                        <div class="col-md-12 row advert-portal">
+                            <section class="card form-wizard" id="w4">
+                                <header class="card-header">
+                                </header>
+                                <div class="card-body new-advert">
+                                    <div class="form-group mb-4">
+                                        {{ include('frontend/includes/include-flash.html.twig') }}
+                                    </div>
+                                    <div class="wizard-progress wizard-progress-lg">
+                                        <div class="steps-progress">
+                                            <div class="progress-indicator"></div>
+                                        </div>
+                                        <ul class="nav wizard-steps">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="#w4-info" data-toggle="tab"><span>1</span>{{ 'front.advert.information' |trans }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#w4-characteristic" data-toggle="tab"><span>2</span>{{ 'front.advert.characteristic' |trans }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#w4-image" data-toggle="tab"><span>3</span>{{ 'front.advert.image.emplacement' |trans }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#w4-description" data-toggle="tab"><span>4</span>{{ 'front.advert.description' |trans }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <form action="{{ path('front_profile_adverts_update', {id: advert.id}) }}" class="form-horizontal p-3" novalidate="novalidate" id="advert-form" method="post" enctype="multipart/form-data">
+                                        <div class="tab-content">
+                                            <div id="w4-info" class="tab-pane active">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label class="required"> {{ 'front.adverts.type'|trans }}</label>
+                                                            <select data-plugin-selectTwo class="form-control populate" name="adverts[advert_type]" required id="advert-type">
+                                                                <option value="">{{ 'front.choose.option'|trans }}</option>
+                                                                {% for advertType in advertTypes %}
+                                                                    <option value="{{ advertType.id }}" data-code="{{ advertType.code }}" {% if advert.advertType.id == advertType.id %} selected {% endif %}> {{ advertType.code|lower|trans }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label class="required"> {{ 'front.estate.status'|trans }}</label>
+                                                            <select data-plugin-selectTwo class="form-control populate" name="adverts[estate_status]" required>
+                                                                <option value="">{{ 'front.choose.option'|trans }}</option>
+                                                                {% for estateStatus in estatesStatus %}
+                                                                    <option value="{{ estateStatus.id }}" {% if advert.estateStatus.id == estateStatus.id %} selected {% endif %}> {{ estateStatus.code|lower|trans }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12" style="padding: 0;">
+                                                                <label class="required" style="margin-right: 16px;margin-left: 16px;"> {{ 'front.estates.type'|trans }}</label>
+                                                            </div>
+                                                            {% for i, estateType in estateTypes %}
+                                                                <div class="col-md-4 col-4">
+                                                                    <input type="radio" class="estateType" id="adverts_estateType_{{ estateType.id  }}" name="adverts[estateType]"
+                                                                           data-code="{{ estateType.code|lower }}" value="{{ estateType.id }}" required {% if i==0 or advert.estateType.id == estateType.id %}checked{% endif %}>
+                                                                    <label for="adverts_estateType_{{ estateType.id  }}">{{ estateType.code|lower|trans  }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="w4-characteristic" class="tab-pane">
+                                                <div class="card card-info">
+                                                    <div class="card-header">
+                                                        <span class="card-title">{{ 'front.advert.information'|trans }}</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.area'|trans }}</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control" name="adverts[area]"
+                                                                           aria-label="{{ 'front.area'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{ advert.area }}">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text">{{ 'front.metre.carre'|trans }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.price'|trans }}</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control" name="adverts[price]"
+                                                                           aria-label="{{ 'front.price'|trans }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{ advert.price }}">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text">{{ 'front.currency.dh'|trans }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-4 forRent" style="display: none">
+                                                                <label class=""></label>
+                                                                <div class="mb-3">
+                                                                    <input type="checkbox" class="estateType" id="for-rent-holiday" name="adverts[rentHoliday]" value="1" {% if advert.rentHoliday == 1 %} checked {% endif %}>
+                                                                    <label for="for-rent-holiday">{{ 'front.rent.holiday'|trans }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-4 forRent" style="display: none">
+                                                                <label class="required">{{ 'front.rent.type'|trans }}</label>
+                                                                <div class="input-group mb-3">
+                                                                    <select data-plugin-selectTwo class="form-control populate" name="adverts[rentType]" id="for-rent-type">
+                                                                        <option value="day" {% if advert.rentType == 'day' %} selected {% endif %}>{{ 'front.rent.day'|trans }}</option>
+                                                                        <option value="month" {% if advert.rentType == 'month' %} selected {% endif %}>{{ 'front.rent.month'|trans }}</option>
+                                                                        <option value="year" {% if advert.rentType == 'year' %} selected {% endif %}>{{ 'front.rent.year'|trans }}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-4 forSell" style="display: none">
+                                                                <label class=""></label>
+                                                                <div class="mb-3">
+                                                                    <input type="checkbox" class="estateType" id="for-sell-neuf" name="adverts[neuf]" value="1" {% if advert.neuf == 1 %} checked {% endif %}>
+                                                                    <label for="for-sell-neuf">{{ 'front.estate.neuf'|trans }}</label>
+                                                                </div>
+                                                            </div>
+
+                                                            {#
+                                                            <div class="form-group col-sm-3">
+                                                                <label class="required">{{ 'front.rooms'|trans }}</label>
+                                                                <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="text" class="spinner-input form-control" name="adverts[rooms]" maxlength="3" readonly required>
+                                                                        <div class="input-group-append">
+                                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                                <i class="fas fa-angle-up"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                                <i class="fas fa-angle-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            #}
+
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.bathrooms'|trans }}</label>
+                                                                <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="text" class="spinner-input form-control" name="adverts[bathrooms]" maxlength="3" readonly required value="{{ advert.bathrooms }}">
+                                                                        <div class="input-group-append">
+                                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                                <i class="fas fa-angle-up"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                                <i class="fas fa-angle-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.bedrooms'|trans }}</label>
+                                                                <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="text" class="spinner-input form-control" name="adverts[bedrooms]" maxlength="3" readonly required value="{{ advert.bedrooms }}">
+                                                                        <div class="input-group-append">
+                                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                                <i class="fas fa-angle-up"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                                <i class="fas fa-angle-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.floor'|trans }}</label>
+                                                                <select data-plugin-selectTwo class="form-control populate" name="adverts[floor]" required>
+                                                                    <option value="">{{ 'front.choose.option'|trans }}</option>
+                                                                    <option value="0" {% if advert.floor == 0 %} selected {% endif %}>{{ 'front.floor0'|trans }}</option>
+                                                                    <option value="1" {% if advert.floor == 1 %} selected {% endif %}>{{ 'front.floor1'|trans }}</option>
+                                                                    <option value="2" {% if advert.floor == 2 %} selected {% endif %}>{{ 'front.floor2'|trans }}</option>
+                                                                    <option value="3" {% if advert.floor == 3 %} selected {% endif %}>{{ 'front.floor3'|trans }}</option>
+                                                                    <option value="4" {% if advert.floor == 4 %} selected {% endif %}>{{ 'front.floor4'|trans }}</option>
+                                                                    <option value="5" {% if advert.floor == 5 %} selected {% endif %}>{{ 'front.floor5'|trans }}</option>
+                                                                    <option value="6" {% if advert.floor == 6 %} selected {% endif %}>{{ 'front.floor6'|trans }}</option>
+                                                                    <option value="7" {% if advert.floor == 7 %} selected {% endif %}>{{ 'front.floor7'|trans }}</option>
+                                                                    <option value="8" {% if advert.floor == 8 %} selected {% endif %}>{{ 'front.floor8'|trans }}</option>
+                                                                    <option value="9" {% if advert.floor == 9 %} selected {% endif %}>{{ 'front.floor9'|trans }}</option>
+                                                                    <option value="10" {% if advert.floor == 10 %} selected {% endif %}>{{ 'front.floor10'|trans }}</option>
+                                                                    <option value="11" {% if advert.floor == 11 %} selected {% endif %}>{{ 'front.floor11'|trans }}</option>
+                                                                    <option value="12" {% if advert.floor == 12 %} selected {% endif %}>{{ 'front.floor12'|trans }}</option>
+                                                                    <option value="13" {% if advert.floor == 13 %} selected {% endif %}>{{ 'front.floor13'|trans }}</option>
+                                                                    <option value="14" {% if advert.floor == 14 %} selected {% endif %}>{{ 'front.floor14'|trans }}</option>
+                                                                    <option value="15" {% if advert.floor == 15 %} selected {% endif %}>{{ 'front.floor15'|trans }}</option>
+                                                                    <option value="16" {% if advert.floor == 16 %} selected {% endif %}>{{ 'front.floor16'|trans }}</option>
+                                                                    <option value="17" {% if advert.floor == 17 %} selected {% endif %}>{{ 'front.floor17'|trans }}</option>
+                                                                    <option value="18" {% if advert.floor == 18 %} selected {% endif %}>{{ 'front.floor18'|trans }}</option>
+                                                                    <option value="19" {% if advert.floor == 19 %} selected {% endif %}>{{ 'front.floor19'|trans }}</option>
+                                                                    <option value="20" {% if advert.floor == 20 %} selected {% endif %}>{{ 'front.floor20'|trans }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.age'|trans }}</label>
+                                                                <select data-plugin-selectTwo class="form-control populate" name="adverts[age]" required>
+                                                                    <option value="">{{ 'front.choose.option'|trans }}</option>
+                                                                    <option value="1" {% if advert.age == '1' %} selected {% endif %}>{{ 'front.age.1'|trans }}</option>
+                                                                    <option value="1-5" {% if advert.age == '1-5' %} selected {% endif %}>{{ 'front.age.1-5'|trans }}</option>
+                                                                    <option value="5-10" {% if advert.age == '5-10' %} selected {% endif %}>{{ 'front.age.5-10'|trans }}</option>
+                                                                    <option value="10-20" {% if advert.age == '10-20' %} selected {% endif %}>{{ 'front.age.10-20'|trans }}</option>
+                                                                    <option value="20-30" {% if advert.age == '20-30' %} selected {% endif %}>{{ 'front.age.20-30'|trans }}</option>
+                                                                    <option value="30-40" {% if advert.age == '30-40' %} selected {% endif %}>{{ 'front.age.30-40'|trans }}</option>
+                                                                    <option value="40-50" {% if advert.age == '40-50' %} selected {% endif %}>{{ 'front.age.40-50'|trans }}</option>
+                                                                    <option value="50-60" {% if advert.age == '50-60' %} selected {% endif %}>{{ 'front.age.50-60'|trans }}</option>
+                                                                    <option value="60-70" {% if advert.age == '60-70' %} selected {% endif %}>{{ 'front.age.60-70'|trans }}</option>
+                                                                    <option value="70-80" {% if advert.age == '70-80' %} selected {% endif %}>{{ 'front.age.70-80'|trans }}</option>
+                                                                    <option value="80-90" {% if advert.age == '80-90' %} selected {% endif %}>{{ 'front.age.80-90'|trans }}</option>
+                                                                    <option value="90-100" {% if advert.age == '90-100' %} selected {% endif %}>{{ 'front.age.90-100'|trans }}</option>
+                                                                    <option value="100" {% if advert.age == '100' %} selected {% endif %}>{{ 'front.age.100'|trans }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="required">{{ 'front.soil.type'|trans }}</label>
+                                                                <select data-plugin-selectTwo class="form-control populate" name="adverts[soil]" required>
+                                                                    <option value="">{{ 'front.choose.option'|trans }}</option>
+                                                                    <option value="parquet" {% if advert.soilType == 'parquet' %} selected {% endif %}>{{ 'front.parquet'|trans }}</option>
+                                                                    <option value="marble" {% if advert.soilType == 'marble' %} selected {% endif %}>{{ 'front.marble'|trans }}</option>
+                                                                    <option value="tile" {% if advert.soilType == 'tile' %} selected {% endif %}>{{ 'front.tile'|trans }}</option>
+                                                                    <option value="other" {% if advert.soilType == 'other' %} selected {% endif %}>{{ 'front.other'|trans }}</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-4 forRent">
+                                                                <label class="required">{{ 'front.capacity'|trans }}</label>
+                                                                <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="text" class="spinner-input form-control" id="for-rent-capacity" name="adverts[capacity]" maxlength="3" readonly value="{{ advert.capacity }}">
+                                                                        <div class="input-group-append">
+                                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                                <i class="fas fa-angle-up"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                                <i class="fas fa-angle-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-4 forRent">
+                                                                <label class="required">{{ 'front.min_night'|trans }}</label>
+                                                                <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="text" class="spinner-input form-control" name="adverts[min_night]" maxlength="3" readonly id="for-rent-night" value="{{ advert.minNight }}">
+                                                                        <div class="input-group-append">
+                                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                                <i class="fas fa-angle-up"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                                <i class="fas fa-angle-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card card-info">
+                                                    <div class="card-header">
+                                                        <span class="card-title">{{ 'front.advert.characteristic'|trans }}</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            {% for character in characteristics %}
+                                                                <div class="col-md-4" id="{{ character.code|lower }}" style="display: none;">
+                                                                    <a class="chooseIcon">
+                                                                        <div class="estate-icon-show {% if character.id in charIds %} active {% endif %}">
+                                                                            <i class="{{ character.icon }} estate-icon" style="text-align: center; font-size: 30px"></i>
+                                                                            <span>{{ character.code|lower|trans }}</span>
+                                                                        </div>
+                                                                        <input type="checkbox" class="character" name="adverts[characteristics][]" value="{{ character.id }}" hidden required="required" {% if character.id in charIds %} checked {% endif %}>
+                                                                    </a>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="w4-image" class="tab-pane">
+                                                <div class="form-group">
+                                                    <div class="card card-info">
+                                                        <div class="card-header">
+                                                            <span class="card-title">{{ 'front.emplacement'|trans }}</span>
+                                                        </div>
+                                                        <div class="card-body row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group" id="address">
+                                                                    <label class="required">{{ 'front.address'|trans }}</label>
+                                                                    <input type="text" name="adverts[address]" class="form-control" id="address" required value="{{ advert.address }}">
+                                                                    <input type="hidden" name="adverts[longitude]" id="longitude" value="{{ advert.longitude }}">
+                                                                    <input type="hidden" name="adverts[latitude]" id="latitude" value="{{ advert.latitude }}">
+                                                                </div>
+                                                                <div class="form-group" id="region-list">
+                                                                    <label class="required">{{ 'front.region'|trans }}</label>
+                                                                    <select name="adverts[region]" class="form-control populate" data-plugin-selectTwo id="regions" required>
+                                                                        <option>{{ 'front.choose.option'|trans }}</option>
+                                                                        {% for region in regions %}
+                                                                            <option value="{{ region.id }}" data-code="{{ region.code }}" {% if advert.region.id == region.id %} selected {% endif %}>{{ region.code|trans }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group" id="province-list">
+                                                                    <label class="required">{{ 'front.province'|trans }}</label>
+                                                                    <select name="adverts[province]" class="form-control" class="form-control populate" data-plugin-selectTwo id="provinces" {% if not advert.province %}disabled{% endif %}>
+                                                                        <option>{{ 'front.choose.option'|trans }}</option>
+                                                                        {% for province in provinces %}
+                                                                            <option value="{{ province.id }}" data-code="{{ province.code }}" {% if advert.province.id == province.id %} selected {% endif %}>{{ province.code|trans }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group" id="city-list">
+                                                                    <label class="required">{{ 'front.city'|trans }}</label>
+                                                                    <select name="adverts[city]" class="form-control" class="form-control populate" data-plugin-selectTwo id="cities" {% if not advert.city %}disabled{% endif %}>
+                                                                        <option>{{ 'front.choose.option'|trans }}</option>
+                                                                        {% for city in cities %}
+                                                                            <option value="{{ city.id }}" data-code="{{ city.code }}" {% if advert.city.id == city.id %} selected {% endif %}>{{ city.code|trans }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group" id="quartier-list">
+                                                                    <label class="required">{{ 'front.quartier'|trans }}</label>
+                                                                    <select name="adverts[quartier]" class="form-control" class="form-control populate" data-plugin-selectTwo id="quartiers" {% if not advert.quartier %}disabled{% endif %}>
+                                                                        <option>{{ 'front.choose.option'|trans }}</option>
+                                                                        {% for quartier in quartiers %}
+                                                                            <option value="{{ quartier.id }}" data-code="{{ quartier.code }}" {% if advert.quartier.id == quartier.id %} selected {% endif %}>{{ quartier.code|trans }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div style="width: 540px; height: 380px; float: right;" id="mapContainer"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="card card-info">
+                                                        <div class="card-header">
+                                                            <span class="card-title">{{ 'front.images'|trans }}</span>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <div class="file-loading">
+                                                                    <input id="Image" name="adverts[]" type="file" class="file" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="w4-description" class="tab-pane">
+                                                <div class="row">
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="card card-info">
+                                                            <div class="card-header">
+                                                                <span class="card-title required">{{ "front.description"|trans }}</span>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <textarea class="form-control" required id="description" name="adverts[description]">{{ advert.description|raw }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="card card-info">
+                                                            <div class="card-header">
+                                                                <span class="card-title required">{{ "front.title"|trans }}</span>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="adverts[title]" id="title" required class="form-control" value="{{ advert.title|raw }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="card card-info">
+                                                            <div class="card-header">
+                                                                <span class="card-title required">{{ "front.contact"|trans }}</span>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <input type="tel" class="form-control telephone" id="tel" required minlength="8" maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                    <input type="hidden" name="adverts[tel]" id="advertTel" required value="{{ advert.mobileNumber }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <ul class="pager">
+                                        <li class="previous disabled">
+                                            <a><i class="fas fa-angle-{{ app.request.locale == 'ar' ? 'right' : 'left' }}"></i> {{ 'front.previous'|trans }}</a>
+                                        </li>
+                                        <li class="finish hidden float-right">
+                                            <a>{{ 'front.finish'|trans }}</a>
+                                        </li>
+                                        <li class="next">
+                                            <a>{{ 'front.next'|trans }} <i class="fas fa-angle-{{ app.request.locale == 'ar' ? 'left' : 'right' }}"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset('js/bootstrap-fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-fileinput/theme.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.bootstrap.wizard.js') }}"></script>
+    <script src="{{ asset('js/examples.wizard.js') }}"></script>
+
+    {% if app.request.locale == 'ar' %}
+        <script src="{{ asset('js/bootstrap-fileinput/ar.js') }}"></script>
+    {% elseif app.request.locale == 'fr' %}
+        <script src="{{ asset('js/bootstrap-fileinput/fr.js') }}"></script>
+    {% endif %}
+
+    <script type="text/javascript">
+        $('.chooseIcon').on("click", function (event) {
+            let iconDiv = $($(this)).children(".estate-icon-show");
+            let checkbox = $($(this)).children(".character");
+            if (iconDiv.hasClass('active')){
+                iconDiv.removeClass('active');
+                checkbox.prop("checked", false);
+            }else{
+                iconDiv.addClass('active');
+                checkbox.prop("checked", true);
+            }
+        });
+
+        $("#Image").fileinput({
+            theme: 'fa',
+            language: '{{ app.request.locale }}',
+            uploadUrl: '#',
+            minFileCount: 1,
+            validateInitialCount: true,
+            showUpload: false,
+            allowedFileExtensions: ['jpg', 'png', 'jpeg'],
+            initialPreview: [
+                {% for image in images %}
+                    '<img src="{{ asset('uploads/'~advert.images~'/'~image) }}" class="img-update" >',
+                {% endfor %}
+            ],
+            initialPreviewConfig: [
+                {% for image in images %}
+                {caption: '{{ image }}', url: "{{ path('ajax_delete_img', {id: advert.id}) }}", key: '{{ image }}' },
+                {% endfor %}
+
+            ],
+            overwriteInitial: false,
+            initialPreviewShowDelete: true,
+            deleteUrl: "{{ path('ajax_delete_img', {id: advert.id}) }}",
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+
+        $('.telephone').val({{ advert.mobileNumber }});
+        $('.telephone').on('keyup',function () {
+            let indicative = $('#w4-description .iti__selected-dial-code').text();
+            let $val = $(this).val();
+
+            $('#advertTel').val(indicative+$val);
+        });
+
+    </script>
+
+    <script>
+
+        // Initialize the platform object:
+        var platform = new H.service.Platform({
+            'apikey': 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
+        });
+
+        var maptypes = platform.createDefaultLayers();
+
+        // Instantiate (and display) a map object:
+        var map = new H.Map(
+            document.getElementById('mapContainer'),
+            maptypes.vector.normal.map,
+            {
+                zoom: 6,
+                center: { lng: -7.603869, lat: 33.589886 },
+                pixelRatio: window.devicePixelRatio || 1
+            }
+        );
+        window.addEventListener('resize', () => map.getViewPort().resize());
+
+        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+        // Create the default UI components
+        var ui = H.ui.UI.createDefault(map, maptypes, 'fr-FR');
+
+        //ui.getControl('zoom').setEnabled(false)
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            let $rentTypeSelected = $('#advert-type').children("option:selected").data('code');
+            showRentSell($rentTypeSelected);
+            $('#advert-type').on('change', function () {
+                let $rentTypeSelected = $(this).children("option:selected").data('code');
+                showRentSell($rentTypeSelected);
+            });
+            //get provinces of region
+            $('#regions').on('change', function () {
+                let region = $(this).val();
+                getLongAndLatByState( $(this).children("option:selected").data('code'));
+                let provinceSelect = $('#provinces');
+                let provinceDev = $('#province-list');
+                $('#city-list').prop('disabled', true);
+                $('#quartier-list').prop('disabled', true);;
+                $.ajax({
+                    url: "{{ path('ajax_get_province_of_region') }}",
+                    data: JSON.stringify({region: region}),
+                    dataType: "json",
+                    method : "POST",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.response.provinces.length > 0){
+                            provinceDev.show();
+                            provinceSelect.prop('disabled', false);
+                            provinceSelect.prop('required', true);
+                            provinceSelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
+                            $.each(data.response.provinces, function ($i, $v) {
+                                provinceSelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                            });
+                        }
+
+                    },
+                    error: function (a, b, c) {
+                        console.log(a, b, c);
+                    },
+                    complete:function () {
+                    }
+                });
+            });
+
+            //get quartier of city
+            $('#cities').on('change', function () {
+                let city = $(this).val();
+                getLongAndLatByCity($(this).children("option:selected").data('code'));
+                let quartierSelect = $('#quartiers');
+                let quartierDev = $('#quartier-list');
+                $.ajax({
+                    url: "{{ path('ajax_get_quartier_of_city') }}",
+                    data: JSON.stringify({city: city}),
+                    dataType: "json",
+                    method : "POST",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.response.quartiers.length > 0){
+                            quartierDev.show();
+                            quartierSelect.prop('disabled', false);
+                            quartierSelect.prop('required', true);
+                            quartierSelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
+                            $.each(data.response.quartiers, function ($i, $v) {
+                                quartierSelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                            });
+                        }else{
+                            quartierDev.hide();
+                        }
+
+                    },
+                    error: function (a, b, c) {
+                        console.log(a, b, c);
+                    },
+                    complete:function () {
+                    }
+                });
+            });
+
+            //get city of province
+            $('#provinces').on('change', function () {
+                let province = $(this).val();
+                let citySelect = $('#cities');
+                let cityDev = $('#city-list');
+                let quartiereDev = $('#quartier-list');
+                $.ajax({
+                    url: "{{ path('ajax_get_city_of_province') }}",
+                    data: JSON.stringify({province: province}),
+                    dataType: "json",
+                    method : "POST",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.response.cities.length > 0){
+                            cityDev.show();
+                            citySelect.prop('disabled', false);
+                            citySelect.prop('required', true);
+                            citySelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
+                            $.each(data.response.cities, function ($i, $v) {
+                                citySelect.append('<option value="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                            });
+                        }else{
+                            cityDev.hide();
+                            quartiereDev.hide();
+                        }
+
+                    },
+                    error: function (a, b, c) {
+                        console.log(a, b, c);
+                    },
+                    complete:function () {
+                    }
+                });
+            });
+
+            //sent
+            $('.finish').on('click', function () {
+                let form = $('#advert-form');
+
+                if (form.valid()){
+                    form.submit();
+                }
+            });
+
+            //go to
+            $('.next, .previous').on('click', function () {
+                $('.card-body')[0].scrollIntoView();
+            });
+
+            function showRentSell($rentTypeSelected) {
+
+                let $forRent = $('.forRent');
+                let $forSell = $('.forSell');
+                let $forRentId = $('[id^="for-rent"]');
+                let $forSellId = $('[id^="for-sell"]');
+
+                if ($rentTypeSelected == 'rent'){
+                    $forRent.show();
+                    $forRentId.prop('disabled', false);
+                    $forSell.hide();
+                    $forSellId.prop('disabled', true);
+                } else if ($rentTypeSelected == 'sell') {
+                    $forRent.hide();
+                    $forRentId.prop('disabled', true);
+                    $forSell.show();
+                    $forSellId.prop('disabled', false);
+                }
+            }
+
+
+            function getLongAndLatByCity(city) {
+                var obj = null;
+
+                $.ajax({
+                    url: 'https://geocoder.ls.hereapi.com/6.2/geocode.json',
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    async: false,
+                    jsonp: 'jsoncallback',
+                    data: {
+                        city: city,
+                        apiKey: 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
+                    },
+                    success: function (data) {
+                        //data = JSON.stringify(data);
+                        $('#latitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Latitude);
+                        $('#longitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Longitude);
+                    }
+                });
+
+            }
+            function getLongAndLatByState(state) {
+                var obj = null;
+
+                $.ajax({
+                    url: 'https://geocoder.ls.hereapi.com/6.2/geocode.json',
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    async: false,
+                    jsonp: 'jsoncallback',
+                    data: {
+                        state: state,
+                        apiKey: 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
+                    },
+                    success: function (data) {
+                        $('#latitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Latitude);
+                        $('#longitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Longitude);
+                    }
+                });
+            }
+
+
+            /*   characteristics */
+
+            let $apartment = "#air_conditioner, #balcon, #concierge, #door, #heating, #elevator, #fireplace, #fridge_appliance, #garage, #internet, #microwave, #parabolic_antenna, #sea, #security_camera, #storage, #terrace, #washing_machine, #tv";
+            let $house = "#air_conditioner, #balcon, #mountainside, #elevator, #heating, #fireplace, #fridge_appliance, #garage, #garden, #internet, #parabolic_antenna, #sea, #security_camera, #terrace";
+            let $office = "#air_conditioner, #elevator, #fireplace, #garage,  #heating, #internet, #parabolic_antenna, #security_camera, #concierge";
+            let $villa = "#air_conditioner, #pool, #fireplace, #garage, #puits, #mountainside, #heating, #parabolic_antenna, #security_camera, #terrace, #garden";
+            let $terrain = "#agricole, #commercial, #lotissement, #montagne, #route, #sea, #tourbain, #urbain, #terrace, #garden";
+            let $commercial = "#emplacement, #boulevard, #coproprie, #garage, #security_camera, #route, #alarm, #charge, #air_conditioner, #heating";
+            let $riad = "#garden, #terrace, #meuble, #hammam, #security_camera, #fridge_appliance, #pool, #heating, #air_conditioner, #fireplace, #pergola";
+            let $studio = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #pool, #terrace, #pool, #fireplace, #air_conditioner, #heating, #fridge_appliance, #meuble, #internet, #parabolic_antenna, #storage, #rue, #boulevard, #sea";
+            let $ferme = "#house, #pool, #puits, #etable, #other_batiment, #arbres, #plantation, #goutegoute, #irrigation, #materiel, #roulant, #gardien, #reseau_electric, #reseau_eau, #route";
+            let $duplex = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #terrace, #pool, #garden_interieur, #fireplace, #air_conditioner,  #heating, #fridge_appliance, #internet, #parabolic_antenna,  #storage, #rue, #boulevard, #sea";
+            let $batiment = "#industriel, #comercial, #habitation, #elevator, #charge, #cave, #garage, #parking, #autres";
+
+
+            let $type = $('.estateType').data('code');
+
+            if ($type == 'apartment'){
+                $($apartment).show();
+            }else if ($type == 'office') {
+                $($office).show();
+            }else if ($type == 'house'){
+                $($house).show();
+            }else if ($type == 'villa'){
+                $($villa).show();
+            }else if ($type == 'terrain'){
+                $($terrain).show();
+            }else if ($type == 'commercial'){
+                $($commercial).show();
+            }else if ($type == 'riad'){
+                $($riad).show();
+            }else if ($type == 'studio'){
+                $($studio).show();
+            }else if ($type == 'ferme'){
+                $($ferme).show();
+            }else if ($type == 'duplex'){
+                $($duplex).show();
+            }else if ($type == 'building'){
+                $($batiment).show();
+            }else{
+                $($apartment).show();
+            }
+
+            $('.estateType').on('change', function () {
+                let $type = $(this).data('code');
+
+                if ($type == 'apartment'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($commercial).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($apartment).show();
+                }else if ($type == 'office') {
+                    $($house).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($commercial).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($office).show();
+                }else if ($type == 'house'){
+                    $($villa).hide();
+                    $($commercial).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($office).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($house).show();
+                }else if ($type == 'villa'){
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($commercial).hide();
+                    $($office).hide();
+                    $($house).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($villa).show();
+                }else if ($type == 'terrain'){
+                    $($apartment).hide();
+                    $($office).hide();
+                    $($commercial).hide();
+                    $($house).hide();
+                    $($villa).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($terrain).show();
+                }else if ($type == 'commercial'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($commercial).show();
+                }else if ($type == 'riad'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($commercial).hide();
+                    $($riad).show();
+                }else if ($type == 'studio'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($commercial).hide();
+                    $($studio).show();
+                }else if ($type == 'ferme'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($commercial).hide();
+                    $($ferme).show();
+                }else if ($type == 'duplex'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($batiment).hide();
+                    $($commercial).hide();
+                    $($duplex).show();
+                }else if ($type == 'building'){
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($apartment).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($commercial).hide();
+                    $($batiment).show();
+                }else{
+                    $($commercial).hide();
+                    $($house).hide();
+                    $($office).hide();
+                    $($villa).hide();
+                    $($terrain).hide();
+                    $($riad).hide();
+                    $($studio).hide();
+                    $($ferme).hide();
+                    $($duplex).hide();
+                    $($batiment).hide();
+                    $($apartment).show();
+                }
+
+                //alert($type);
+            });
+        });
+    </script>
+
+{% endblock %}

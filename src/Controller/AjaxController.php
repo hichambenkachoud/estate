@@ -240,38 +240,16 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/city-region", name="ajax_get_city_of_region", methods={"POST"})
+     * @Route("/province-region", name="ajax_get_province_of_region", methods={"POST"})
      */
-    public function getCityOfRegion()
+    public function getCProvinceOfRegion()
     {
         $data = $this->_checkData();
 
         $region = isset($data['region']) ? $data['region'] : null;
 
         $result = [];
-        $cities = $this->entityManager->getRepository(City::class)->findBy(['region' => $region]);
-        foreach ($cities as $city){
-            $citie['id'] = $city->getId();
-            $citie['code'] = $this->trans->trans($city->getCode());
-            $citie['name'] = $city->getCode();
-            $result[] = $citie;
-        }
-        $response["code"] = 0;
-        $response["response"] = ["cities"=> $result];
-        return new Response(json_encode($response));
-    }
-
-    /**
-     * @Route("/province-city", name="ajax_get_province_of_city", methods={"POST"})
-     */
-    public function getProvinceOfCity()
-    {
-        $data = $this->_checkData();
-
-        $city = isset($data['city']) ? $data['city'] : null;
-
-        $result = [];
-        $provinces = $this->entityManager->getRepository(Province::class)->findBy(['city' => $city]);
+        $provinces = $this->entityManager->getRepository(Province::class)->findBy(['region' => $region, 'enabled' => true], ['name' => 'asc']);
         foreach ($provinces as $province){
             $p['id'] = $province->getId();
             $p['code'] = $this->trans->trans($province->getCode());
@@ -284,25 +262,47 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/quartier-province", name="ajax_get_quartier_of_province", methods={"POST"})
+     * @Route("/quartier-city", name="ajax_get_quartier_of_city", methods={"POST"})
      */
-    public function getQuartierOfProvince()
+    public function getQuartierOfCity()
     {
         $data = $this->_checkData();
 
-        $province = isset($data['province']) ? $data['province'] : null;
+        $city = isset($data['city']) ? $data['city'] : null;
 
         $result = [];
-        $quartiers = $this->entityManager->getRepository(Quartier::class)->findBy(['province' => $province]);
+        $quartiers = $this->entityManager->getRepository(Quartier::class)->findBy(['city' => $city, 'enabled' => true], ['name' => 'ASC']);
         foreach ($quartiers as $quartier){
             $p['id'] = $quartier->getId();
             $p['code'] = $this->trans->trans($quartier->getCode());
             $p['name'] = $quartier->getCode();
             $result[] = $p;
         }
-
         $response["code"] = 0;
         $response["response"] = ["quartiers"=> $result];
+        return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/city-province", name="ajax_get_city_of_province", methods={"POST"})
+     */
+    public function getCityOfProvince()
+    {
+        $data = $this->_checkData();
+
+        $province = isset($data['province']) ? $data['province'] : null;
+
+        $result = [];
+        $cities = $this->entityManager->getRepository(City::class)->findBy(['province' => $province, 'enabled' => true], ['name'=> 'ASC']);
+        foreach ($cities as $city){
+            $p['id'] = $city->getId();
+            $p['code'] = $this->trans->trans($city->getCode());
+            $p['name'] = $city->getCode();
+            $result[] = $p;
+        }
+
+        $response["code"] = 0;
+        $response["response"] = ["cities"=> $result];
         return new Response(json_encode($response));
     }
 
@@ -335,6 +335,43 @@ class AjaxController extends AbstractController
 
         $response["code"] = 0;
         $response["response"] = ["message"=> $this->trans->trans('front.adverts.contact.success')];
+        return new Response(json_encode($response));
+
+    }
+
+    /**
+     * contact agent
+     * @Route(path="/search-city-quartier", name="ajax_search_city_quartier", methods={"POST"})
+     */
+    public function searchCityQuartier(Request $request)
+    {
+        $data = $this->_checkData();
+        $city = isset($data['city']) ? trim($data['city']) : null;
+
+
+        $result = [];
+        $cities = $this->entityManager->getRepository(City::class)->findCityByName($city);
+        if (count($cities) > 0){
+            /** @var City $city */
+            foreach ($cities as $city){
+                $p['id'] = $city->getId();
+                $p['code'] = $this->trans->trans($city->getCode());
+                $p['name'] = $city->getCode();
+                $result[] = $p;
+            }
+        }else{
+            //$quartiers = $this->entityManager->getRepository(Quartier::class)->findQuartierByName($city);
+            /** @var Quartier $quartier **/
+            /*foreach ($quartiers as $quartier){
+                $p['id'] = $quartier->getId();
+                $p['code'] = $this->trans->trans($quartier->getCode());
+                $p['name'] = $quartier->getCode();
+                $result[] = $p;
+            }*/
+        }
+        
+        $response["code"] = 0;
+        $response["response"] = ["cities"=> $result];
         return new Response(json_encode($response));
 
     }
@@ -465,7 +502,49 @@ class AjaxController extends AbstractController
 
     }
 
+    /**
+     * @param $request
+     * @param $id
+     * @return Response
+     * @Route(path="/delete_image/{id}", name="ajax_delete_img")
+     */
+    public function deletePicture(Request $request, $id){
 
+        $imageToDelete = $request->get('key');
+
+        $advert = $this->entityManager->getRepository(Adverts::class)->find(intval($id));
+        if ($advert){
+            $uploadsDir = $this->getParameter('uploads_directory');
+            $newDirName = $uploadsDir.$advert->getImages();
+
+            if (is_file($newDirName.'/'.$imageToDelete)){
+                unlink($newDirName.'/'.$imageToDelete);
+            }
+        }
+
+        return new Response(true);
+    }
+
+    /**
+     *  @Route(path="/add_wish", name="ajax_add_wish")
+     */
+    public function addWish(Request $request){
+        $data = $this->_checkData();
+        /** @var Members $member */
+        $member = $this->getUser();
+
+        $wishList = json_decode($member->getWishList(), true);
+        $advertId = isset($data['advertId']) ? trim($data['advertId']) : null;
+
+        array_push($wishList, intval($advertId));
+
+        $member->setWishList(json_encode($wishList));
+        $this->entityManager->flush();
+
+        $response["code"] = 0;
+        $response["response"] = ["message"=> $this->trans->trans('front.adverts.contact.success')];
+        return new Response(json_encode($response));
+    }
     private function _checkData()
     {
         $data = json_decode(file_get_contents('php://input'), TRUE);

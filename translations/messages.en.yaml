@@ -238,6 +238,8 @@ front:
   price: Price
   rooms: Rooms
   bedrooms: Bedrooms
+  bedroom: Bedroom
+  bathroom: Bathroom
   bathrooms: Bathrooms
   bathrooms1: 1  Bathroom
   bathrooms2: 2 Bathrooms
@@ -298,6 +300,7 @@ front:
   advert.contact: Contact the announcer
   address: Address
   advert.add.success: The announcement has been saved, please wait for confirmation from the administrator
+  advert.update.success: The announcement has been updated
   contact: Contact information
   bedrooms.min: Min. bedrooms
   bedrooms.max: Max. bedrooms
@@ -416,8 +419,16 @@ front:
   contact_agency: Contact the agency
   agency.contact.success: Your message has been sent to the agency
   agency.not-available: The agency is no longer available
+  no_result: We have no property, at the moment, which corresponds to your search
+  rent.time: Rental time
+  rent.holiday: Vacation location
+  estate.neuf: New real estate
+  neuf: New
+  my_adverts: My announcements
+  wish.list: Recorded announcements
 
-
+yes: Yes
+no: No
 sell: For sell
 rent: For rent
 apartment: Appartment
@@ -437,117 +448,6 @@ good-condition: Good condition
 furnished: Furnished
 unfurnished: Unfurnished
 partially-furnished: Partially furnished
-
-tanger: Tanger
-assilah: Assilah
-mdiq: M'diq
-fnideq: Fnideq
-tetouan: Tétouan
-fahs: Fahs
-anjra: Anjra
-larache: Larache
-alhoceïma: Al Hoceïma
-chefchaouen: Chefchaouen
-ouezzane: Ouezzane
-
-oujda: Oujda
-angad: Angad
-nador: Nador
-driouch: Driouch
-jerada: Jerada
-berkane: Berkane
-taourirt: Taourirt
-guercif: Guercif
-figuig: Figuig
-
-fes: Fès
-meknes: Meknès
-taza: Taza
-elhajeb: El Hajeb
-ifrane: Ifrane
-moulay-yaacoub: Moulay Yaâcoub
-sefrou: Séfrou
-boulemane: Boulemane
-taounate: Taounate
-
-rabat: Rabat
-sale: Salé
-skhirate: Skhirate
-temara: Témara
-kenitra: Kénitra
-khemisset: Khémisset
-sidi-kacem: Sidi Kacem
-sidi-slimane: Sidi Slimane
-
-beni-mellal: Béni-Mellal
-azilal: Azilal
-fquih-ben-salah: Fquih Ben Salah
-khenifra: Khénifra
-khouribga: Khouribga
-
-mohammedia: Mohammédia
-el-jadida: El Jadida
-nouaceur: Nouaceur
-mediouna: Médiouna
-benslimane: Benslimane
-berrechid: Berrechid
-settat: Settat
-sidi-bennour: Sidi Bennour
-
-marrakech: Marrakech
-chichaoua: Chichaoua
-elhaouz: Al Haouz
-Sraghna: El Kelaâ des Sraghna
-essaouira: Essaouira
-rehamna: Rehamna
-safi: Safi
-youssoufia: Youssoufia
-
-errachidia: Errachidia
-ouarzazate: Ouarzazate
-midelt: Midelt
-tinghir: Tinghir
-zagora: Zagora
-
-agadir: Agadir
-ida-outanane: Ida-Outanane
-ait-melloul: Aït Melloul
-inezgane: Inezgane
-ait-baha: Aït Baha
-chtouka: Chtouka
-taroudant: Taroudant
-tiznit: Tiznit
-tata: Tata
-
-guelmim: Guelmim
-assa-zag: Assa-Zag
-tan-tan: Tan-Tan
-sidi-ifni: Sidi Ifni
-
-laayoune: Laâyoune
-boujdour: Boujdour
-tarfaya: Tarfaya
-es-semara: Es-Semara
-
-oued-ed-dahab: Oued Ed-Dahab
-aousserd: Aousserd
-dakhla: Dakhla
-Llgouira: Lagouira
-casablanca: Casablanca
-
-casablanca-settat: Casablanca-Settat
-tanger-tetouan-hoceima: Tanger-Tétouan-Al Hoceïma
-oriental: Oriental
-fes-meknes: Fès-Meknès
-rabat-sale-kenitra: Rabat-Salé-Kénitra
-benimellal-khenifra: Béni Mellal-Khénifra
-marrakech-safi:  	Marrakech-Safi
-draa-tafilalet: Drâa-Tafilalet
-souss-massa:  	Souss-Massa
-guelmim-ouednoun: Guelmim-Oued Noun
-laayoune-sakia-elhamra: Laâyoune-Sakia El Hamra
-dakhla-oued-eddahab: Dakhla-Oued Ed-Dahab
-
 properties: Properties
 
 garage: Garage
@@ -609,3 +509,346 @@ materiel: Material / Equipment
 meuble: Furnished
 hammam: Hammam
 pergola: Pergola
+
+assilah: Assilah
+fahs: Fahs
+anjra: Anjra
+alhoceïma: Al Hoceïma
+ouezzane: Ouezzane
+oujda: Oujda
+angad: Angad
+berkane: Berkane
+sefrou: Séfrou
+skhirate: Skhirate
+sidi-slimane: Sidi Slimane
+khouribga: Khouribga
+elhaouz: Al Haouz
+Sraghna: El Kelaâ des Sraghna
+ida-outanane: Ida-Outanane
+ait-melloul: Aït Melloul
+inezgane: Inezgane
+ait-baha: Aït Baha
+chtouka: Chtouka
+tata: Tata
+boujdour: Boujdour
+es-semara: Es-Semara
+aousserd: Aousserd
+dakhla: Dakhla
+Llgouira: Lagouira
+casablanca-settat: Casablanca-Settat
+tanger-tetouan-hoceima: Tanger-Tétouan-Al Hoceïma
+oriental: Oriental
+fes-meknes: Fès-Meknès
+rabat-sale-kenitra: Rabat-Salé-Kénitra
+benimellal-khenifra: Béni Mellal-Khénifra
+marrakech-safi:  	Marrakech-Safi
+draa-tafilalet: Drâa-Tafilalet
+souss-massa:  	Souss-Massa
+guelmim-ouednoun: Guelmim-Oued Noun
+laayoune-sakia-elhamra: Laâyoune-Sakia El Hamra
+dakhla-oued-eddahab: Dakhla-Oued Ed-Dahab
+ouazzane: Ouazzane
+chefchaouen: Fhefchaouen
+fahs-anjra: Fahs-Anjra
+larache: Larache
+al-hoceima: Al Hoceïma
+tetouan: Tétouan
+mdiq-fnideq: M'diq-Fnideq
+tanger-asilah: Tanger-Asilah
+berkan: Berkan
+figuig: Figuig
+jerada: Jerada
+nador: Nador
+guercif: Guercif
+driouch: Driouch
+taourirt: Taourirt
+oujda-angad: Oujda-Angad
+
+boulemane: Boulemane
+moulay-yaacoub: Moulay Yaâcoub
+taounate: Taounate
+taza: Taza
+ifrane: Ifrane
+elhajeb: Elhajeb
+khemisset: Khémisset
+rabat: Rabat
+skhirat-temara: Skhirat-Témara
+sidi-kacem: Sidi Kacem
+sidi-sliman: Sidi Slimane
+beni-mellal: Béni Mellal
+azilal: Azilal
+fquih-ben-salah: Fquih Ben Salah
+khenifra: Khénifra
+khouribga​: Khouribga​
+mediouna: Médiouna
+casablanca: Casablanca
+el-jadida: El jadida
+benslimane: Benslimane
+settat: Settat
+sidi-bennour: Sidi Bennour
+al-haouz: Al haouz
+el-kelaa-des-sraghna: El Kelâa Des Sraghna
+chichaoua: Chichaoua
+rehamna: Rehamna
+safi: Safi
+youssoufia: Youssoufia
+errachidia: Errachidia
+zagora​: Zagora​
+midelt: Midelt
+chtouka-ait-baha: Chtouka-Aït Baha
+ouarzazate: Ouarzazate
+taroudant: Taroudant
+tinghir: Tinghir
+tiznit: Tiznit
+zagora: Zagora
+agadir-ida-outanane: Agadir Ida-Outanane
+inezgane-ait-melloul: Inezgane-Aït Melloul
+guelmim: Guelmim
+sidi-ifni: Sidi Ifni
+assa-zag: Assa-Zag
+tan-tan: Tan-Tan
+laayoune: Laâyoune
+es-semara​: Es-Semara​
+boujdour​​: Boujdour​
+tarfaya: Tarfaya
+oued-ed-dahab: Oued Ed-Dahab
+allyene: Allyene
+cabo-negro: Cabo Negro
+fnideq: Fnideq
+mdiq: M'Diq
+msick: M'sick
+martil: Martil
+aquouass-briech: Aquouass Briech
+asilah: Asilah
+azzinate: Azzinate
+boukhalef: Boukhalef
+gueznaia: Gueznaia
+tanger: Tanger
+boufkrane: Boufkrane
+dkhissa: Dkhissa
+mhaya: M'haya
+meknes: Meknès
+moulay-driss-zerhoun: Moulay Driss Zerhoun
+mrhassiyine: Mrhassiyine
+oued-jdida: Oued Jdida
+ain-bida: Ain Bida
+mechouar-fes-jdid: Méchouar Fès Jdid
+oulad-tayeb: Oulad Tayeb
+sidi-harazem: Sidi Harazem
+skhinate: Skhinate
+fes: Fès
+Arbaoua: Arbaoua
+kenitra: Kénitra
+mehdia: Mehdia
+moulay-bousselham: Moulay Bousselham
+sidi-taibi: Sidi Taibi
+souk-tlet-el-gharb: Souk Tlet El Gharb
+agdal-riyad: Agdal-Riyad
+el-youssoufia: El Youssoufia
+hassan: Hassan
+souissi: Souissi
+touarga: Touarga
+yacoub-el-mansour: Yacoub El Mansour
+sale: Salé
+sidi-bouknadel: Sidi Bouknadel
+ain-aouda: Ain Aouda
+ain-attig: Ain Attig
+el-menzeh: El Menzeh
+harhoura: Harhoura
+mers-el-kheir: Mers El Kheir
+sabbah: Sabbah
+skhirat: Skhirat
+tamesna: Tamesna
+temara: Temara
+bouskoura: Bouskoura
+dar-bouazza: Dar Bouazza
+errahma: Errahma
+nouaceur: Nouaceur
+oulad-salah: Oulad Salah
+al-fida: Al Fida
+anfa: Anfa
+ain-chock: Aïn Chock
+ain-sebaa: Aïn Sebaâ
+ben-msick: Ben M'sick
+bernoussi: Bernoussi
+hay-hassani: Hay Hassani
+hay-mohammadi: Hay Mohammadi
+maarif: Maârif
+mers-sultan: Mers Sultan
+moulay-rachid: Moulay Rachid
+roches-noires: Roches Noires
+sbata: Sbata
+sidi-belyout: Sidi Belyout
+sidi-moumen: Sidi Moumen
+sidi-othmane: Sidi Othmane
+ain-harrouda: Aïn Harrouda
+beni-yakhlef: Béni Yakhlef
+chellalate: Chellalate
+mohammedia: Mohammedia
+sidi-moussa-ben-ali: Sidi Moussa Ben Ali
+sidi-moussa-el-majdoub: Sidi Moussa El Majdoub
+Zenata: Zenata
+berrechid: Berrechid
+deroua: Deroua
+el-gara: El Gara
+had-soualem: Had Soualem
+lakhiaita: Lakhiaita
+oulad-abbou: Oulad Abbou
+oulad-zidane: Oulad Zidane
+sahel-oulad-hriz: Sahel Oulad H''riz
+sidi-rahal: Sidi Rahal
+sidi-rahal-chatai: Sidi Rahal Chatai
+essaouira: Essaouira
+had-dra: Had Dra
+mouarid: Mouarid
+agafay: Agafay
+ait-imour: Ait Imour
+alouidane: Alouidane
+harbil: Harbil
+kattara: Kattara
+loudaya: Loudaya
+marrakech: Marrakech
+ouahat-sidi-brahim: Ouahat Sidi Brahim
+oulad-hassoune: Oulad Hassoune
+saada: Saada
+sid-zouine: Sid Zouine
+tassoultante: Tassoultante
+agadir: Agadir
+aourir: Aourir
+drargua: Drargua
+imouzzer: Imouzzer
+imsouane: Imsouane
+taghazout: Taghazout
+Tamri: Tamri
+bni-makada: Bni Makada
+charf-mghougha: Charf Mghougha
+charf-souani: Charf Souani
+tanger-medina: Tanger Medina
+fes-medina: Fes Medina
+jnane-el-ouard: Jnane El Ouard
+les-merinides: Les Merinides
+mechouar-fes-el-jadid: Mechouar Fes El Jadid
+saiss: Saiss
+zouagha: Zouagha
+agdal: Agdal
+al-irfane: Al Irfane
+guich-oudaya: Guich Oudaya
+haut-agdal: Haut Agdal
+les-orangers: Les Orangers
+riyad: Riyad
+riyad-extension: Riyad Extension
+bab-lamrissa: Bab Lamrissa
+bettana: Bettana
+hssaine: Hssaine
+laayayda: Laayayda
+tabriquet: Tabriquet
+al-aalia: Al Aalia
+al-qods: Al Qods
+centre-ville: Centre Ville
+derb-lfath: Derb Lfath
+diour-dokala: Diour Dokala
+Hassania: Hassania
+hay-al-amal: Hay Al Amal
+hay-al-falah: Hay Al Falah
+hay-al-horria: Hay Al Horria
+hay-al-wahda: Hay Al Wahda
+hay-annasr: Hay Annasr
+hay-chabab: Hay Chabab
+hay-essalama: Hay Essalama
+hay-mesk-lil: Hay Mesk Lil
+hay-salam: Hay Salam
+hay-saada: Hay Saada
+kasbah: Kasbah
+la-colline: La Colline
+la-siesta: La Siesta
+les-cretes: Les Cretes
+mannesmann: Mannesmann
+monica: Monica
+nassim: Nassim
+le-port: Le Port
+quartier-du-soleil: Quartier Du Soleil
+quartier-du-parc: Quartier Du Parc
+rachidia: Rachidia
+tenoukchet: Tenoukchet
+wafa: Wafa
+zone-industrielle: Zone industrielle
+les-abattoirs: Les Abattoirs
+agadir-oufella: Agadir Oufella
+al-wifaq: Al Wifaq
+amicales: Amicales
+amsernate: Amsernate
+anahda: Anahda
+anza: Anza
+assaka: Assaka
+ben-serguaou: Ben Serguaou
+bouargane: Bouargane
+boutchakat: Boutchakat
+charaf: Charaf
+cite-adrar: Cité Adrar
+extension-dakhla: Extension Dakhla
+founti: Founti
+haut-anza: Haut Anza
+ain-diab: Ain Diab
+ain-diab-extension: Ain Diab Extension
+anfa-supérieur: Anfa Supérieur
+bourgogne-ouest: Bourgogne Ouest
+elmanar-elhank: El Manar - El Hank
+hay-tasahol: Hay Tasahol
+racine: Racine
+racine-extension: Racine Extension
+triangle-dOr: Triangle d'Or
+al-andalous: Al Andalous
+al-osra: Al Osra
+californie: Californie
+hay-al-fadl: Hay Al Fadl
+hay-al-fath: Hay Al Fath
+hay-chrifa: Hay Chrifa
+hay-haddaouia: Hay Haddaouia
+hay-inara: Hay Inara
+hay-lmkansa: Hay Lmkansa
+hay-moulay-abdellah: Hay Moulay Abdellah
+hay-rmila: Hay Rmila
+lekrimat: Lekrimat
+mandarona: Mandarona
+miamar: Miamar
+beausejour: Beauséjour
+cil-hay-salam: CIL Hay Salam
+casablanca-finance-city: Casablanca Finance City
+city-dar-es-salaam: City Dar Es Salaam
+ferme-bretonne-hay-arraha: Ferme Bretonne Hay Arraha
+hay-al-qods: Hay Al Qods
+hay-zobir: Hay Zobir
+la-floride: La Floride
+laymoune: Laymoune
+lissasfa: Lissasfa
+longchamps-hay-al-hanaa: Longchamps Hay Al Hanâa
+oulfa: Oulfa
+sidi-el-khadir: Sidi El Khadir
+burger: Burger
+derb-ghalef: Derb Ghalef
+franceville: Franceville
+hermitage: Hermitage
+les-hopitaux: Les Hôpitaux
+les-princesses : Les princesses
+maarif-extension: Maârif Extension
+oasis: Oasis
+palmier: Palmier
+plateau-al-batha: Plateau Al Batha
+polo: Polo
+quartier-bachkou: Quartier Bachkou
+riviera: Riviera
+val-fleury: Val Fleury
+ennakhil-palmeraie: Ennakhil-Palmeraie
+gueliz: Guéliz
+kasba: Kasba
+marrakech-medina: Marrakech-Médina
+michouar: Michouar
+menara: Ménara
+route-amizmiz: Route Amizmiz
+route-casablanca: Route Casablanca
+route-dagadir-essaouira: Route d'Agadir - Essaouira
+route-de-fes: Route de Fès
+route-de-ouarzazate: Route de Ouarzazate
+route-de-safi: Route de Safi
+route-de-ourika: Route de l'Ourika
+sidi-youssef-ben-ali: Sidi Youssef Ben Ali

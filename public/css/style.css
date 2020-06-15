@@ -1,12 +1,48 @@
 .search-estate{
     background-color: #413c46;
 }
+.details{
+    text-align: left;
+}
+.city-search-dropdown{
+    display: none;
+    position: absolute;
+    top: 56%;
+    left: 51%;
+    width: 30%;
+    background: #fff;
+    margin-top: .125rem;
+    -webkit-border-radius: .188rem;
+    -moz-border-radius: .188rem;
+    border-radius: .188rem;
+    -webkit-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    -moz-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    padding: .5rem 0;
+    max-height: 25rem;
+    z-index: 125;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.cit-list{
+    padding: .188rem 0;
+    font-size: .875rem;
+    cursor: pointer;
+    list-style-type: none;
+}
+.city-item{
+    padding-left: 20px;
+}
+.city-item:hover{
+    background-color: #d03623;
+    color: #fff;
+}
 .home .advert{
-    height: 490px;
+    height: 450px;
 }
 .thumb-info-inner.title{
     height: 54px;
-    overflow: auto;
+    overflow-y: auto;
 }
 .wishlist-icon{
     color: white;
@@ -17,10 +53,46 @@
     font-size: 26px;
     padding: 5px;
 }
-.wishlist-icon i{
+.wishlist-icon-header{
+    color: white;
+    font-size: 26px;
+    padding: 5px;
+}
+.wishlist-icon i, .wishlist-icon-header i{
     color: #d01212;
 }
-
+.wishlist-icon-header i .count {
+    bottom: 0.1rem;
+    left: calc(100% - .99rem);
+    background: #ef5e4e;
+    color: #fff;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    -webkit-border-radius: .5625rem;
+    -moz-border-radius: .5625rem;
+    border-radius: .5625rem;
+    font-size: .6875rem;
+    line-height: 0;
+    font-weight: 700;
+    padding: 0 0.1875rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: .125rem solid #fff;
+    position: absolute;
+}
 #tel-error{
     position: absolute;
 }
@@ -56,13 +128,16 @@
 }
 
 .thumb-info img{
-    height: 250px;
+    height: 265px;
+}
+.profile .thumb-info img{
+    height: 163px;
 }
 .custom-thumb-info-title{
     color: #000;
 }
 .advert .p-4{
-    padding: 0.9rem 1.2rem !important;
+    padding: 0.9rem 0.6rem !important;
 }
 .advert .title{
     color: #4488cd;
@@ -456,7 +531,7 @@
     padding-bottom: 5px;
 }
 .dropdown ul li a:hover{
-  text-decoration: none;
+    text-decoration: none;
     color: #E36159;
     cursor: pointer;
 }
@@ -699,13 +774,37 @@
     .phone_agent, .email_agent{
         width: 50%;
     }
+
+    .city-search-dropdown {
+        position: absolute;
+        top: 65%;
+        left: 8%;
+        width: 84%;
+        background: #fff;
+        margin-top: .125rem;
+        -webkit-border-radius: .188rem;
+        -moz-border-radius: .188rem;
+        border-radius: .188rem;
+        -webkit-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        -moz-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        padding: .5rem 0;
+        max-height: 25rem;
+        z-index: 125;
+        overflow: hidden;
+        overflow-y: auto;
+    }
 }
 
 @media screen and (min-width: 350px) {
     .order-by {
         margin-right: 1rem;
     }
-
+}
+@media screen and (min-width: 334px) {
+    .first-sort .dropdown-menu{
+        transform: translate3d(-104px, 0px, 0px) !important;
+    }
 }
 
 
@@ -1230,7 +1329,12 @@ html .wizard-progress .steps-progress .progress-indicator, html.dark .wizard-pro
     -webkit-box-shadow: 0px 0px 1px #444;
     box-shadow: 0px 0px 1px #444;
 }
-
+.img-update{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
 
 .form-group label{
     cursor: pointer;
@@ -1241,13 +1345,15 @@ html .wizard-progress .steps-progress .progress-indicator, html.dark .wizard-pro
     max-width: 100px;
     display: block;
     width: 100px;
+    margin-left: 15%;
 }
 .estate-icon-show{
     text-align: center;
     border: 1px solid;
     padding: 15px;
     border-radius: 45px;
-    width: max-content;
+    /*width: max-content;*/
+    width: 100%;
     /*margin-left: 43%;*/
     margin-bottom: 20px;
     cursor: pointer;

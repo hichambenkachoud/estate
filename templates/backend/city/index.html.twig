@@ -37,7 +37,7 @@
                             <th>{{ 'admin.code' | trans }}</th>
                             <th>{{ 'admin.name' | trans }}</th>
                             <th>{{ 'admin.status' | trans }}</th>
-                            <th>{{ 'admin.region' | trans }}</th>
+                            <th>{{ 'admin.province' | trans }}</th>
                             <th>{{ 'admin.create_date' | trans }}</th>
                             <th>{{ 'admin.actions' | trans }}</th>
                         </tr>
@@ -48,7 +48,7 @@
                                 <td>{{ city.code }}</td>
                                 <td>{{ city.name }}</td>
                                 <td>{{ city.enabled ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>' }}</td>
-                                <td>{{ city.region.name }}</td>
+                                <td>{{ city.province.name }}</td>
                                 <td>{{ city.createDate ? city.createDate|date('Y-m-d H:i:s') : '' }}</td>
                                 <td>
                                     <a href="{{ path('city_show', {'id': city.id}) }}"><i class="fas fa-eye"></i></a>

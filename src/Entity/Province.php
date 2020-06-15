@@ -34,10 +34,10 @@ class Province implements \JsonSerializable
     private $enabled;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="provinces")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="provinces")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $city;
+    private $region;
 
     /**
      * @ORM\Column(name="create_date", type="datetime")
@@ -45,14 +45,19 @@ class Province implements \JsonSerializable
     private $createDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Quartier", mappedBy="province", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\City", mappedBy="province", orphanRemoval=true)
      */
-    private $quartiers;
+    private $cities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Adverts", mappedBy="province")
+     */
+    private $adverts;
 
 
     public function __construct()
     {
-        $this->quartiers = new ArrayCollection();
+        $this->cities = new ArrayCollection();
         $this->createDate = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
     }
 
@@ -98,14 +103,14 @@ class Province implements \JsonSerializable
         return $this;
     }
 
-    public function getCity(): ?City
+    public function getRegion(): ?Region
     {
-        return $this->city;
+        return $this->region;
     }
 
-    public function setCity(?City $city): self
+    public function setRegion(?Region $region): self
     {
-        $this->city = $city;
+        $this->region = $region;
 
         return $this;
     }
@@ -123,35 +128,69 @@ class Province implements \JsonSerializable
     }
 
     /**
-     * @return Collection|Quartier[]
+     * @return Collection|City[]
      */
-    public function getProvinces(): Collection
+    public function getCities(): Collection
     {
-        return $this->quartiers;
+        return $this->cities;
     }
 
-    public function addProvince(Quartier $quartier): self
+    public function addCity(City $city): self
     {
-        if (!$this->quartiers->contains($quartier)) {
-            $this->quartiers[] = $quartier;
-            $quartier->setCountry($this);
+        if (!$this->cities->contains($city)) {
+            $this->cities[] = $city;
+            $city->setProvince($this);
         }
 
         return $this;
     }
 
-    public function removeProvince(Quartier $quartier): self
+    public function removeCity(City $city): self
     {
-        if ($this->quartiers->contains($quartier)) {
-            $this->quartiers->removeElement($quartier);
+        if ($this->cities->contains($city)) {
+            $this->cities->removeElement($city);
             // set the owning side to null (unless already changed)
-            if ($quartier->getCountry() === $this) {
-                $quartier->setCountry(null);
+            if ($city->getProvince() === $this) {
+                $city->setProvince(null);
             }
         }
 
         return $this;
     }
+
+
+
+    /**
+     * @return Collection|Adverts[]
+     */
+    public function getAdverts(): Collection
+    {
+        return $this->adverts;
+    }
+
+    public function addAdvert(Adverts $advert): self
+    {
+        if (!$this->adverts->contains($advert)) {
+            $this->adverts[] = $advert;
+            $advert->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdvert(Adverts $advert): self
+    {
+        if ($this->adverts->contains($advert)) {
+            $this->adverts->removeElement($advert);
+            // set the owning side to null (unless already changed)
+            if ($advert->getProvince() === $this) {
+                $advert->setProvince(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
     /**

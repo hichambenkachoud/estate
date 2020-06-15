@@ -11,6 +11,7 @@ class Adverts
 {
 
     const NUM_ITEMS = 10;
+    const NUM_ITEMS_PROFILE = 3;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -183,6 +184,16 @@ class Adverts
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $latitude;
+
+    /**
+     * @ORM\Column(name="neuf", type="boolean", nullable=true)
+     */
+    private $neuf;
+
+    /**
+     * @ORM\Column(name="rent_holiday", type="boolean", nullable=true)
+     */
+    private $rentHoliday;
 
 
 
@@ -629,6 +640,38 @@ class Adverts
         $this->latitude = $latitude;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNeuf()
+    {
+        return $this->neuf;
+    }
+
+    /**
+     * @param mixed $neuf
+     */
+    public function setNeuf($neuf): void
+    {
+        $this->neuf = $neuf;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRentHoliday()
+    {
+        return $this->rentHoliday;
+    }
+
+    /**
+     * @param mixed $rentHoliday
+     */
+    public function setRentHoliday($rentHoliday): void
+    {
+        $this->rentHoliday = $rentHoliday;
     }
 
 

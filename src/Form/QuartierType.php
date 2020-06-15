@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Province;
 use App\Entity\Quartier;
 use Doctrine\ORM\EntityRepository;
@@ -50,16 +51,16 @@ class QuartierType extends AbstractType
                     ]
                 ]
             )
-            ->add('province', EntityType::class,
+            ->add('city', EntityType::class,
                 [
-                    'class' => Province::class,
+                    'class' => City::class,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('u')
                             ->where('u.enabled = true')
                             ->orderBy('u.name', 'ASC');
                     },
-                    'label' => $this->trans->trans('admin.province'),
                     'choice_label' => 'name',
+                    'label' => $this->trans->trans('admin.city'),
                     'placeholder' => $this->trans->trans('admin.choose.options'),
                     'attr' => [
                         'class' => 'form-control populate',

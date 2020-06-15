@@ -109,6 +109,18 @@ class Members implements UserInterface, \Serializable
      */
     private $image;
 
+    /**
+     * @var $wishNumber
+     * @ORM\Column(name="wish_number", type="integer", nullable=true)
+     */
+    private $wishNumber;
+
+    /**
+     * @var $wishList
+     * @ORM\Column(name="wish_list", type="string", length=255, nullable=true)
+     */
+    private $wishList;
+
     public function __construct()
     {
         $this->createDate = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
@@ -393,6 +405,44 @@ class Members implements UserInterface, \Serializable
     public function setImage($image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWishNumber()
+    {
+        return $this->wishNumber;
+    }
+
+    /**
+     * @param mixed $wishNumber
+     */
+    public function setWishNumber($wishNumber): void
+    {
+        $this->wishNumber = $wishNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWishList()
+    {
+        return $this->wishList;
+    }
+
+    /**
+     * @param mixed $wishList
+     */
+    public function setWishList($wishList): void
+    {
+        $this->wishList = $wishList;
+    }
+
+
+    public function getAllWishes(){
+
+        return  json_decode($this->wishList, true);
     }
 
 

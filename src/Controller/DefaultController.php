@@ -10,6 +10,7 @@ use App\Entity\City;
 use App\Entity\EstateStatus;
 use App\Entity\EstateType;
 use App\Entity\Members;
+use App\Entity\Province;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class DefaultController extends AbstractController
         $specialAdvert = $this->entityManager->getRepository(Adverts::class)->findOneSpecial();
 
         //var_dump($specialAdvert);die();
-        $cities = $this->entityManager->getRepository(City::class)->findBySomeIds();
+        $provinces = $this->entityManager->getRepository(Province::class)->findBySomeIds();
 
         return $this->render('frontend/static/index.html.twig',
            [
@@ -60,7 +61,7 @@ class DefaultController extends AbstractController
                'estateStatus' => $estateStatus,
                'adverts' => $adverts,
                'members' => $members,
-               'cities' => $cities,
+               'cities' => $provinces,
                'specialAdvert' => $specialAdvert
            ]);
     }

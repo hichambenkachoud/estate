@@ -34,10 +34,10 @@ class Quartier implements \JsonSerializable
     private $enabled;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="quarties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="quarties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $province;
+    private $city;
 
     /**
      * @ORM\Column(name="create_date", type="datetime")
@@ -90,14 +90,15 @@ class Quartier implements \JsonSerializable
         return $this;
     }
 
-    public function getProvince(): ?Province
+    public function getCity(): ?City
+
     {
-        return $this->province;
+        return $this->city;
     }
 
-    public function setProvince(?Province $province): self
+    public function setCity(?City $city): self
     {
-        $this->province = $province;
+        $this->city = $city;
 
         return $this;
     }

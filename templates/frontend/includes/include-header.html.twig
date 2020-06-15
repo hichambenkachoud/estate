@@ -68,21 +68,13 @@
                                                     <a class="dropdown-item" href="#">{{ 'front.contactus' |trans }}</a>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li>#}
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="{{ path('front_index') }}">
-                                                {{ 'front.property' |trans}}
+                                            <a class="dropdown-item dropdown-toggle" href="{{ path('front_estate_neuf_search') }}">
+                                                {{ 'front.estate.neuf' |trans}}
                                             </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ path('search-advert') }}?advertType=1">{{ 'sell'|trans}}</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ path('search-advert') }}?advertType=2">{{ 'rent'|trans}}</a>
-                                                </li>
-                                            </ul>
                                         </li>
-                                        #}
+
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle" href="{{ path('front_agency_index') }}">
                                                 {{ 'front.agent.found'| trans }}
@@ -129,6 +121,17 @@
                                                 </ul>
                                             </li>
                                         {% endif %}
+                                        <li class="dropdown d-none d-sm-block">
+                                            <div class="wishlist-icon-header">
+                                                <a href="#">
+                                                    <i class="far fa-heart" aria-hidden="true">
+                                                        {% if app.user.wishNumber > 0 %}
+                                                            <span class="count" id="wish-list-count">{{ app.user.wishNumber }}</span>
+                                                        {% endif %}
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>

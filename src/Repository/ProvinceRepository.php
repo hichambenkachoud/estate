@@ -47,4 +47,14 @@ class ProvinceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findBySomeIds()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.code IN (:val)')
+            ->setParameter('val', ['casablanca', 'rabat', 'marrakech'])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

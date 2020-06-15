@@ -41,7 +41,7 @@
                                         <div class="thumb-info-wrapper m-0">
 
                                             <img src="{{ asset('uploads/' ~ advert.images ~ '/0.png') }}"
-                                                 class="img-fluid" alt="{{ advert.title }}" id="advert-img-{{ advert.id }}">
+                                                 class="img-fluid" alt="{{ advert.title }}" id="advert-img-{{ advert.id }}" style="height: 170px;">
                                             <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3">
                                                 {{ advert.advertType.code|trans }}
                                             </div>
@@ -67,11 +67,17 @@
                                             <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}">{{ advert.title|striptags }}</div>
                                             <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
                                             <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
-                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {{ advert.quartier ? (advert.quartier.name|trans)~',' : ''  }} {{ advert.city ? (advert.city.name|trans) : ''  }}</div>
+                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {#{{ advert.quartier ? (advert.quartier.code|trans)~',' : ''  }} #}{{ advert.city ? (advert.city.code|trans) : ''  }} {{ advert.province ? (', '~ advert.province.code|trans) : ''  }}</div>
                                             <div class="thumb-info-inner text-4" style="color: #4488cd;">
                                                 {{ advert.estateType ? advert.estateType.code | trans : ' '}}
                                                 <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
                                             </div>
+                                            {% if advert.estateType.code in ['apartment', 'studio', 'duplex', 'villa', 'house', 'riad'] %}
+                                            <div class="thumb-info-inner text-2">
+                                                {% if advert.bedrooms %}<span><b>{{ advert.bedrooms }}</b> {{ advert.bedrooms > 1 ? 'front.bedrooms'|trans :  'front.bedroom'|trans}}</span>{% endif %}
+                                                {% if advert.bathrooms %}<span><b>{{ advert.bathrooms }}</b> {{ advert.bathrooms > 1 ? 'front.bathrooms'|trans : 'front.bathroom'|trans }}</span>{% endif %}
+                                            </div>
+                                            {% endif %}
                                         </div>
                                         <div class="custom-thumb-info-title p-4 col-md-12 row" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
                                             <div class="col-md-6 phone_agent" data-tel="{{ advert.mobileNumber }}">
@@ -255,19 +261,37 @@
             e.preventDefault();
         });
 
-        $('.wishlist-icon').on('click', function (e) {
-            let $div = $(this);
-            let $icon = $div.find('i');
+        $('#search-city').on('keyup', function () {
+            let $city = $(this).val();
+            let $searchDiv = $('.cit-list');
 
-            if ($icon.hasClass('fas fa-heart')){
-                $icon.removeClass('fas fa-heart');
-                $icon.addClass('far fa-heart');
-            } else if ($icon.hasClass('far fa-heart')) {
-                $icon.removeClass('far fa-heart');
-                $icon.addClass('fas fa-heart');
+            if ($city.length > 0){
+                $('.city-search-dropdown').show();
+                $searchDiv.html(' ');
+                $.ajax({
+                    url: "{{ url('ajax_search_city_quartier') }}",
+                    data: JSON.stringify({city: $city}),
+                    dataType: 'JSON',
+                    method: "POST",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.response.cities.length > 0){
+                            $.each(data.response.cities, function ($i, $v) {
+                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                            });
+                        }
+                    },
+                    error: function (a, b, c) {
+                        console.log(a, b, c);
+                    },
+                    complete:function () {
+                    }
+                });
+            } else{
+                $('.city-search-dropdown').hide();
             }
-            e.preventDefault();
 
-        })
+
+        });
     </script>
 {% endblock %}

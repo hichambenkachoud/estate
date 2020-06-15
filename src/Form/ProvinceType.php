@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\City;
 use App\Entity\Province;
+use App\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -50,16 +51,16 @@ class ProvinceType extends AbstractType
                     ]
                 ]
             )
-            ->add('city', EntityType::class,
+            ->add('region', EntityType::class,
                 [
-                    'class' => City::class,
+                    'class' => Region::class,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('u')
                             ->where('u.enabled = true')
                             ->orderBy('u.name', 'ASC');
                     },
                     'choice_label' => 'name',
-                    'label' => $this->trans->trans('admin.city'),
+                    'label' => $this->trans->trans('admin.region'),
                     'placeholder' => $this->trans->trans('admin.choose.options'),
                     'attr' => [
                         'class' => 'form-control populate',

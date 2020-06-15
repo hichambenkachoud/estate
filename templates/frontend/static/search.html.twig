@@ -3,18 +3,21 @@
         var $rentType = $('#rent-type');
         var $forSell = $('.for-sell');
         var $forRent = $("[class*='for-rent']");
+        var $forRentHoliday = $(".for-rent-holiday");
 
         let $type = $('.advertTypeRadio:checked').data('code');
         let $rentTypeSelected = $('#adverts-rent').children("option:selected").val();
         if ($type == 'rent'){
             $('#adverts-rent').attr('disabled', false);
             $rentType.show();
+            $forRentHoliday.show();
             showPriceDiv($rentTypeSelected ? undefined : 'day');
             $forSell.hide();
         } else{
             $('#adverts-rent').attr('disabled', true);
             $forRent.hide();
             $rentType.hide();
+            $forRentHoliday.hide();
             $forSell.show();
         }
         // change advert type: sell or rent

@@ -76,8 +76,8 @@
 
                             <table class="table table-striped">
                                 <colgroup>
-                                    <col width="35%">
-                                    <col width="65%">
+                                    <col width="50%">
+                                    <col width="50%">
                                 </colgroup>
                                 <tbody>
                                 <tr>
@@ -103,7 +103,7 @@
                                         {{ 'front.reference'|trans }}
                                     </td>
                                     <td>
-                                        #{{ advert.reference }}
+                                        {{ advert.reference|slice(8, 6) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,6 +116,17 @@
                                         </td>
                                     {% endif %}
                                 </tr>
+                                {% if  advert.quartier %}
+                                <tr>
+                                    <td>
+                                        {{ 'front.quartier'|trans }}
+                                    </td>
+                                    <td>
+                                        {{ advert.quartier.code|lower|trans }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% if  advert.city %}
                                 <tr>
                                     <td>
                                         {{ 'front.city'|trans }}
@@ -124,6 +135,17 @@
                                         {{ advert.city.code|lower|trans }}
                                     </td>
                                 </tr>
+                                {% endif %}
+                                {% if  advert.province %}
+                                <tr>
+                                    <td>
+                                        {{ 'front.province'|trans }}
+                                    </td>
+                                    <td>
+                                        {{ advert.province.code|lower|trans }}
+                                    </td>
+                                </tr>
+                                {% endif %}
                                 {% if advert.age is not empty %}
                                     <tr>
                                         <td>
@@ -134,24 +156,13 @@
                                         </td>
                                     </tr>
                                 {% endif %}
-
-                                {% if advert.rooms is not empty %}
-                                    <tr>
-                                        <td>
-                                            {{ 'front.rooms'|trans }}
-                                        </td>
-                                        <td>
-                                            {{ advert.rooms }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
                                 {% if advert.bedrooms is not empty %}
                                     <tr>
                                         <td>
                                             {{ 'front.bedrooms'|trans }}
                                         </td>
                                         <td>
-                                            {{ ('front.bedrooms'~advert.bedrooms)|trans }}
+                                            {{ advert.bedrooms }}
                                         </td>
                                     </tr>
                                 {% endif %}
@@ -161,7 +172,7 @@
                                             {{ 'front.bathrooms'|trans }}
                                         </td>
                                         <td>
-                                            {{ advert.bedrooms }}
+                                            {{ advert.bathrooms }}
                                         </td>
                                     </tr>
                                 {% endif %}
@@ -247,7 +258,7 @@
                                     <a href="#" class="text-decoration-none">
 												<span class="agent-thumb">
 													<img class="img-fluid rounded-circle"
-                                                         src="{{ asset('images/agents/' ~ advert.images ) }}"
+                                                         src="{{ asset('uploads/members/' ~ advert.member.image ) }}"
                                                          alt/>
 												</span>
                                         <span class="agent-infos text-light pt-3 mb-4">
@@ -370,36 +381,6 @@
             });
 
             e.preventDefault();
-        });
-
-        $('#regions').on('change', function () {
-            let region = $(this).val();
-            let citySelect = $('#cities');
-            let cityDev = $('#city-list');
-            $.ajax({
-                url: "{{ path('ajax_get_city_of_region') }}",
-                data: JSON.stringify({region: region}),
-                dataType: "json",
-                method : "POST",
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data.response.cities.length > 0){
-                        cityDev.show();
-                        citySelect.prop('disabled', false);
-                        citySelect.prop('required', true);
-                        citySelect.html('<option value="">{{ 'front.choose.option'|trans }}</option>');
-                        $.each(data.response.cities, function ($i, $v) {
-                            citySelect.append('<option value="' + $v["id"] + '">' + $v["code"] + '</option>');
-                        });
-                    }
-
-                },
-                error: function (a, b, c) {
-                    console.log(a, b, c);
-                },
-                complete:function () {
-                }
-            });
         });
     </script>
 

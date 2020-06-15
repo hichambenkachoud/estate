@@ -40,9 +40,9 @@ class Region
     private $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\City", mappedBy="region", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Province", mappedBy="region", orphanRemoval=true)
      */
-    private $cities;
+    private $provinces;
 
     /**
      * @ORM\Column(name="create_date", type="datetime")
@@ -51,7 +51,7 @@ class Region
 
     public function __construct()
     {
-        $this->cities = new ArrayCollection();
+        $this->provinces = new ArrayCollection();
         $this->createDate = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
     }
 
@@ -121,30 +121,30 @@ class Region
     }
 
     /**
-     * @return Collection|City[]
+     * @return Collection|Province[]
      */
-    public function getCities(): Collection
+    public function getProvinces(): Collection
     {
-        return $this->cities;
+        return $this->provinces;
     }
 
-    public function addCity(City $city): self
+    public function addProvince(Province $province): self
     {
-        if (!$this->cities->contains($city)) {
-            $this->cities[] = $city;
-            $city->setCountry($this);
+        if (!$this->provinces->contains($province)) {
+            $this->provinces[] = $province;
+            $province->setRegion($this);
         }
 
         return $this;
     }
 
-    public function removeCity(City $city): self
+    public function removeProvince(Province $province): self
     {
-        if ($this->cities->contains($city)) {
-            $this->cities->removeElement($city);
+        if ($this->provinces->contains($province)) {
+            $this->provinces->removeElement($province);
             // set the owning side to null (unless already changed)
-            if ($city->getCountry() === $this) {
-                $city->setCountry(null);
+            if ($province->getRegion() === $this) {
+                $province->setRegion(null);
             }
         }
 

@@ -11,6 +11,7 @@ use App\Entity\Country;
 use App\Entity\EstateCharacteristics;
 use App\Entity\EstateStatus;
 use App\Entity\EstateType;
+use App\Entity\Members;
 use App\Entity\Province;
 use App\Entity\Quartier;
 use App\Entity\Region;
@@ -84,6 +85,8 @@ class AdvertController extends AbstractController
            $advert->setRentType(isset($advertPost['rentType']) ? $advertPost['rentType'] : null);
            $advert->setLongitude(isset($advertPost['longitude']) ? $advertPost['longitude'] : null);
            $advert->setLatitude(isset($advertPost['latitude']) ? $advertPost['latitude'] : null);
+           $advert->setNeuf(isset($advertPost['neuf']) ? boolval($advertPost['neuf']) : 0);
+           $advert->setRentHoliday(isset($advertPost['rentHoliday']) ? boolval($advertPost['rentHoliday']) : 0);
            $advert->setMember($member);
            $dirName = time().rand(0000,9999);
            $advert->setImages($dirName);
@@ -151,12 +154,12 @@ class AdvertController extends AbstractController
      */
     public function getAdvertByCity($city,  $id, $page = 1)
     {
-        /** @var City $advertCity */
-        $advertCity = $this->entity_manager->getRepository(City::class)->find($id);
+        /** @var Province $advertProvince */
+        $advertProvince = $this->entity_manager->getRepository(Province::class)->find($id);
 
-        if (!$advertCity){
+        if (!$advertProvince){
             return $this->redirectToRoute('front_index');
-        }elseif ($city != strtolower($advertCity->getCode())){
+        }elseif ($city != strtolower($advertProvince->getCode())){
             return $this->redirectToRoute('front_index');
         }
 
@@ -165,12 +168,12 @@ class AdvertController extends AbstractController
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
 
-        $adverts = $this->entity_manager->getRepository(Adverts::class)->findAdvertsByCity($advertCity, $page, Adverts::NUM_ITEMS);
+        $adverts = $this->entity_manager->getRepository(Adverts::class)->findAdvertsByCity($advertProvince, $page, Adverts::NUM_ITEMS);
         $total = count($adverts);
 
 
         return $this->render('frontend/advert/list-city.html.twig', [
-            'advertCity' => $advertCity,
+            'advertCity' => $advertProvince,
             'advertTypes' => $advertTypes,
             'estateTypes' => $estateTypes,
             'estateStatus' => $estateStatus,
@@ -188,7 +191,7 @@ class AdvertController extends AbstractController
      */
     public function searchAdvert(Request $request){
 
-        $advertTypeRequest = $rentTypeRequest = $estateTypeRequest = $priceMin = $priceMax = $areaMin = $areaMax = $publication = $sorted = null;
+        $advertTypeRequest = $rentTypeRequest = $estateTypeRequest = $priceMin = $priceMax = $areaMin = $areaMax = $publication = $sorted = $neuf = $rentHoliday = null;
         $rooms = $advertStatusRequest = $floors = $adverts = $bathrooms = $characters = array();
 
         if ($request->get('page') && !empty($request->get('page'))){
@@ -205,6 +208,12 @@ class AdvertController extends AbstractController
         if ($request->get('estateType') && !empty($request->get('estateType'))){
             $estateTypeRequest = $request->get('estateType');
         }
+        if ($request->get('immeubleNeuf') && !empty($request->get('immeubleNeuf'))){
+            $neuf = intval($request->get('immeubleNeuf'));
+        }
+        if ($request->get('rentHoliday') && !empty($request->get('rentHoliday'))){
+            $rentHoliday = intval($request->get('rentHoliday'));
+        }
         /** @var AdvertType $advertType */
         $advertType = $this->entity_manager->getRepository(AdvertType::class)->find(intval($advertTypeRequest));
         if ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
@@ -214,7 +223,7 @@ class AdvertController extends AbstractController
             if ($request->get('priceMax') && !empty($request->get('priceMax'))){
                 $priceMax = intval($request->get('priceMax'));
             }
-        }elseif ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
+        }elseif ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_RENT){
             if ($rentTypeRequest == AdvertType::RENT_DAY){
                 if ($request->get('priceMinDay') && !empty($request->get('priceMinDay'))){
                     $priceMin = intval($request->get('priceMinDay'));
@@ -268,9 +277,9 @@ class AdvertController extends AbstractController
         }
 
         if ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
-            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $page, Adverts::NUM_ITEMS);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $neuf, $page, Adverts::NUM_ITEMS);
         }elseif ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_RENT){
-            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllRentByCriteria($rentTypeRequest, $estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $page, Adverts::NUM_ITEMS);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllRentByCriteria($rentTypeRequest, $estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $rentHoliday, $page, Adverts::NUM_ITEMS);
         }else{
             $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllValid($page, Adverts::NUM_ITEMS);
         }
@@ -403,9 +412,9 @@ class AdvertController extends AbstractController
         /** @var AdvertType $advertType */
         $advertType = $this->entity_manager->getRepository(AdvertType::class)->findOneBy(['code' => AdvertType::ADVERT_TYPE_RENT]);
 
-        $cityObj = $this->entity_manager->getRepository(City::class)->find(intval($cityId));
-        if ($cityObj && strtolower($cityObj->getCode() == $city)){
-            $cityType = $cityObj;
+        $provinceObj = $this->entity_manager->getRepository(Province::class)->find(intval($cityId));
+        if ($provinceObj && strtolower($provinceObj->getCode() == $city)){
+            $cityType = $provinceObj;
         }
 
         /** @var EstateType $estateTypeR */
@@ -458,9 +467,9 @@ class AdvertController extends AbstractController
         /** @var AdvertType $advertType */
         $advertType = $this->entity_manager->getRepository(AdvertType::class)->findOneBy(['code' => AdvertType::ADVERT_TYPE_SELL]);
 
-        $cityObj = $this->entity_manager->getRepository(City::class)->find(intval($cityId));
-        if ($cityObj && strtolower($cityObj->getCode() == $city)){
-            $cityType = $cityObj;
+        $provinceObj = $this->entity_manager->getRepository(Province::class)->find(intval($cityId));
+        if ($provinceObj && strtolower($provinceObj->getCode() == $city)){
+            $cityType = $provinceObj;
         }
 
         /** @var EstateType $estateTypeR */
@@ -495,6 +504,263 @@ class AdvertController extends AbstractController
             'total' => $total,
             'subject' => 'front.sell.'.$estate.'.'.$city
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route(path="/mon_profil/adverts/{page}", name="front_profile_adverts", methods={"GET"})
+     */
+    public function profileAdverts(Request $request, $page = 1)
+    {
+        $member = $this->getUser();
+        if ($request->get('page') && !empty($request->get('page'))){
+            $page = intval($request->get('page'));
+        }
+        $adverts = $this->entity_manager->getRepository(Adverts::class)->findByMemberPaginated($member, $page, Adverts::NUM_ITEMS_PROFILE);
+
+        //var_dump($adverts);die();
+        $total = count($adverts);
+
+        return $this->render('frontend/advert/profile_adverts.html.twig', [
+            'adverts' => $adverts,
+            'page_count' => ceil($total/Adverts::NUM_ITEMS_PROFILE),
+            'total' => $total,
+            'current_page' => $page
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route(path="/mon_profil/advert/{id}", name="front_profile_adverts_update", methods={"GET", "POST"})
+     */
+    public function profileUpdateAdvert(Request $request, $id)
+    {
+        $member = $this->getUser();
+        $reload = false;
+        /** @var Adverts $advert */
+        $advert = $this->entity_manager->getRepository(Adverts::class)->findOneBy(['member' => $member, 'id' => $id]);
+
+        if (!$advert){
+            return $this->redirectToRoute('front_profile_adverts');
+        }
+
+        $characteristic = null;
+        $charIds = json_decode($advert->getCharacteristics(), true);
+        $images = array_diff(scandir(__DIR__.'/../../public/uploads/'.$advert->getImages()), ['.', '..']);
+
+        if ($request->isMethod(Request::METHOD_POST) && isset($_POST['adverts'])){
+            $advertPost = $_POST['adverts'];
+            $advert->setAdvertType($this->getAdvertType(intval($advertPost['advert_type'])));
+            $advert->setEstateType($this->getEstateType(intval($advertPost['estateType'])));
+            $advert->setEstateStatus($this->getEstateStatus(intval($advertPost['estate_status'])));
+            $advert->setArea(floor($advertPost['area']));
+            $advert->setPrice(floor($advertPost['price']));
+            $advert->setRooms(isset($advertPost['rooms']) ? intval($advertPost['rooms']) : 0);
+            $advert->setBathrooms(isset($advertPost['bathrooms']) ? intval($advertPost['bathrooms']) : 0);
+            $advert->setBedrooms(isset($advertPost['bedrooms']) ? intval($advertPost['bedrooms']) : 0);
+            $advert->setFloor(isset($advertPost['floor']) ? intval($advertPost['floor']) : 0);
+            $advert->setSoilType(isset($advertPost['soil']) ? $advertPost['soil'] : null);
+            $advert->setCapacity(isset($advertPost['capacity']) ? intval($advertPost['capacity']) : 0);
+            $advert->setMinNight(isset($advertPost['min_night']) ? intval($advertPost['min_night']) : 0);
+            $advert->setCharacteristics(isset($advertPost['characteristics']) ? json_encode($advertPost['characteristics']) : json_encode(null));
+            $advert->setAddress(isset($advertPost['address']) ? $advertPost['address'] : null);
+            $advert->setCountry($this->getCountry());
+            $advert->setRegion($this->getRegion(isset($advertPost['region']) ? intval($advertPost['region']) : 0));
+            $advert->setCity($this->getCity(isset($advertPost['city']) ? intval($advertPost['city']) : 0));
+            $advert->setProvince($this->getProvince(isset($advertPost['province']) ? intval($advertPost['province']) : 0));
+            $advert->setQuartier($this->getQuartier(isset($advertPost['quartier']) ? intval($advertPost['quartier']) : 0));
+            $advert->setDescription(isset($advertPost['description']) ? $advertPost['description'] : null);
+            $advert->setTitle(isset($advertPost['title']) ? $advertPost['title'] : null);
+            $advert->setMobileNumber(isset($advertPost['tel']) ? $advertPost['tel'] : null);
+            $advert->setAge(isset($advertPost['age']) ? $advertPost['age'] : null);
+            $advert->setRentType(isset($advertPost['rentType']) ? $advertPost['rentType'] : null);
+            $advert->setLongitude(isset($advertPost['longitude']) ? $advertPost['longitude'] : null);
+            $advert->setLatitude(isset($advertPost['latitude']) ? $advertPost['latitude'] : null);
+            $advert->setNeuf(isset($advertPost['neuf']) ? boolval($advertPost['neuf']) : 0);
+            $advert->setRentHoliday(isset($advertPost['rentHoliday']) ? boolval($advertPost['rentHoliday']) : 0);
+            $advert->setMember($member);
+
+
+            try{
+                $this->entity_manager->flush();
+
+                if (isset($_FILES['adverts']['name'])){
+
+                    $countFiles = count($_FILES['adverts']['name']);
+                    $uploadsDir = $this->getParameter('uploads_directory');
+                    $newDirName = $uploadsDir.$advert->getImages();
+
+                    for($i=0; $i< $countFiles; $i++)
+                    {
+                        $fileName = basename($_FILES['adverts']['name'][$i]);
+                        if (empty($fileName)){
+                            continue;
+                        }
+                        $targetFilePath = $newDirName . '/' .$fileName;
+                        $explodeFileName = explode('.', $fileName);
+                        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+                        if (count($explodeFileName) > 2){
+                            throw new \Exception('file.invalid');
+                        }
+
+                        if (!in_array(strtolower($fileType), self::EXTENSIONS)){
+                            throw new \Exception('file.extension.invalid');
+                        }
+                        $targetFilePath = $newDirName . '/' .rand(0000,9999).'.png';
+                        move_uploaded_file($_FILES["adverts"]["tmp_name"][$i], $targetFilePath);
+
+                        if (!is_file($newDirName . '/0.png')){
+                            rename($targetFilePath, $newDirName . '/0.png');
+                        }
+                    }
+                }
+
+
+                $this->addFlash('success', $this->trans->trans('front.advert.update.success'));
+                $reload = true;
+                //return $this->redirectToRoute('front_profile_adverts');
+            }catch (\Exception $e){
+                $this->addFlash('error', $e->getMessage());
+            }
+
+        }
+
+        $advertTypes = $this->entity_manager->getRepository(AdvertType::class)->findBy(['enabled' => true]);
+        $estateTypes = $this->entity_manager->getRepository(EstateType::class)->findBy(['enabled' => true]);
+        $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
+        $characteristics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled'=>true]);
+        $regions = $this->entity_manager->getRepository(Region::class)->findBy(['enabled'=>true]);
+        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled'=>true, 'region' => $advert->getRegion()]);
+        $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled'=>true, 'province' => $advert->getProvince()]);
+        $quartiers = $this->entity_manager->getRepository(Quartier::class)->findBy(['enabled'=>true, 'city' => $advert->getCity()]);
+
+
+
+        return $this->render('frontend/advert/profile_single_advert.html.twig', [
+            'advert' => $advert,
+            'advertTypes' => $advertTypes,
+            'estateTypes' => $estateTypes,
+            'estatesStatus' => $estateStatus,
+            'characteristics' => $characteristics,
+            'regions' => $regions,
+            'provinces' => $provinces,
+            'cities' => $cities,
+            'quartiers' => $quartiers,
+            'charIds' => $charIds,
+            'images' => $images,
+            'reload' => $reload
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route(path="/mon_profil/wishes/{page}", name="front_profile_wishes", methods={"GET"})
+     */
+    public function profileWishList(Request $request, $page = 1)
+    {
+        /** @var Members $member */
+        $member = $this->getUser();
+        if ($request->get('page') && !empty($request->get('page'))){
+            $page = intval($request->get('page'));
+        }
+        $wishListArray = $adverts = array();
+        if (!empty($member->getWishList())){
+            $wishListArray = json_decode($member->getWishList(), true);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllWishesBYMemberPaginated($wishListArray, $page, Adverts::NUM_ITEMS_PROFILE);
+        }
+        $total = count($adverts);
+
+        return $this->render('frontend/advert/profile_wish.html.twig', [
+            'adverts' => $adverts,
+            'page_count' => ceil($total/Adverts::NUM_ITEMS_PROFILE),
+            'total' => $total,
+            'current_page' => $page
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @Route(path="/estates/neuf", name="front_estate_neuf_search", methods={"GET"})
+     * @return Response
+     */
+    public function newEstate(Request $request){
+
+        $estateTypeRequest = $priceMin = $priceMax = $areaMin = $areaMax = $publication = $sorted = null;
+        $rooms = $advertStatusRequest = $floors = $adverts = $bathrooms = $characters = array();
+
+        if ($request->get('page') && !empty($request->get('page'))){
+            $page = intval($request->get('page'));
+        }else{
+            $page=1;
+        }
+        if ($request->get('estateType') && !empty($request->get('estateType'))){
+            $estateTypeRequest = $request->get('estateType');
+        }
+        /** @var AdvertType $advertType */
+        $advertType = $this->entity_manager->getRepository(AdvertType::class)->findOneBy(['code' => AdvertType::ADVERT_TYPE_SELL]);
+        if ($request->get('priceMin') && !empty($request->get('priceMin'))){
+            $priceMin = intval($request->get('priceMin'));
+        }
+        if ($request->get('priceMax') && !empty($request->get('priceMax'))){
+            $priceMax = intval($request->get('priceMax'));
+        }
+
+        if ($request->get('areaMin') && !empty($request->get('areaMin'))){
+            $areaMin = $request->get('areaMin');
+        }
+        if ($request->get('areaMax') && !empty($request->get('areaMax'))){
+            $areaMax = $request->get('areaMax');
+        }
+        if ($request->get('rooms') && !empty($request->get('rooms'))){
+            $rooms = $request->get('rooms');
+        }
+        if ($request->get('bathrooms') && !empty($request->get('rooms'))){
+            $bathrooms = $request->get('bathrooms');
+        }
+        if ($request->get('chars') && !empty($request->get('chars'))){
+            $characters = $request->get('chars');
+        }
+        if ($request->get('status') && !empty($request->get('status'))){
+            $advertStatusRequest = $request->get('status');
+        }
+        if ($request->get('floor') && !empty($request->get('floor'))){
+            $floors = $request->get('floor');
+        }
+        if ($request->get('publication') && !empty($request->get('publication'))){
+            $publication = $request->get('publication');
+        }
+        if ($request->get('sorted') && !empty($request->get('sorted'))){
+            $sorted = $request->get('sorted');
+        }
+
+        if ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellNeufByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $page, Adverts::NUM_ITEMS);
+        }else{
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllNeufValid($page, Adverts::NUM_ITEMS);
+        }
+
+
+
+        $advertTypes = $this->entity_manager->getRepository(AdvertType::class)->findBy(['enabled' => true, 'code' => 'sell']);
+        $estateTypes = $this->entity_manager->getRepository(EstateType::class)->findBy(['enabled' => true]);
+        $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
+        $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
+
+        //var_dump($adverts);die();
+        $total = count($adverts);
+
+
+        return $this->render('frontend/advert/search-advert-neuf.html.twig', [
+            'advertTypes' => $advertTypes,
+            'estateTypes' => $estateTypes,
+            'estateStatus' => $estateStatus,
+            'current_page' => $page,
+            'chars' => $characterstics,
+            'adverts' => $adverts,
+            'page_count' => ceil($total/Adverts::NUM_ITEMS),
+            'total' => $total
+        ]);
+
     }
 
 
