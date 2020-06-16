@@ -77,7 +77,15 @@
                                                     </div>
                                                     <div class="custom-thumb-info-title b-normal p-4">
                                                         <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}" style="font-size: 1.1em !important;">{{ advert.title }}</div>
-                                                        <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {{ advert.quartier ? (advert.quartier.name|trans)~',' : ''  }} {{ advert.city ? (advert.city.name|trans) : ''  }}</div>
+                                                        <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i>
+                                                            {% if advert.quartier %}
+                                                                {{ advert.quartier.code|trans }}, {{ advert.quartier.city.code|trans }}
+                                                            {% elseif advert.city %}
+                                                                {{ advert.city.code|trans }}, {{ advert.province.code|trans }}
+                                                            {% else %}
+                                                                {{ advert.province.code|trans }}
+                                                            {% endif %}
+                                                        </div>
                                                         <div class="thumb-info-inner text-4" style="color: #4488cd;">
                                                             {{ advert.estateType ? advert.estateType.code | trans : ' '}}
                                                             <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>

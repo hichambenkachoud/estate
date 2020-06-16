@@ -420,12 +420,14 @@ front:
   agency.contact.success: Your message has been sent to the agency
   agency.not-available: The agency is no longer available
   no_result: We have no property, at the moment, which corresponds to your search
+  no_result_city: No results match your search
   rent.time: Rental time
   rent.holiday: Vacation location
   estate.neuf: New real estate
   neuf: New
   my_adverts: My announcements
   wish.list: Recorded announcements
+  city.quartier: District or City
 
 yes: Yes
 no: No

@@ -67,7 +67,15 @@
                                             <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}">{{ advert.title|striptags }}</div>
                                             <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
                                             <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
-                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {#{{ advert.quartier ? (advert.quartier.code|trans)~',' : ''  }} #}{{ advert.city ? (advert.city.code|trans) : ''  }} {{ advert.province ? (', '~ advert.province.code|trans) : ''  }}</div>
+                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i>
+                                                {% if advert.quartier %}
+                                                    {{ advert.quartier.code|trans }}, {{ advert.quartier.city.code|trans }}
+                                                {% elseif advert.city %}
+                                                    {{ advert.city.code|trans }}, {{ advert.province.code|trans }}
+                                                {% else %}
+                                                    {{ advert.province.code|trans }}
+                                                {% endif %}
+                                            </div>
                                             <div class="thumb-info-inner text-4" style="color: #4488cd;">
                                                 {{ advert.estateType ? advert.estateType.code | trans : ' '}}
                                                 <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
@@ -264,9 +272,10 @@
         $('#search-city').on('keyup', function () {
             let $city = $(this).val();
             let $searchDiv = $('.cit-list');
+            let $dropdownDiv = $('.city-search-dropdown');
 
             if ($city.length > 0){
-                $('.city-search-dropdown').show();
+                $dropdownDiv.show();
                 $searchDiv.html(' ');
                 $.ajax({
                     url: "{{ url('ajax_search_city_quartier') }}",
@@ -275,10 +284,13 @@
                     method: "POST",
                     contentType: 'application/json',
                     success: function (data) {
+                        $searchDiv.html(' ');
                         if (data.response.cities.length > 0){
                             $.each(data.response.cities, function ($i, $v) {
-                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code='+$v["name"]+'">' + $v["code"] + '</option>');
+                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code="'+$v["name"]+'">' + $v["code"] + '</li>');
                             });
+                        }else{
+                            $searchDiv.html('<li class="no-result">{{ 'front.no_result_city'|trans }}</li>');
                         }
                     },
                     error: function (a, b, c) {
@@ -288,10 +300,18 @@
                     }
                 });
             } else{
-                $('.city-search-dropdown').hide();
+                $dropdownDiv.hide();
             }
+        });
 
+        $(document).on('click', '.city-item', function () {
+            let $dropdownDiv = $('.city-search-dropdown');
+            let $name = $(this).data('code');
+            $('#input-city').val($name);
+            let $nameToShow = $(this).html();
+            $('#search-city').val($nameToShow);
 
+            $dropdownDiv.hide();
         });
     </script>
 {% endblock %}

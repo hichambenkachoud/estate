@@ -91,7 +91,7 @@
                                             {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
                                         </div>
                                         <div class="thumb-info-listing-type wishlist-icon">
-                                            {% if advert.id in app.user.allWishes %}
+                                            {% if app.user and advert.id in app.user.allWishes %}
                                                 <i class="fas fa-heart" aria-hidden="true"></i>
                                             {% else %}
                                                 <i class="far fa-heart" aria-hidden="true"></i>
@@ -118,7 +118,15 @@
                                             <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}" style="font-size: 1.1em !important;">{{ advert.title }}</div>
                                             <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
                                             <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
-                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i> {{ advert.quartier ? (advert.quartier.name|trans)~',' : ''  }} {{ advert.city ? (advert.city.name|trans) : ''  }}</div>
+                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i>
+                                                {% if advert.quartier %}
+                                                    {{ advert.quartier.code|trans }}, {{ advert.quartier.city.code|trans }}
+                                                {% elseif advert.city %}
+                                                    {{ advert.city.code|trans }}, {{ advert.province.code|trans }}
+                                                {% else %}
+                                                    {{ advert.province.code|trans }}
+                                                {% endif %}
+                                            </div>
                                             <div class="thumb-info-inner text-4" style="color: #4488cd;">
                                                 {{ advert.estateType ? advert.estateType.code | trans : ' '}}
                                                 <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>

@@ -419,6 +419,7 @@ front:
   agency.contact.success: Votre message nous a été envoyé à l'agence
   agency.not-available: L'agence n'est plus disponible
   no_result: Nous n’avons aucune propriété, en ce moment, qui correspond à votre recherche
+  no_result_city: Aucune résultat correspond à votre recherche
   rent.time: Temps de location
   rent.holiday: Location de vacances
   estate.neuf: Immobilier neuf
@@ -426,6 +427,7 @@ front:
   my_adverts: Mes annonces
   wish.list: Les annonces enregistrées
   image.bad.format: Le format est invalide
+  city.quartier: Quartier ou Ville
 
 
 yes: Oui

@@ -6,6 +6,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+/templates/bundles/TwigBundle/Exception/data.sql
 /vendor/
 ###< symfony/framework-bundle ###
 /.idea/*

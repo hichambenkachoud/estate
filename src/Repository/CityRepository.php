@@ -23,11 +23,11 @@ class CityRepository extends ServiceEntityRepository
      * @param string $city
      * @return City[] Returns an array of City objects
      */
-    public function findCityByName($city)
+    public function findByCityName($city)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('lower(c.name) like :name')
-            ->setParameter('name', '%'.strtolower($city).'%')
+            ->setParameter('name', strtolower($city).'%')
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(6)
             ->getQuery()

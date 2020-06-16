@@ -33,6 +33,9 @@
 .city-item{
     padding-left: 20px;
 }
+.no-result{
+    padding-left: 20px;
+}
 .city-item:hover{
     background-color: #d03623;
     color: #fff;

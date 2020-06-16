@@ -125,8 +125,10 @@
                                             <div class="wishlist-icon-header">
                                                 <a href="#">
                                                     <i class="far fa-heart" aria-hidden="true">
-                                                        {% if app.user.wishNumber > 0 %}
+                                                        {% if app.user and app.user.wishNumber > 0 %}
                                                             <span class="count" id="wish-list-count">{{ app.user.wishNumber }}</span>
+                                                            {% else %}
+                                                             <span class="count" id="wish-list-count">0</span>
                                                         {% endif %}
                                                     </i>
                                                 </a>

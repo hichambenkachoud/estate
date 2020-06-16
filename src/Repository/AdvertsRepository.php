@@ -74,12 +74,13 @@ class AdvertsRepository extends ServiceEntityRepository
             ->join('a.estateType', 'estateType')
             ->leftJoin('a.city', 'city')
             ->leftJoin('a.quartier', 'quartier')
+            ->leftJoin('a.province', 'province')
             ->andWhere('advertType.id = :advertTypeId')
             ->setParameter('advertTypeId', $advertType)
             ->andWhere('estateType.id = :estateTypeId')
             ->setParameter('estateTypeId', $estateType);
         if ($city != '' && !empty($city) && $city != null){
-            $q->andWhere('lower(city.name) like :city OR lower(quartier.name) like :city')
+            $q->andWhere('lower(city.name) like :city OR lower(quartier.name) like :city OR lower(province.name) like :city')
                 ->setParameter('city', '%'.strtolower($city).'%');
         }
 

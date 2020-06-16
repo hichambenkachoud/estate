@@ -38,15 +38,19 @@ class QuartierRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?City
+    /**
+     * @param string $quartier
+     * @return Quartier[] Returns an array of Quartiers objects
+     */
+    public function findByQuartierName($quartier)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('q')
+            ->andWhere('lower(q.name) like :name')
+            ->setParameter('name', strtolower($quartier).'%')
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(6)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
 }

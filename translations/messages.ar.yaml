@@ -268,12 +268,14 @@ front:
   agency.contact.success: تم إرسال رسالتك إلى الوكالة
   agency.not-available: الوكالة لم تعد متاحة
   no_result: ليس لدينا اي عقار في الوقت الحالي يطابق بحثك
+  no_result_city: لا توجد نتائج تطابق بحثك
   rent.time: وقت الإيجار
   rent.holiday: تأجير خاص بالعطل
   estate.neuf: عقار جديد
   neuf: جديد
   my_adverts: إعلاناتي
   wish.list: الإعلانات المسجلة
+  city.quartier: المنطقة أو المدينة
 
 
 

@@ -36,18 +36,21 @@ class ProvinceRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Province
+    /**
+     * @param string $province
+     * @return Province[] Returns an array of Provinces objects
+     */
+    public function findByProvinceName($province)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('p')
+            ->andWhere('lower(p.name) like :name')
+            ->setParameter('name', strtolower($province).'%')
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(6)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
-
     public function findBySomeIds()
     {
         return $this->createQueryBuilder('c')
