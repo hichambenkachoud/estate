@@ -26,7 +26,8 @@ class CityRepository extends ServiceEntityRepository
     public function findByCityName($city)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('lower(c.name) like :name')
+            ->leftJoin('c.province', 'province')
+            ->andWhere('lower(c.name) like :name OR lower(province.name) like :name')
             ->setParameter('name', strtolower($city).'%')
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(6)

@@ -346,12 +346,12 @@ class AjaxController extends AbstractController
     public function searchCityQuartier(Request $request)
     {
         $data = $this->_checkData();
-        $city = isset($data['city']) ? trim($data['city']) : null;
+        $citySearch = isset($data['city']) ? trim($data['city']) : null;
 
 
         $result = [];
 
-        $quartiers = $this->entityManager->getRepository(Quartier::class)->findByQuartierName($city);
+        $quartiers = $this->entityManager->getRepository(Quartier::class)->findByQuartierName($citySearch);
         if (count($quartiers) > 0){
             /** @var Quartier $quartier **/
             foreach ($quartiers as $quartier){
@@ -360,30 +360,35 @@ class AjaxController extends AbstractController
                 $p['name'] = $quartier->getName();
                 $result[] = $p;
             }
-        }else{
-            $cities = $this->entityManager->getRepository(City::class)->findByCityName($city);
-            if (count($cities) > 0){
-                /** @var City $city */
-                foreach ($cities as $city){
-                    $p['id'] = $city->getId();
-                    $p['code'] = $this->trans->trans($city->getProvince()->getCode()). ', '.$this->trans->trans($city->getCode());
-                    $p['name'] = $city->getName();
-                    $result[] = $p;
-                }
-            }else{
-                $provinces = $this->entityManager->getRepository(Province::class)->findByProvinceName($city);
-                /** @var Province $province */
-                foreach ($provinces as $province){
-                    $p['id'] = $province->getId();
-                    $p['code'] = $this->trans->trans($province->getCode());
-                    $p['name'] = $province->getName();
-                    $result[] = $p;
-                }
+        }
+
+        $cities = $this->entityManager->getRepository(City::class)->findByCityName($citySearch);
+        if (count($cities) > 0){
+            /** @var City $city */
+            foreach ($cities as $city){
+                $p['id'] = $city->getId();
+                $p['code'] = $this->trans->trans($city->getProvince()->getCode()). ', '.$this->trans->trans($city->getCode());
+                $p['name'] = $city->getName();
+                $result[] = $p;
             }
         }
-        
+        $provinces = $this->entityManager->getRepository(Province::class)->findByProvinceName($citySearch);
+        if (count($provinces) > 0){
+            /** @var Province $province */
+            foreach ($provinces as $province){
+                $p['id'] = $province->getId();
+                $p['code'] = $this->trans->trans($province->getCode());
+                $p['name'] = $province->getName();
+                $result[] = $p;
+            }
+        }
+
+        $tempArr = array_unique(array_column($result, 'code'));
+        $result1 = array_slice(array_intersect_key($result, $tempArr), 0, 8);
+
+
         $response["code"] = 0;
-        $response["response"] = ["cities"=> $result];
+        $response["response"] = ["cities"=> $result1];
         return new Response(json_encode($response));
 
     }

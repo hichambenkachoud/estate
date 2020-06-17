@@ -90,13 +90,15 @@
                                         <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3 {% if app.request.locale == 'ar' %} advertType {% endif %}">
                                             {{ advert.advertType ? advert.advertType.code|lower|trans : '' }}
                                         </div>
-                                        <div class="thumb-info-listing-type wishlist-icon">
-                                            {% if app.user and advert.id in app.user.allWishes %}
-                                            <i class="fas fa-heart" aria-hidden="true"></i>
-                                            {% else %}
-                                                <i class="far fa-heart" aria-hidden="true"></i>
-                                            {% endif %}
-                                        </div>
+                                        {% if app.user %}
+                                            <div class="thumb-info-listing-type wishlist-icon">
+                                                {% if  advert.id in app.user.allWishes %}
+                                                    <i class="fas fa-heart" aria-hidden="true"></i>
+                                                {% else %}
+                                                    <i class="far fa-heart" aria-hidden="true"></i>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
 
                                     </div>
                                     <div class="details" style="width: 50%;">

@@ -45,7 +45,9 @@ class QuartierRepository extends ServiceEntityRepository
     public function findByQuartierName($quartier)
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('lower(q.name) like :name')
+            ->leftJoin('q.city', 'city')
+            ->leftJoin('city.province', 'province')
+            ->andWhere('lower(q.name) like :name OR lower(city.name) like :name OR lower(province.name) like :name')
             ->setParameter('name', strtolower($quartier).'%')
             ->orderBy('q.id', 'ASC')
             ->setMaxResults(6)

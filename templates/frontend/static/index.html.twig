@@ -45,9 +45,11 @@
                                             <div class="thumb-info-listing-type bg-color-secondary text-uppercase text-color-light font-weight-semibold p-1 pl-3 pr-3">
                                                 {{ advert.advertType.code|trans }}
                                             </div>
-                                            <div class="thumb-info-listing-type wishlist-icon">
-                                                <i class="far fa-heart" aria-hidden="true"></i>
-                                            </div>
+                                            {% if app.user %}
+                                                <div class="thumb-info-listing-type wishlist-icon">
+                                                    <i class="far fa-heart" aria-hidden="true"></i>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                         <div class="thumb-info-price bg-color-dark text-color-light text-4 p-2 pl-4 pr-4" id="advert-price-{{ advert.id }}">
                                             {% if advert.advertType.code == 'sell' %}
@@ -285,7 +287,8 @@
                     contentType: 'application/json',
                     success: function (data) {
                         $searchDiv.html(' ');
-                        if (data.response.cities.length > 0){
+                        //console.log(data.response.cities)
+                        if (data.response.cities.length > 0 || Object.keys(data.response.cities).length > 0){
                             $.each(data.response.cities, function ($i, $v) {
                                 $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code="'+$v["name"]+'">' + $v["code"] + '</li>');
                             });
