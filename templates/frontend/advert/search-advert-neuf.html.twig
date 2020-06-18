@@ -31,33 +31,23 @@
 
             <div class="row mb-4 properties-listing sort-destination p-0">
                 <div class="row col-md-12">
-                    <div class="form-group col-md-4">
-                        <label class="required">{{ 'front.province' |trans }}</label>
-                        <select data-plugin-selectTwo class="form-control populate get-emplacement-province" name="province" id="province">
-                            <option value="">{{ 'front.choose.option'|trans }}</option>
-                            {% for province in provinces %}
-                                <option value="{{ province.name }}" {% if provinceSelected == province %} selected {% endif %}> {{ province.code|lower|trans }}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="city-search-dropdown search">
+                        <ul class="cit-list">
+                            <li class="city-item">tiznit</li>
+                            <li class="city-item">agadir</li>
+                            <li class="city-item">agadir</li>
+                            <li class="city-item">agadir</li>
+                            <li class="city-item">agadir</li>
+                            <li class="city-item">fas</li>
+                        </ul>
                     </div>
+                    <div class="form-group col-md-4"></div>
                     <div class="form-group col-md-4">
-                        <label class="required">{{ 'front.city' |trans }}</label>
-                        <select data-plugin-selectTwo class="form-control populate get-emplacement-city" name="city" id="city">
-                            <option value="">{{ 'front.choose.option'|trans }}</option>
-                            {% for city in cities %}
-                                <option value="{{ city.name }}" {% if citySelected == city %} selected {% endif %}> {{ city.code|lower|trans }}</option>
-                            {% endfor %}
-                        </select>
+                        <label class="required">{{ 'front.city.quartier'|trans }}</label>
+                        <input type="text" class="form-control text-uppercase text-3" id="search-city"
+                               placeholder="{{ 'front.city.quartier'|trans }}" autocomplete="off" value="{{ app.request.get('obj') }}">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label class="required">{{ 'front.quartier' |trans }}</label>
-                        <select data-plugin-selectTwo class="form-control populate get-emplacement-quartier" name="quartier" id="quartier">
-                            <option value="">{{ 'front.choose.option'|trans }}</option>
-                            {% for quartier in quartiers  %}
-                                <option value="{{ quartier.name }}" {% if quartierSelected == quartier %} selected {% endif %}> {{ quartier.code|lower|trans }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <div class="form-group col-md-4"></div>
                 </div>
                 <div class="col-md-6">
                     <h4>{{ 'search.result'|trans }}: <span>{{ total > 0 ? (total == 1 ? 'advert.found'|trans : total ~ ' ' ~'adverts.found'|trans) : 'advert.none'|trans  }}</span></h4>
@@ -130,7 +120,7 @@
                                         {% endif %}
 
                                     </div>
-                                    <div class="details" style="width: 50%;">
+                                    <div class="details {% if app.request.locale == 'ar' %} arabe {% endif %}" style="width: 50%;">
                                         <div class="thumb-info-price bg-color-dark text-color-light text-4 p-2 pl-4 pr-4" id="advert-price-{{ advert.id }}">
                                             {% if advert.advertType.code == 'sell' %}
                                                 {{ advert.price|number_format(0, '.', ',') }} {{ 'front.currency.dh'|trans }}
@@ -164,8 +154,9 @@
                                             </div>
                                             {% if advert.estateType.code in ['apartment', 'studio', 'duplex', 'villa', 'house', 'riad'] %}
                                                 <div class="thumb-info-inner text-2">
-                                                    {% if advert.bedrooms %}<span><b>{{ advert.bedrooms }}</b> {{ advert.bedrooms > 1 ? 'front.bedrooms'|trans :  'front.bedroom'|trans}}</span>{% endif %}
-                                                    {% if advert.bathrooms %}<span><b>{{ advert.bathrooms }}</b> {{ advert.bathrooms > 1 ? 'front.bathrooms'|trans : 'front.bathroom'|trans }}</span>{% endif %}
+                                                    {% if advert.bedrooms %}<span class="feature">{{ advert.bedrooms }} <i class="flaticon-bed"></i> </span>{% endif %}
+                                                    {% if advert.bathrooms %}<span class="feature">{{ advert.bathrooms }}<i class="flaticon-bath-1"></i></span>{% endif %}
+                                                    {% if advert.area %}<span class="feature">{{ advert.area }}<i class="flaticon-area"></i></span>{% endif %}
                                                 </div>
                                             {% endif %}
                                         </div>

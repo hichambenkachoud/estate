@@ -40,7 +40,7 @@ class EstateCharacteristicsRepository extends ServiceEntityRepository
     public function findByChars($charIds)
     {
         return $this->createQueryBuilder('e')
-            ->select('e.code, e.name, e.icon')
+            ->select('e.id, e.code, e.name, e.icon')
             ->andWhere('e.id IN (:val)')
             ->setParameter('val', $charIds)
             ->getQuery()

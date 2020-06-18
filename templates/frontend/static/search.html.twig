@@ -109,9 +109,10 @@
             if ($dataSorted != null && $dataSorted != undefined){
                 $('#input-sorted').val($dataSorted);
             }
-            let $province = $('.get-emplacement-province').children("option:selected").val();
+            let $province = $('#search-city').val();
             if ($province != undefined){
-                $('#input-province').val($province);
+                //$('#input-city').val($province);
+                $('#input-obj').val($province);
             }
             $('#propertiesFormHeader').submit();
             e.preventDefault();
@@ -119,39 +120,14 @@
 
         $('.get-sorted').on('change', function (e) {
             let $dataSorted = $(this).data('sort');
-            let $province = $('.get-emplacement-province').children("option:selected").val();
+            let $province = $('#search-city').val();
             if ($province != undefined){
-                $('#input-province').val($province);
+                //$('#input-city').val($province);
+                $('#input-obj').val($province);
             }
 
             if ($dataSorted != undefined && $dataSorted != null){
                 $('#input-sorted').val($dataSorted);
-            }
-            $('#propertiesFormHeader').submit();
-            e.preventDefault();
-        });
-
-        $('.get-emplacement-province').on('change', function (e) {
-            let $emplacementSelected = $(this).children("option:selected").val();
-            if ($emplacementSelected != undefined && $emplacementSelected != null){
-                $('#input-province').val($emplacementSelected);
-            }
-            $('#propertiesFormHeader').submit();
-            e.preventDefault();
-        });
-        $('.get-emplacement-city').on('change', function (e) {
-            let $emplacementSelected = $(this).children("option:selected").val();
-            if ($emplacementSelected != undefined && $emplacementSelected != null){
-                $('#input-city').val($emplacementSelected);
-                $('#input-province').val($('.get-emplacement-province').children("option:selected").val());
-            }
-            $('#propertiesFormHeader').submit();
-            e.preventDefault();
-        });
-        $('.get-emplacement-quartier').on('change', function (e) {
-            let $emplacementSelected = $(this).children("option:selected").val();
-            if ($emplacementSelected != undefined && $emplacementSelected != null){
-                $('#input-quartier').val($emplacementSelected);
             }
             $('#propertiesFormHeader').submit();
             e.preventDefault();

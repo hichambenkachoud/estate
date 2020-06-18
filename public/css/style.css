@@ -1,14 +1,65 @@
+#header .header-nav-main nav > ul > li > a{
+    color: black;
+    font-size: 14px;
+}
+#header .header-nav-main:not(.header-nav-main-mobile-dark) nav > ul > li > a{
+    color: black;
+    font-size: 12px;
+}
 .search-estate{
     background-color: #413c46;
 }
 .details{
     text-align: left;
 }
+.details.arabe{
+    text-align: right;
+}
 .city-search-dropdown{
     display: none;
     position: absolute;
     top: 56%;
-    left: 51%;
+    left: 42%;
+    width: 26%;
+    background: #fff;
+    margin-top: .125rem;
+    -webkit-border-radius: .188rem;
+    -moz-border-radius: .188rem;
+    border-radius: .188rem;
+    -webkit-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    -moz-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    padding: .5rem 0;
+    max-height: 25rem;
+    z-index: 125;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.city-search-dropdown.arabe{
+    display: none;
+    position: absolute;
+    top: 56%;
+    left: 32%;
+    width: 26%;
+    background: #fff;
+    margin-top: .125rem;
+    -webkit-border-radius: .188rem;
+    -moz-border-radius: .188rem;
+    border-radius: .188rem;
+    -webkit-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    -moz-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+    padding: .5rem 0;
+    max-height: 25rem;
+    z-index: 125;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.city-search-dropdown.search{
+    display: none;
+    position: absolute;
+    top: 81%;
+    left: 35%;
     width: 30%;
     background: #fff;
     margin-top: .125rem;
@@ -24,6 +75,12 @@
     overflow: hidden;
     overflow-y: auto;
 }
+.arabe .cit-list{
+    padding: 0 20px;
+    font-size: .875rem;
+    cursor: pointer;
+    list-style-type: none;
+}
 .cit-list{
     padding: .188rem 0;
     font-size: .875rem;
@@ -32,6 +89,7 @@
 }
 .city-item{
     padding-left: 20px;
+    padding-right: 20px;
 }
 .no-result{
     padding-left: 20px;
@@ -41,7 +99,10 @@
     color: #fff;
 }
 .home .advert{
-    height: 450px;
+    height: 375px;
+}
+.thumb-info-inner span.feature{
+    display: inline-flex;
 }
 .thumb-info-inner.title{
     height: 54px;
@@ -238,6 +299,15 @@
 }
 .search-home input[type="text"]{
     height: 2.8rem !important;
+}
+
+.search-home{
+    left: 6%;
+    position: relative;
+}
+.search-home.arabe{
+    right: 8%;
+    position: relative;
 }
 .header-bottom {
     display: none;
@@ -796,6 +866,31 @@
         z-index: 125;
         overflow: hidden;
         overflow-y: auto;
+    }
+    .city-search-dropdown.arabe {
+        position: absolute;
+        top: 65%;
+        left: 8%;
+        width: 84%;
+        background: #fff;
+        margin-top: .125rem;
+        -webkit-border-radius: .188rem;
+        -moz-border-radius: .188rem;
+        border-radius: .188rem;
+        -webkit-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        -moz-box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        box-shadow: 0 .313rem .625rem rgba(0,0,0,.2);
+        padding: .5rem 0;
+        max-height: 25rem;
+        z-index: 125;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+    .search-home.arabe{
+        right: 0;
+    }
+    .search-home{
+        left: 0;
     }
 }
 

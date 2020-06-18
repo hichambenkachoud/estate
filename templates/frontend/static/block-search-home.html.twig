@@ -1,9 +1,9 @@
-<div class="col-sm-12 order-2 order-sm-2 align-self-center p-static search-estate">
+<div class="col-sm-10 order-2 order-sm-2 align-self-center p-static search-estate">
     <div class="overflow-hidden">
         {#<ul class="custom-fullwidth-dropdown-menu ml-0">
 
         </ul>#}
-        <div class="city-search-dropdown">
+        <div class="city-search-dropdown {% if app.request.locale == 'ar' %} arabe {% endif %}">
             <ul class="cit-list">
                 <li class="city-item">tiznit</li>
                 <li class="city-item">agadir</li>
@@ -13,7 +13,7 @@
                 <li class="city-item">fas</li>
             </ul>
         </div>
-        <li style="list-style-type: none;padding: 12px 0;">
+        <li style="list-style-type: none;padding: 2px 0;">
             <div class="dropdown-mega-content mt-3 ml-3 mr-3">
                 <form id="propertiesFormHeader" action="{{ path('search-advert-home') }}"
                       method="GET">
@@ -51,11 +51,11 @@
                                 <input type="text" class="form-control text-uppercase text-3" id="search-city"
                                        placeholder="{{ 'front.city.quartier'|trans }}" autocomplete="off">
                                 <input type="hidden" name="obj" id="input-obj" value="">
-                                <input type="hidden" name="value" id="input-city" value="">
+                                <input type="hidden" name="city" id="input-city" value="">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 mb-1">
                                 <input type="submit" value="{{ 'front.search'|trans }}"
-                                       class="btn btn-secondary btn-sm text-uppercase text-3" style="height: 2.8rem !important;">
+                                       class="btn btn-secondary btn-sm text-uppercase text-3" style="height: 2.8rem !important;width: inherit;">
                             </div>
 
                         </div>

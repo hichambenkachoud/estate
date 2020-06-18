@@ -7,7 +7,7 @@
                 class="page-header page-header-modern page-header-background page-header-background-md py-0 overlay overlay-color-primary overlay-show overlay-op-8"
                 style="background-image: url({{ asset('images/estate-background-2.jpg') }});max-height: 350px;">
             <div class="container">
-                <div class="row search-home">
+                <div class="row search-home {% if app.request.locale == 'ar' %} arabe {% endif %}">
                     {{ include('frontend/static/block-search-home.html.twig') }}
                     <div class="order-1 order-sm-1 align-items-end justify-content-end d-flex pt-5">
                         <div style="min-height: 350px;" class="overflow-hidden">
@@ -34,7 +34,7 @@
                          data-total-pages="2">
 
                         {% for advert in adverts %}
-                        <div class="col-md-4 col-lg-4 col-sm-12 p-3 isotope-item home">
+                        <div class="col-md-4 col-lg-4 col-sm-12 p-3 isotope-item home" style="padding: 6px !important;">
                             <div class="listing-item">
                                 <a href="{{ path('front_advert_single', {id: advert.id}) }}" class="text-decoration-none">
                                     <div class="thumb-info thumb-info-lighten border advert">
@@ -69,7 +69,7 @@
                                             <div class="thumb-info-inner text-4 mb-1 title" id="advert-title-{{ advert.id }}">{{ advert.title|striptags }}</div>
                                             <div id="advert-agent-{{ advert.id }}" hidden style="display: none;">{{ advert.member ? advert.member.firstname ~ ' ' ~ advert.member.firstname : ' ' }}</div>
                                             <div id="advert-content-{{ advert.id }}" hidden style="display: none;">{{ 'front.form.contatc.content'|trans({'%reference%': '123222', '%site%': 'estate site'}) }}</div>
-                                            <div class="thumb-info-inner text-3 mb-3"><i class="fa fa-map-marker-alt"></i>
+                                            <div class="thumb-info-inner text-3 mb-2"><i class="fa fa-map-marker-alt"></i>
                                                 {% if advert.quartier %}
                                                     {{ advert.quartier.code|trans }}, {{ advert.quartier.city.code|trans }}
                                                 {% elseif advert.city %}
@@ -78,25 +78,25 @@
                                                     {{ advert.province.code|trans }}
                                                 {% endif %}
                                             </div>
-                                            <div class="thumb-info-inner text-4" style="color: #4488cd;">
+                                            <div class="thumb-info-inner text-3" style="color: #4488cd;">
                                                 {{ advert.estateType ? advert.estateType.code | trans : ' '}}
-                                                <span style="color: #000; font-size: 1rem; float: inline-end;">{{ advert.area }} {{'front.metre.carre'|trans }}</span>
                                             </div>
                                             {% if advert.estateType.code in ['apartment', 'studio', 'duplex', 'villa', 'house', 'riad'] %}
                                             <div class="thumb-info-inner text-2">
-                                                {% if advert.bedrooms %}<span><b>{{ advert.bedrooms }}</b> {{ advert.bedrooms > 1 ? 'front.bedrooms'|trans :  'front.bedroom'|trans}}</span>{% endif %}
-                                                {% if advert.bathrooms %}<span><b>{{ advert.bathrooms }}</b> {{ advert.bathrooms > 1 ? 'front.bathrooms'|trans : 'front.bathroom'|trans }}</span>{% endif %}
+                                                {% if advert.bedrooms %}<span class="feature">{{ advert.bedrooms }} <i class="flaticon-bed"></i> </span>{% endif %}
+                                                {% if advert.bathrooms %}<span class="feature">{{ advert.bathrooms }}<i class="flaticon-bath-1"></i></span>{% endif %}
+                                                {% if advert.area %}<span class="feature">{{ advert.area }}<i class="flaticon-area"></i></span>{% endif %}
                                             </div>
                                             {% endif %}
                                         </div>
-                                        <div class="custom-thumb-info-title p-4 col-md-12 row" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
+                                      {#  <div class="custom-thumb-info-title p-4 col-md-12 row" style="border-top: 1px solid #5a719f;display: flex;text-align: center;">
                                             <div class="col-md-6 phone_agent" data-tel="{{ advert.mobileNumber }}">
                                                 <span class="ws-nowrap"><i class="fas fa-phone"></i> {{ 'front.phone_agent'|trans }} </span>
                                             </div>
                                                 <div class="col-md-6 email_agent" data-id="{{ advert.id }}" data-toggle="modal" data-target="#email_agent">
                                                     <span class="ws-nowrap"><i class="fas fa-envelope"></i> {{ 'front.send_mail'|trans }}</span>
                                             </div>
-                                        </div>
+                                        </div>#}
                                     </div>
                                 </a>
                             </div>
@@ -176,25 +176,6 @@
                                     </a>
                                 </div>
                             </div>
-                           {# <div class="col-md-6 col-lg-12">
-                                <div class="special-offer-item text-center text-color-light">
-                                    <a href="demo-real-estate-properties.html" class="text-decoration-none">
-												<span class="special-offer-wrapper">
-													<img src="../../../public/../../../public/img/demos/real-estate/offers/special-offer-2.jpg"
-                                                         class="img-fluid" alt="">
-													<span class="special-offer-infos text-color-light pt-4">
-														<span class="special-offer-description font-weight-light text-5">
-															Exclusive Comdominium
-														</span>
-														<span class="special-offer-title font-weight-bold text-uppercase text-3 mb-3">
-															Miami Beach
-														</span>
-														<span class="btn btn-secondary text-uppercase custom-padding-1 d-inline-block">view more</span>
-													</span>
-												</span>
-                                    </a>
-                                </div>
-                            </div>#}
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-lg-12">
@@ -271,49 +252,12 @@
             e.preventDefault();
         });
 
-        $('#search-city').on('keyup', function () {
-            let $city = $(this).val();
-            let $searchDiv = $('.cit-list');
-            let $dropdownDiv = $('.city-search-dropdown');
-
-            if ($city.length > 0){
-                $dropdownDiv.show();
-                $searchDiv.html(' ');
-                $.ajax({
-                    url: "{{ url('ajax_search_city_quartier') }}",
-                    data: JSON.stringify({city: $city}),
-                    dataType: 'JSON',
-                    method: "POST",
-                    contentType: 'application/json',
-                    success: function (data) {
-                        $searchDiv.html(' ');
-                        //console.log(data.response.cities)
-                        if (data.response.cities.length > 0 || Object.keys(data.response.cities).length > 0){
-                            $.each(data.response.cities, function ($i, $v) {
-                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code="'+$v["name"]+'" data-obj="'+$v["obj"]+'">' + $v["code"] + '</li>');
-                            });
-                        }else{
-                            $searchDiv.html('<li class="no-result">{{ 'front.no_result_city'|trans }}</li>');
-                        }
-                    },
-                    error: function (a, b, c) {
-                        console.log(a, b, c);
-                    },
-                    complete:function () {
-                    }
-                });
-            } else{
-                $dropdownDiv.hide();
-            }
-        });
-
         $(document).on('click', '.city-item', function () {
             let $dropdownDiv = $('.city-search-dropdown');
             let $name = $(this).data('code');
-            let $obj = $(this).data('obj');
             $('#input-city').val($name);
-            $('#input-obj').val($obj);
             let $nameToShow = $(this).html();
+            $('#input-obj').val($nameToShow);
             $('#search-city').val($nameToShow);
 
             $dropdownDiv.hide();

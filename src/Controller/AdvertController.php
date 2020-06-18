@@ -203,7 +203,7 @@ class AdvertController extends AbstractController
     public function searchAdvert(Request $request){
 
         $advertTypeRequest = $rentTypeRequest = $estateTypeRequest = $priceMin = $priceMax = $areaMin
-            = $areaMax = $publication = $sorted = $neuf = $rentHoliday = $province = $city = $quartier = null;
+            = $areaMax = $publication = $sorted = $neuf = $rentHoliday = $obj = $city = null;
         $rooms = $advertStatusRequest = $floors = $adverts = $bathrooms = $characters = array();
 
         if ($request->get('page') && !empty($request->get('page'))){
@@ -287,20 +287,17 @@ class AdvertController extends AbstractController
         if ($request->get('sorted') && !empty($request->get('sorted'))){
             $sorted = $request->get('sorted');
         }
-        if ($request->get('province') && !empty($request->get('province'))){
-            $province = $request->get('province');
+        if ($request->get('obj') && !empty($request->get('obj'))){
+            $obj = $request->get('obj');
         }
         if ($request->get('city') && !empty($request->get('city'))){
             $city = $request->get('city');
         }
-        if ($request->get('quartier') && !empty($request->get('quartier'))){
-            $quartier = $request->get('quartier');
-        }
 
         if ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
-            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $neuf, $province, $city, $quartier, $page, Adverts::NUM_ITEMS);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $neuf, $city, $page, Adverts::NUM_ITEMS);
         }elseif ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_RENT){
-            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllRentByCriteria($rentTypeRequest, $estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $rentHoliday, $province, $city, $quartier, $page, Adverts::NUM_ITEMS);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllRentByCriteria($rentTypeRequest, $estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $rentHoliday, $city, $page, Adverts::NUM_ITEMS);
         }else{
             $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllValid($page, Adverts::NUM_ITEMS);
         }
@@ -311,15 +308,6 @@ class AdvertController extends AbstractController
         $estateTypes = $this->entity_manager->getRepository(EstateType::class)->findBy(['enabled' => true]);
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
-
-        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled' => true]);
-        $provinceSelected = $this->entity_manager->getRepository(Province::class)->findOneBy(['enabled' => true, 'name' => $province]);
-        $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceSelected ? $provinceSelected->getId() : 0]);
-        $citySelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $city]);
-        $quartiers = $this->entity_manager->getRepository(Quartier::class)->findBy(['enabled' => true, 'city' => $citySelected ? $citySelected->getId() : 0]);
-        $quartierSelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $quartier]);
-
-
         //var_dump($adverts);die();
         $total = count($adverts);
 
@@ -332,13 +320,7 @@ class AdvertController extends AbstractController
             'chars' => $characterstics,
             'adverts' => $adverts,
             'page_count' => ceil($total/Adverts::NUM_ITEMS),
-            'total' => $total,
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'quartiers' => $quartiers,
-            'provinceSelected' => $provinceSelected,
-            'citySelected' => $citySelected,
-            'quartierSelected' => $quartierSelected,
+            'total' => $total
         ]);
     }
 
@@ -350,7 +332,7 @@ class AdvertController extends AbstractController
      */
     public function searchAdvertHome(Request $request, $page=1){
 
-        $advertTypeRequest = $estateTypeRequest = $cityRequest = $obj = $quartierSelected = $citySelected = null;
+        $advertTypeRequest = $estateTypeRequest = $cityRequest = $obj = null;
         $adverts = array();
 
         if ($request->get('advertType') && !empty($request->get('advertType'))){
@@ -360,8 +342,8 @@ class AdvertController extends AbstractController
         if ($request->get('estateType') && !empty($request->get('estateType'))){
             $estateTypeRequest = $request->get('estateType');
         }
-        if ($request->get('value') && !empty($request->get('value'))){
-            $cityRequest = trim($request->get('value'));
+        if ($request->get('city') && !empty($request->get('city'))){
+            $cityRequest = trim($request->get('city'));
         }
 
         if ($request->get('obj') && !empty($request->get('obj'))){
@@ -383,23 +365,7 @@ class AdvertController extends AbstractController
         $estateTypes = $this->entity_manager->getRepository(EstateType::class)->findBy(['enabled' => true]);
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
-        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled' => true]);
-        $quartier = [];
-        if ($obj == 'province'){
-            $provinceSelected = $this->entity_manager->getRepository(Province::class)->findOneBy(['enabled' => true, 'name' => $cityRequest]);
-            $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceSelected->getId()]);
-        }elseif ($obj == 'city'){
-            $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true]);
-            $citySelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $cityRequest]);
-            $quartier = $this->entity_manager->getRepository(Quartier::class)->findBy(['enabled' => true, 'city' => $citySelected->getId()]);
-            $provinceSelected = $this->entity_manager->getRepository(Province::class)->findOneBy(['enabled' => true, 'id' => $citySelected->getProvince()->getId()]);
-        }else{
-            $quartierSelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $cityRequest]);
-            $citySelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'id' => $quartierSelected ? $quartierSelected->getCity()->getId() : 0]);
-            $quartier = $this->entity_manager->getRepository(Quartier::class)->findBy(['enabled' => true, 'city' => $citySelected->getId()]);
-            $provinceSelected = $this->entity_manager->getRepository(Province::class)->findOneBy(['enabled' => true, 'id' => $citySelected->getProvince()->getId()]);
-            $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceSelected->getId()]);
-        }
+
 
         //var_dump($adverts);die();
         $total = count($adverts);
@@ -412,12 +378,6 @@ class AdvertController extends AbstractController
             'current_page' => $page,
             'chars' => $characterstics,
             'adverts' => $adverts,
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'quartiers' => $quartier,
-            'provinceSelected' => $provinceSelected,
-            'citySelected' => $citySelected,
-            'quartierSelected' => $quartierSelected,
             'page_count' => ceil($total/Adverts::NUM_ITEMS),
             'total' => $total
         ]);
@@ -438,7 +398,7 @@ class AdvertController extends AbstractController
         $characteristic = null;
         $charIds = json_decode($advert->getCharacteristics(), true);
 
-        $characteristic = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled'=>true]);
+        $characteristic = $this->entity_manager->getRepository(EstateCharacteristics::class)->findByChars($charIds);
 
         $images = array_diff(scandir(__DIR__.'/../../public/uploads/'.$advert->getImages()), ['.', '..']);
 
@@ -494,11 +454,6 @@ class AdvertController extends AbstractController
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
 
-        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled' => true]);
-        $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceObj ? $provinceObj->getId() : 0]);
-        $citySelected = $quartierSelected = null;
-        $quartiers = [];
-
         //var_dump($adverts);die();
         $total = count($adverts);
 
@@ -513,12 +468,7 @@ class AdvertController extends AbstractController
             'page_count' => ceil($total/Adverts::NUM_ITEMS),
             'total' => $total,
             'subject' => 'front.rent.'.$estate.'.'.$city,
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'quartiers' => $quartiers,
-            'provinceSelected' => $provinceObj,
-            'citySelected' => $citySelected,
-            'quartierSelected' => $quartierSelected,
+            'province' => $provinceObj
         ]);
     }
 
@@ -560,12 +510,6 @@ class AdvertController extends AbstractController
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
 
-        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled' => true]);
-        $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceObj ? $provinceObj->getId() : 0]);
-        $citySelected = $quartierSelected = null;
-        $quartiers = [];
-
-        //var_dump($adverts);die();
         $total = count($adverts);
 
 
@@ -581,12 +525,7 @@ class AdvertController extends AbstractController
             'page_count' => ceil($total/Adverts::NUM_ITEMS),
             'total' => $total,
             'subject' => 'front.sell.'.$estate.'.'.$city,
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'quartiers' => $quartiers,
-            'provinceSelected' => $provinceObj,
-            'citySelected' => $citySelected,
-            'quartierSelected' => $quartierSelected,
+            'province' => $provinceObj
         ]);
     }
 
@@ -769,7 +708,7 @@ class AdvertController extends AbstractController
      */
     public function newEstate(Request $request){
 
-        $estateTypeRequest = $priceMin = $priceMax = $areaMin = $areaMax = $publication = $sorted = $province = $city = $quartier = null;
+        $estateTypeRequest = $priceMin = $priceMax = $areaMin = $areaMax = $publication = $sorted = $obj = $city = null;
         $rooms = $advertStatusRequest = $floors = $adverts = $bathrooms = $characters = array();
 
         if ($request->get('page') && !empty($request->get('page'))){
@@ -816,18 +755,15 @@ class AdvertController extends AbstractController
         if ($request->get('sorted') && !empty($request->get('sorted'))){
             $sorted = $request->get('sorted');
         }
-        if ($request->get('province') && !empty($request->get('province'))){
-            $province = $request->get('province');
+        if ($request->get('obj') && !empty($request->get('obj'))){
+            $obj = $request->get('obj');
         }
         if ($request->get('city') && !empty($request->get('city'))){
             $city = $request->get('city');
         }
-        if ($request->get('quartier') && !empty($request->get('quartier'))){
-            $quartier = $request->get('quartier');
-        }
 
         if ($advertType && strtolower($advertType->getCode()) == AdvertType::ADVERT_TYPE_SELL){
-            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellNeufByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $province, $city, $quartier, $page, Adverts::NUM_ITEMS);
+            $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllSellNeufByCriteria($estateTypeRequest, $priceMin, $priceMax, $areaMin, $areaMax, $publication, $advertStatusRequest, $rooms, $bathrooms, $characters, $floors, $sorted, $city, $page, Adverts::NUM_ITEMS);
         }else{
             $adverts = $this->entity_manager->getRepository(Adverts::class)->findAllNeufValid($page, Adverts::NUM_ITEMS);
         }
@@ -838,13 +774,6 @@ class AdvertController extends AbstractController
         $estateTypes = $this->entity_manager->getRepository(EstateType::class)->findBy(['enabled' => true]);
         $estateStatus = $this->entity_manager->getRepository(EstateStatus::class)->findBy(['enabled' => true]);
         $characterstics = $this->entity_manager->getRepository(EstateCharacteristics::class)->findBy(['enabled' => true]);
-        $provinces = $this->entity_manager->getRepository(Province::class)->findBy(['enabled' => true]);
-        $provinceSelected = $this->entity_manager->getRepository(Province::class)->findOneBy(['enabled' => true, 'name' => $province]);
-        $cities = $this->entity_manager->getRepository(City::class)->findBy(['enabled' => true, 'province' => $provinceSelected ? $provinceSelected->getId() : 0]);
-        $citySelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $city]);
-        $quartiers = $this->entity_manager->getRepository(Quartier::class)->findBy(['enabled' => true, 'city' => $citySelected ? $citySelected->getId() : 0]);
-        $quartierSelected = $this->entity_manager->getRepository(City::class)->findOneBy(['enabled' => true, 'name' => $quartier]);
-
 
         //var_dump($adverts);die();
         $total = count($adverts);
@@ -858,13 +787,7 @@ class AdvertController extends AbstractController
             'chars' => $characterstics,
             'adverts' => $adverts,
             'page_count' => ceil($total/Adverts::NUM_ITEMS),
-            'total' => $total,
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'quartiers' => $quartiers,
-            'provinceSelected' => $provinceSelected,
-            'citySelected' => $citySelected,
-            'quartierSelected' => $quartierSelected,
+            'total' => $total
         ]);
 
     }
