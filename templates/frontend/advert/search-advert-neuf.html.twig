@@ -30,6 +30,35 @@
         <div class="container">
 
             <div class="row mb-4 properties-listing sort-destination p-0">
+                <div class="row col-md-12">
+                    <div class="form-group col-md-4">
+                        <label class="required">{{ 'front.province' |trans }}</label>
+                        <select data-plugin-selectTwo class="form-control populate get-emplacement-province" name="province" id="province">
+                            <option value="">{{ 'front.choose.option'|trans }}</option>
+                            {% for province in provinces %}
+                                <option value="{{ province.name }}" {% if provinceSelected == province %} selected {% endif %}> {{ province.code|lower|trans }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="required">{{ 'front.city' |trans }}</label>
+                        <select data-plugin-selectTwo class="form-control populate get-emplacement-city" name="city" id="city">
+                            <option value="">{{ 'front.choose.option'|trans }}</option>
+                            {% for city in cities %}
+                                <option value="{{ city.name }}" {% if citySelected == city %} selected {% endif %}> {{ city.code|lower|trans }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="required">{{ 'front.quartier' |trans }}</label>
+                        <select data-plugin-selectTwo class="form-control populate get-emplacement-quartier" name="quartier" id="quartier">
+                            <option value="">{{ 'front.choose.option'|trans }}</option>
+                            {% for quartier in quartiers  %}
+                                <option value="{{ quartier.name }}" {% if quartierSelected == quartier %} selected {% endif %}> {{ quartier.code|lower|trans }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <h4>{{ 'search.result'|trans }}: <span>{{ total > 0 ? (total == 1 ? 'advert.found'|trans : total ~ ' ' ~'adverts.found'|trans) : 'advert.none'|trans  }}</span></h4>
                 </div>
@@ -41,7 +70,7 @@
                                 <a class="btn regular smaller get-sorted {% if app.request.get('sorted') == 'important' or app.request.get('sorted') is empty %} selected {% endif %}" data-sort="important">{{ 'front.sort.important'|trans }} </a>
                             </li>
                             <li class="first-sort">
-                                <a class="btn regular smaller get-sorted {% if app.request.get('sorted') == 'price-desc' %} selected {% endif %}" data-sort="price-desc"> {{ 'front.sort.price.asc'|trans }} </a>
+                                <a class="btn regular smaller get-sorted {% if app.request.get('sorted') == 'price-asc' %} selected {% endif %}" data-sort="price-asc"> {{ 'front.sort.price.asc'|trans }} </a>
                             </li>
                             <li class="first-sort d-none">
                                 <a class="btn regular smaller get-sorted {% if app.request.get('sorted') == 'createDate-desc' %} selected {% endif %}" data-sort="createDate-desc"> {{ 'front.sort.date.desc'|trans }} </a>
@@ -58,10 +87,10 @@
                                         <a data-sort="createDate-desc" class="get-sorted {% if app.request.get('sorted') == 'createDate-desc' %} selected {% endif %}">  {{ 'front.sort.date.desc'|trans }} </a>
                                     </li>
                                     <li>
-                                        <a data-sort="price-desc" class="get-sorted {% if app.request.get('sorted') == 'price-desc' %} selected {% endif %}"> {{ 'front.sort.price.asc'|trans }} </a>
+                                        <a data-sort="price-desc" class="get-sorted {% if app.request.get('sorted') == 'price-desc' %} selected {% endif %}"> {{ 'front.sort.price.desc'|trans }} </a>
                                     </li>
                                     <li>
-                                        <a data-sort="price-asc" class="get-sorted {% if app.request.get('sorted') == 'price-asc' %} selected {% endif %}"> {{ 'front.sort.price.desc'|trans }} </a>
+                                        <a data-sort="price-asc" class="get-sorted {% if app.request.get('sorted') == 'price-asc' %} selected {% endif %}"> {{ 'front.sort.price.asc'|trans }} </a>
                                     </li>
                                     <li>
                                         <a data-sort="area-desc" class="get-sorted {% if app.request.get('sorted') == 'area-desc' %} selected {% endif %}"> {{ 'front.sort.area.asc'|trans }} </a>

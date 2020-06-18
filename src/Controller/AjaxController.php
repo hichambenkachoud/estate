@@ -348,16 +348,16 @@ class AjaxController extends AbstractController
         $data = $this->_checkData();
         $citySearch = isset($data['city']) ? trim($data['city']) : null;
 
-
         $result = [];
 
-        $quartiers = $this->entityManager->getRepository(Quartier::class)->findByQuartierName($citySearch);
-        if (count($quartiers) > 0){
-            /** @var Quartier $quartier **/
-            foreach ($quartiers as $quartier){
-                $p['id'] = $quartier->getId();
-                $p['code'] = $this->trans->trans($quartier->getCity()->getProvince()->getCode()) .', '.$this->trans->trans($quartier->getCity()->getCode()).', '.$this->trans->trans($quartier->getCode());
-                $p['name'] = $quartier->getName();
+        $provinces = $this->entityManager->getRepository(Province::class)->findByProvinceName($citySearch);
+        if (count($provinces) > 0){
+            /** @var Province $province */
+            foreach ($provinces as $province){
+                $p['id'] = $province->getId();
+                $p['code'] = $this->trans->trans($province->getCode());
+                $p['name'] = $province->getName();
+                $p['obj'] = 'province';
                 $result[] = $p;
             }
         }
@@ -369,16 +369,19 @@ class AjaxController extends AbstractController
                 $p['id'] = $city->getId();
                 $p['code'] = $this->trans->trans($city->getProvince()->getCode()). ', '.$this->trans->trans($city->getCode());
                 $p['name'] = $city->getName();
+                $p['obj'] = 'city';
                 $result[] = $p;
             }
         }
-        $provinces = $this->entityManager->getRepository(Province::class)->findByProvinceName($citySearch);
-        if (count($provinces) > 0){
-            /** @var Province $province */
-            foreach ($provinces as $province){
-                $p['id'] = $province->getId();
-                $p['code'] = $this->trans->trans($province->getCode());
-                $p['name'] = $province->getName();
+
+        $quartiers = $this->entityManager->getRepository(Quartier::class)->findByQuartierName($citySearch);
+        if (count($quartiers) > 0){
+            /** @var Quartier $quartier **/
+            foreach ($quartiers as $quartier){
+                $p['id'] = $quartier->getId();
+                $p['code'] = $this->trans->trans($quartier->getCity()->getProvince()->getCode()) .', '.$this->trans->trans($quartier->getCity()->getCode()).', '.$this->trans->trans($quartier->getCode());
+                $p['name'] = $quartier->getName();
+                $p['obj'] = 'quartier';
                 $result[] = $p;
             }
         }
@@ -390,7 +393,6 @@ class AjaxController extends AbstractController
         $response["code"] = 0;
         $response["response"] = ["cities"=> $result1];
         return new Response(json_encode($response));
-
     }
 
     /**

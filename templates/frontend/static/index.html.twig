@@ -290,7 +290,7 @@
                         //console.log(data.response.cities)
                         if (data.response.cities.length > 0 || Object.keys(data.response.cities).length > 0){
                             $.each(data.response.cities, function ($i, $v) {
-                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code="'+$v["name"]+'">' + $v["code"] + '</li>');
+                                $searchDiv.append('<li class="city-item" data-id="' + $v["id"] + '" data-code="'+$v["name"]+'" data-obj="'+$v["obj"]+'">' + $v["code"] + '</li>');
                             });
                         }else{
                             $searchDiv.html('<li class="no-result">{{ 'front.no_result_city'|trans }}</li>');
@@ -310,7 +310,9 @@
         $(document).on('click', '.city-item', function () {
             let $dropdownDiv = $('.city-search-dropdown');
             let $name = $(this).data('code');
+            let $obj = $(this).data('obj');
             $('#input-city').val($name);
+            $('#input-obj').val($obj);
             let $nameToShow = $(this).html();
             $('#search-city').val($nameToShow);
 

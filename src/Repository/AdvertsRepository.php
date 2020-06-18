@@ -72,9 +72,9 @@ class AdvertsRepository extends ServiceEntityRepository
         $q =  $this->createQueryBuilder('a')
             ->join('a.advertType', 'advertType')
             ->join('a.estateType', 'estateType')
+            ->join('a.province', 'province')
             ->leftJoin('a.city', 'city')
             ->leftJoin('a.quartier', 'quartier')
-            ->leftJoin('a.province', 'province')
             ->andWhere('advertType.id = :advertTypeId')
             ->setParameter('advertTypeId', $advertType)
             ->andWhere('estateType.id = :estateTypeId')
@@ -145,18 +145,31 @@ class AdvertsRepository extends ServiceEntityRepository
 
     public function findAllSellByCriteria($estateType, $priceMin,
                                       $priceMax, $areaMin, $areaMax, $publication, $advertStatus, $rooms = array(), $bathrooms = [], $characters = [], $floors = array(), $sorted = '', $neuf = 0,
-                                      $page = 1, $maxPerPage = Adverts::NUM_ITEMS){
+                                          $province='', $city='', $quartier='', $page = 1, $maxPerPage = Adverts::NUM_ITEMS){
 
         $currentDate = date('Y-m-d H:i:s');
 
         $query = $this->createQueryBuilder('a');
         $query->join('a.advertType', 'advertType')
             ->join('a.estateType', 'estateType')
+            ->join('a.province', 'province')
+            ->leftjoin('a.city', 'city')
+            ->leftjoin('a.quartier', 'quartier')
             ->leftJoin('a.estateStatus', 'estateStatus');
         $query->where('(a.valid = :valid AND a.refused = :refused)');
         $query->andWhere('lower(advertType.code) = :advertTypeCode')->setParameter('advertTypeCode', strtolower(AdvertType::ADVERT_TYPE_SELL));
         if ($estateType != '' && !empty($estateType)){
             $query->andWhere('estateType.id = :estateTypeId')->setParameter('estateTypeId', intval($estateType));
+        }
+
+        if ($province != '' and !empty($province)){
+            $query->andWhere('lower(province.name) LIKE :provinceName')->setParameter('provinceName', strtolower($province).'%');
+        }
+        if ($city != '' and !empty($city)){
+            $query->andWhere('lower(city.name) LIKE :cityName')->setParameter('cityName', strtolower($city).'%');
+        }
+        if ($quartier != '' and !empty($quartier)){
+            $query->andWhere('lower(quartier.name) LIKE :quartierName')->setParameter('quartierName', strtolower($quartier).'%');
         }
 
         if ($priceMin != 0 && $priceMin != NULL){
@@ -239,18 +252,30 @@ class AdvertsRepository extends ServiceEntityRepository
     }
     public function findAllSellNeufByCriteria($estateType, $priceMin,
                                       $priceMax, $areaMin, $areaMax, $publication, $advertStatus, $rooms = array(), $bathrooms = [], $characters = [], $floors = array(), $sorted = '',
-                                      $page = 1, $maxPerPage = Adverts::NUM_ITEMS){
+                                              $province='', $city='', $quartier='', $page = 1, $maxPerPage = Adverts::NUM_ITEMS){
 
         $currentDate = date('Y-m-d H:i:s');
 
         $query = $this->createQueryBuilder('a');
         $query->join('a.advertType', 'advertType')
             ->join('a.estateType', 'estateType')
+            ->join('a.province', 'province')
+            ->leftjoin('a.city', 'city')
+            ->leftjoin('a.quartier', 'quartier')
             ->leftJoin('a.estateStatus', 'estateStatus');
         $query->where('(a.valid = :valid AND a.refused = :refused AND a.neuf = :neuf)');
         $query->andWhere('lower(advertType.code) = :advertTypeCode')->setParameter('advertTypeCode', strtolower(AdvertType::ADVERT_TYPE_SELL));
         if ($estateType != '' && !empty($estateType)){
             $query->andWhere('estateType.id = :estateTypeId')->setParameter('estateTypeId', intval($estateType));
+        }
+        if ($province != '' and !empty($province)){
+            $query->andWhere('lower(province.name) LIKE :provinceName')->setParameter('provinceName', strtolower($province).'%');
+        }
+        if ($city != '' and !empty($city)){
+            $query->andWhere('lower(city.name) LIKE :cityName')->setParameter('cityName', strtolower($city).'%');
+        }
+        if ($quartier != '' and !empty($quartier)){
+            $query->andWhere('lower(quartier.name) LIKE :quartierName')->setParameter('quartierName', strtolower($quartier).'%');
         }
 
         if ($priceMin != 0 && $priceMin != NULL){
@@ -330,17 +355,29 @@ class AdvertsRepository extends ServiceEntityRepository
 
     public function findAllRentByCriteria($rentType, $estateType, $priceMin,
                                           $priceMax, $areaMin, $areaMax, $publication, $advertStatus, $rooms = [], $floors = [],$bathrooms = [], $characters = [], $sorted = '', $rentHoliday = 0,
-                                          $page=1, $maxPerPage = Adverts::NUM_ITEMS){
+                                          $province='', $city='', $quartier='', $page = 1, $maxPerPage = Adverts::NUM_ITEMS){
 
         $currentDate = date('Y-m-d H:i:s');
         $query = $this->createQueryBuilder('a');
         $query->join('a.advertType', 'advertType')
             ->join('a.estateType', 'estateType')
+            ->join('a.province', 'province')
+            ->leftjoin('a.city', 'city')
+            ->leftjoin('a.quartier', 'quartier')
             ->leftJoin('a.estateStatus', 'estateStatus');
         $query->where('(a.valid = :valid AND a.refused = :refused)');
         $query->andWhere('lower(advertType.code) = :advertTypeCode')->setParameter('advertTypeCode', strtolower(AdvertType::ADVERT_TYPE_RENT));
         if ($estateType != '' && !empty($estateType)){
             $query->andWhere('estateType.id = :estateTypeId')->setParameter('estateTypeId', intval($estateType));
+        }
+        if ($province != '' and !empty($province)){
+            $query->andWhere('lower(province.name) LIKE :provinceName')->setParameter('provinceName', strtolower($province).'%');
+        }
+        if ($city != '' and !empty($city)){
+            $query->andWhere('lower(city.name) LIKE :cityName')->setParameter('cityName', strtolower($city).'%');
+        }
+        if ($quartier != '' and !empty($quartier)){
+            $query->andWhere('lower(quartier.name) LIKE :quartierName')->setParameter('quartierName', strtolower($quartier).'%');
         }
         if ($rentType != '' && !empty($rentType)){
             $query->andWhere('a.rentType = :rentType')->setParameter('rentType', strtolower($rentType));
