@@ -152,7 +152,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-sm-3 forSell">
+                                                    <div class="form-group col-sm-3 forSell" id="neuf" style="display: none;">
                                                         <label class="required">{{ 'front.estate.neuf'|trans }}</label>
                                                         <div class="mb-3">
                                                             <input type="checkbox" class="estateType" id="for-sell-neuf" name="adverts[neuf]" value="1">
@@ -179,7 +179,7 @@
                                                     </div>
                                                     #}
 
-                                                    <div class="form-group col-sm-3">
+                                                    <div class="form-group col-sm-3" id="bathrooms" style="display: none;">
                                                         <label class="required">{{ 'front.bathrooms'|trans }}</label>
                                                         <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
                                                             <div class="input-group" style="width:150px;">
@@ -196,7 +196,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-sm-3">
+                                                    <div class="form-group col-sm-3" id="bedrooms" style="display: none;">
                                                         <label class="required">{{ 'front.bedrooms'|trans }}</label>
                                                         <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
                                                             <div class="input-group" style="width:150px;">
@@ -213,7 +213,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-sm-3">
+                                                    <div class="form-group col-sm-3" id="floor" style="display: none;">
                                                         <label class="required">{{ 'front.floor'|trans }}</label>
                                                         <select data-plugin-selectTwo class="form-control populate" name="adverts[floor]" required>
                                                             <option value="">{{ 'front.choose.option'|trans }}</option>
@@ -240,7 +240,7 @@
                                                             <option value="20">{{ 'front.floor20'|trans }}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-sm-3">
+                                                    <div class="form-group col-sm-3" id="age" style="display: none;">
                                                         <label class="required">{{ 'front.age'|trans }}</label>
                                                         <select data-plugin-selectTwo class="form-control populate" name="adverts[age]" required>
                                                             <option value="">{{ 'front.choose.option'|trans }}</option>
@@ -259,7 +259,7 @@
                                                             <option value="100">{{ 'front.age.100'|trans }}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-sm-3">
+                                                    <div class="form-group col-sm-3" id="soil" style="display: none;">
                                                         <label class="required">{{ 'front.soil.type'|trans }}</label>
                                                         <select data-plugin-selectTwo class="form-control populate" name="adverts[soil]" required>
                                                             <option value="">{{ 'front.choose.option'|trans }}</option>
@@ -270,7 +270,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="form-group col-sm-3 forRent">
+                                                    <div class="form-group col-sm-3 forRent" id="capacity" style="display: none">
                                                         <label class="required">{{ 'front.capacity'|trans }}</label>
                                                         <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
                                                             <div class="input-group" style="width:150px;">
@@ -287,7 +287,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-sm-3 forRent">
+                                                    <div class="form-group col-sm-3 forRent" id="min_night" style="display: none;">
                                                         <label class="required">{{ 'front.min_night'|trans }}</label>
                                                         <div data-plugin-spinner data-plugin-options='{ "value":1, "min": 1, "max": 100 }'>
                                                             <div class="input-group" style="width:150px;">
@@ -544,12 +544,16 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
-            let $forRent = $('.forRent');
-            let $forSell = $('.forSell');
-            let $forRentId = $('[id^="for-rent"]');
-            let $forSellId = $('[id^="for-sell"]');
             $('#advert-type').on('change', function () {
                 let $rentTypeSelected = $(this).children("option:selected").data('code');
+                showForAdvertType($rentTypeSelected);
+            });
+
+            function showForAdvertType($rentTypeSelected){
+                let $forRent = $('.forRent');
+                let $forSell = $('.forSell');
+                let $forRentId = $('[id^="for-rent"]');
+                let $forSellId = $('[id^="for-sell"]');
                 if ($rentTypeSelected == 'rent'){
                     $forRent.show();
                     $forRentId.prop('disabled', false);
@@ -561,7 +565,21 @@
                     $forSell.show();
                     $forSellId.prop('disabled', false);
                 }
-            });
+            }
+
+            function showForAdvertTypeOnly($rentTypeSelected){
+                let $forRent = $('.forRent');
+                let $forSell = $('.forSell');
+                let $forRentId = $('[id^="for-rent"]');
+                let $forSellId = $('[id^="for-sell"]');
+                if ($rentTypeSelected == 'rent'){
+                    $forSell.hide();
+                    $forSellId.prop('disabled', true);
+                } else if ($rentTypeSelected == 'sell') {
+                    $forRent.hide();
+                    $forRentId.prop('disabled', true);
+                }
+            }
            //get provinces of region
            $('#regions').on('change', function () {
               let region = $(this).val();
@@ -724,17 +742,17 @@
 
             /*   characteristics */
 
-            let $apartment = "#air_conditioner, #balcon, #concierge, #door, #heating, #elevator, #fireplace, #fridge_appliance, #garage, #internet, #microwave, #parabolic_antenna, #sea, #security_camera, #storage, #terrace, #washing_machine, #tv";
-            let $house = "#air_conditioner, #balcon, #mountainside, #elevator, #heating, #fireplace, #fridge_appliance, #garage, #garden, #internet, #parabolic_antenna, #sea, #security_camera, #terrace";
-            let $office = "#air_conditioner, #elevator, #fireplace, #garage,  #heating, #internet, #parabolic_antenna, #security_camera, #concierge";
-            let $villa = "#air_conditioner, #pool, #fireplace, #garage, #puits, #mountainside, #heating, #parabolic_antenna, #security_camera, #terrace, #garden";
+            let $apartment = "#air_conditioner, #balcon, #concierge, #door, #heating, #elevator, #fireplace, #fridge_appliance, #garage, #internet, #microwave, #parabolic_antenna, #sea, #security_camera, #storage, #terrace, #washing_machine, #tv, #bathrooms, #floor, #bedrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $house = "#air_conditioner, #balcon, #mountainside, #elevator, #heating, #fireplace, #fridge_appliance, #garage, #garden, #internet, #parabolic_antenna, #sea, #security_camera, #terrace, #bathrooms, #floor, #badrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $office = "#air_conditioner, #elevator, #fireplace, #garage,  #heating, #internet, #parabolic_antenna, #security_camera, #concierge, #bathrooms, #floor, #bedrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $villa = "#air_conditioner, #pool, #fireplace, #garage, #puits, #mountainside, #heating, #parabolic_antenna, #security_camera, #terrace, #garden, #bathrooms, #floor, #badrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
             let $terrain = "#agricole, #commercial, #lotissement, #montagne, #route, #sea, #tourbain, #urbain, #terrace, #garden";
-            let $commercial = "#emplacement, #boulevard, #coproprie, #garage, #security_camera, #route, #alarm, #charge, #air_conditioner, #heating";
-            let $riad = "#garden, #terrace, #meuble, #hammam, #security_camera, #fridge_appliance, #pool, #heating, #air_conditioner, #fireplace, #pergola";
-            let $studio = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #pool, #terrace, #pool, #fireplace, #air_conditioner, #heating, #fridge_appliance, #meuble, #internet, #parabolic_antenna, #storage, #rue, #boulevard, #sea";
+            let $commercial = "#emplacement, #boulevard, #coproprie, #garage, #security_camera, #route, #alarm, #charge, #air_conditioner, #heating, #bathrooms, #floor, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $riad = "#garden, #terrace, #meuble, #hammam, #security_camera, #fridge_appliance, #pool, #heating, #air_conditioner, #fireplace, #pergola, #bathrooms, #bedrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $studio = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #pool, #terrace, #pool, #fireplace, #air_conditioner, #heating, #fridge_appliance, #meuble, #internet, #parabolic_antenna, #storage, #rue, #boulevard, #sea, #bathrooms, #floor, #bedrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
             let $ferme = "#house, #pool, #puits, #etable, #other_batiment, #arbres, #plantation, #goutegoute, #irrigation, #materiel, #roulant, #gardien, #reseau_electric, #reseau_eau, #route";
-            let $duplex = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #terrace, #pool, #garden_interieur, #fireplace, #air_conditioner,  #heating, #fridge_appliance, #internet, #parabolic_antenna,  #storage, #rue, #boulevard, #sea";
-            let $batiment = "#industriel, #comercial, #habitation, #elevator, #charge, #cave, #garage, #parking, #autres";
+            let $duplex = "#garage, #parking, #elevator, #concierge, #security_camera, #balcon, #terrace, #pool, #garden_interieur, #fireplace, #air_conditioner,  #heating, #fridge_appliance, #internet, #parabolic_antenna,  #storage, #rue, #boulevard, #sea, #bathrooms, #floor, #badrooms, #estateStatus, #neuf, #age, #soil, #capacity, #min_night";
+            let $batiment = "#industriel, #comercial, #habitation, #elevator, #charge, #cave, #garage, #parking, #autres, #floor";
 
 
             let $type = $('.estateType').data('code');
@@ -913,6 +931,9 @@
                    $($batiment).hide();
                    $($apartment).show();
                }
+
+                let $rentTypeSelected = $('#advert-type').children("option:selected").data('code');
+                showForAdvertTypeOnly($rentTypeSelected);
 
                //alert($type);
             });
