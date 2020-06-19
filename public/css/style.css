@@ -6,6 +6,9 @@
     color: black;
     font-size: 12px;
 }
+#header .header-nav-main nav > ul > li.open > a, #header .header-nav-main nav > ul > li:hover > a{
+    color: white;
+}
 .search-estate{
     background-color: #413c46;
 }

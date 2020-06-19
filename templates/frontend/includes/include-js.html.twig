@@ -128,19 +128,47 @@
         let $div = $(this);
         let $icon = $div.find('i');
         let $wishCount = $('#wish-list-count');
-        console.log($wishCount.html());
+        let $advertId = $div.data('id');
+
         if ($icon.hasClass('fas fa-heart')){
             $icon.removeClass('fas fa-heart');
             $icon.addClass('far fa-heart');
 
             $wishCount.html(parseInt($wishCount.html())-1);
+            $.ajax({
+                url: "{{ url('ajax_remove_wish') }}",
+                data: JSON.stringify({advertId: $advertId}),
+                dataType: 'JSON',
+                method: "POST",
+                contentType: 'application/json',
+                success: function (data) {
+                },
+                error: function (a, b, c) {
+                },
+                complete:function () {
+                }
+            });
+            e.preventDefault();
         } else if ($icon.hasClass('far fa-heart')) {
             $icon.removeClass('far fa-heart');
             $icon.addClass('fas fa-heart');
-
             $wishCount.html(parseInt($wishCount.html())+1);
+
+            $.ajax({
+                url: "{{ url('ajax_add_wish') }}",
+                data: JSON.stringify({advertId: $advertId}),
+                dataType: 'JSON',
+                method: "POST",
+                contentType: 'application/json',
+                success: function (data) {
+                },
+                error: function (a, b, c) {
+                },
+                complete:function () {
+                }
+            });
+            e.preventDefault();
         }
-        e.preventDefault();
     });
 
 

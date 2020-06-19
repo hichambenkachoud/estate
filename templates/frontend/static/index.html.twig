@@ -46,8 +46,12 @@
                                                 {{ advert.advertType.code|trans }}
                                             </div>
                                             {% if app.user %}
-                                                <div class="thumb-info-listing-type wishlist-icon">
-                                                    <i class="far fa-heart" aria-hidden="true"></i>
+                                                <div class="thumb-info-listing-type wishlist-icon" data-id="{{ advert.id }}">
+                                                    {% if  advert.id in app.user.allWishes %}
+                                                        <i class="fas fa-heart" aria-hidden="true"></i>
+                                                    {% else %}
+                                                        <i class="far fa-heart" aria-hidden="true"></i>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </div>

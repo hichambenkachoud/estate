@@ -545,7 +545,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     *  @Route(path="/add_wish", name="ajax_add_wish")
+     *  @Route(path="/add_wish", name="ajax_add_wish", methods={"POST"})
      */
     public function addWish(Request $request){
         $data = $this->_checkData();
@@ -558,10 +558,36 @@ class AjaxController extends AbstractController
         array_push($wishList, intval($advertId));
 
         $member->setWishList(json_encode($wishList));
+        $member->setWishNumber($member->getWishNumber() + 1);
         $this->entityManager->flush();
 
         $response["code"] = 0;
-        $response["response"] = ["message"=> $this->trans->trans('front.adverts.contact.success')];
+        $response["response"] = ["message"=> 'success'];
+        return new Response(json_encode($response));
+    }
+
+    /**
+     *  @Route(path="/remove_wish", name="ajax_remove_wish", methods={"POST"})
+     */
+    public function removeWish(Request $request){
+        $data = $this->_checkData();
+        /** @var Members $member */
+        $member = $this->getUser();
+
+        $wishList = json_decode($member->getWishList(), true);
+        $advertId = isset($data['advertId']) ? trim($data['advertId']) : null;
+
+        $key = array_search($advertId, $wishList);
+        if ($key !== false) {
+            unset($wishList[$key]);
+        }
+
+        $member->setWishList(json_encode($wishList));
+        //$member->setWishNumber($member->getWishNumber() - 1);
+        $this->entityManager->flush();
+
+        $response["code"] = 0;
+        $response["response"] = ["message"=> 'success'];
         return new Response(json_encode($response));
     }
     private function _checkData()
