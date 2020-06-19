@@ -269,7 +269,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form" id="bedrooms" style="display:none;">
                                     {#<select data-plugin-selectTwo class="form-control form-control-lg text-uppercase text-3 populate"
                                             name="adverts[roomsMin]"
                                             data-msg-required="This field is required."
@@ -297,7 +297,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form" id="estateStatus" style="display:none;">
                                     <span>{{ 'front.estate.status'|trans }}</span>
                                     <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
                                     {% for estateStatut in estateStatus %}
@@ -311,7 +311,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form" id="floor" style="display:none;">
                                     <span>{{ 'front.floor'|trans }}</span>
                                     <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
                                         <li>
@@ -335,7 +335,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form">
+                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3 item-form" id="bathrooms" style="display:none;">
 
                                     <span>{{ 'front.bathrooms'|trans }}</span>
                                     <ul class="{% if app.request.locale == 'ar' %} arabe {% endif %}">
