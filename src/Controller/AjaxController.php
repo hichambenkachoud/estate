@@ -367,7 +367,11 @@ class AjaxController extends AbstractController
             /** @var City $city */
             foreach ($cities as $city){
                 $p['id'] = $city->getId();
-                $p['code'] = $this->trans->trans($city->getProvince()->getCode()). ', '.$this->trans->trans($city->getCode());
+                if ($this->trans->trans($city->getProvince()->getCode()) == $this->trans->trans($city->getCode())){
+                    $p['code'] = $this->trans->trans($city->getCode());
+                }else{
+                    $p['code'] = $this->trans->trans($city->getProvince()->getCode()). ', '.$this->trans->trans($city->getCode());
+                }
                 $p['name'] = $city->getName();
                 $p['obj'] = 'city';
                 $result[] = $p;
@@ -379,7 +383,11 @@ class AjaxController extends AbstractController
             /** @var Quartier $quartier **/
             foreach ($quartiers as $quartier){
                 $p['id'] = $quartier->getId();
-                $p['code'] = $this->trans->trans($quartier->getCity()->getProvince()->getCode()) .', '.$this->trans->trans($quartier->getCity()->getCode()).', '.$this->trans->trans($quartier->getCode());
+                if ($this->trans->trans($quartier->getCity()->getProvince()->getCode()) == $this->trans->trans($quartier->getCity()->getCode())){
+                    $p['code'] = $this->trans->trans($quartier->getCity()->getCode()).', '.$this->trans->trans($quartier->getCode());
+                }else{
+                    $p['code'] = $this->trans->trans($quartier->getCity()->getProvince()->getCode()) .', '.$this->trans->trans($quartier->getCity()->getCode()).', '.$this->trans->trans($quartier->getCode());
+                }
                 $p['name'] = $quartier->getName();
                 $p['obj'] = 'quartier';
                 $result[] = $p;

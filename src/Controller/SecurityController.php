@@ -82,7 +82,7 @@ class SecurityController extends AbstractController
 
                 $url = $this->generateUrl('front_security_confirm_account', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
-                exec("php ../bin/console app:send-email --subject=registration --email=".$member->getEmail()." --url=$url --lang=".$request->getLocale().">> ../var/log/register.log&");
+                exec("php ../bin/console app:send-front-email --subject=registration --email=".$member->getEmail()." --url=$url --lang=".$request->getLocale().">> ../var/log/register.log&");
             }catch (\Exception $e){
                 $this->logger->info(json_encode($e));
             }

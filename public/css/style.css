@@ -752,6 +752,14 @@
     .first-sort .dropdown-menu {
         right: auto;
     }
+    .search-home{
+        left: 9%;
+        position: relative;
+    }
+    .search-home.arabe{
+        right: 8%;
+        position: relative;
+    }
 }
 
 @media all and (max-width: 768px){
