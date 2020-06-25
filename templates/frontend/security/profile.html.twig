@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ 'title'|trans }} - {{ 'front.profile'|trans }} {% endblock %}
 
+{% block metas %}
+    <meta name="title" content="{{ 'front.profile'|trans }}">
+    <meta name="description" content="{{ 'front.profile'|trans }}">
+    <meta property="og:title" content="{{ 'front.profile'|trans }}">
+    <meta name="keywords" content="{{ 'front.profile'|trans }}">
+{% endblock %}
 {% block body %}
 
         <div role="main" class="main">

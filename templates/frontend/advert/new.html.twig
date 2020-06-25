@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title'|trans }} - {{ 'front.advert.add'|trans }}{% endblock %}
+
+{% block metas %}
+    <meta name="title" content="{{ 'front.advert.add'|trans }}">
+    <meta name="description" content="{{ 'front.advert.add'|trans }}">
+    <meta property="og:title" content="{{ 'front.advert.add'|trans }}">
+    <meta name="keywords" content="{{ 'front.advert.add'|trans }}">
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="https://js.hereapi.cn/v3/3.0/mapsjs-ui.css" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap-fileinput/fileinput.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
     <style type="text/css">
         .krajee-default .file-caption-info, .krajee-default .file-size-info{
@@ -419,6 +430,30 @@
                                                    </div>
                                                </div>
                                            </div>
+                                           <div class="col-sm-6 mb-4">
+                                               <div class="card card-info">
+                                                   <div class="card-header">
+                                                       <span class="card-title required">{{ "front.keywords"|trans }}</span>
+                                                   </div>
+                                                   <div class="card-body">
+                                                       <div class="form-group">
+                                                           <input type="text" name="adverts[keywords]" id="keywords" required class="form-control" data-role="tagsinput">
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-6 mb-4">
+                                               <div class="card card-info">
+                                                   <div class="card-header">
+                                                       <span class="card-title required">{{ "front.seo.description"|trans }}</span>
+                                                   </div>
+                                                   <div class="card-body">
+                                                       <div class="form-group">
+                                                           <textarea type="text" name="adverts[seoDescription]" id="seoDescription" required class="form-control" maxlength="155"></textarea>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
                                            <div class="col-sm-4">
                                                <div class="card card-info">
                                                    <div class="card-header">
@@ -465,6 +500,7 @@
 
     <script src="{{ asset('js/bootstrap-fileinput/fileinput.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-fileinput/theme.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-fileinput/bootstrap-tagsinput.js') }}"></script>
     <script src="{{ asset('js/jquery.bootstrap.wizard.js') }}"></script>
     <script src="{{ asset('js/examples.wizard.js') }}"></script>
 
@@ -520,8 +556,6 @@
         });
 
         var maptypes = platform.createDefaultLayers();
-
-        // Instantiate (and display) a map object:
         var map = new H.Map(
             document.getElementById('mapContainer'),
             maptypes.vector.normal.map,
@@ -531,21 +565,52 @@
                 pixelRatio: window.devicePixelRatio || 1
             }
         );
+
+        var Marker = new H.map.Marker({lat:33.589886, lng:-7.603869});
+        map.addObject(Marker);
+
         window.addEventListener('resize', () => map.getViewPort().resize());
 
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
         // Create the default UI components
         var ui = H.ui.UI.createDefault(map, maptypes, 'fr-FR');
+        // Instantiate (and display) a map object:
 
-        //ui.getControl('zoom').setEnabled(false)
+        function displayMap(longitude = 0, latitude = 0) {
+            map.removeObjects(map.getObjects ())
+            var group = new  H.map.Group(),
+                position,
+                i;
+
+            position = {
+                lat: latitude,
+                lng: longitude
+            };
+
+
+
+
+            marker = new H.map.Marker(position);
+            group.addObject(marker);
+
+            group.addEventListener('tap', function (evt) {
+                map.setCenter(evt.target.getGeometry());
+                openBubble(
+                    evt.target.getGeometry(), evt.target.label);
+            }, false);
+
+            // Add the locations group to the map
+            map.addObject(group);
+            map.setCenter(group.getBoundingBox().getCenter());
+        }
 
     </script>
     
     <script type="text/javascript">
         $(document).ready(function () {
             $('#advert-type').on('change', function () {
-                let $rentTypeSelected = $(this).children("option:selected").data('code');
+                let $rentTypeSelected = $(this).children("option:selected").data('name');
                 showForAdvertType($rentTypeSelected);
             });
 
@@ -583,7 +648,7 @@
            //get provinces of region
            $('#regions').on('change', function () {
               let region = $(this).val();
-               getLongAndLatByState( $(this).children("option:selected").data('code'));
+               getLongAndLatByState( $(this).children("option:selected").html());
               let provinceSelect = $('#provinces');
               let provinceDev = $('#province-list');
                $('#city-list').prop('disabled', true);
@@ -617,7 +682,7 @@
            //get quartier of city
            $('#cities').on('change', function () {
               let city = $(this).val();
-               getLongAndLatByCity($(this).children("option:selected").data('code'));
+               getLongAndLatByCity($(this).children("option:selected").html());
               let quartierSelect = $('#quartiers');
               let quartierDev = $('#quartier-list');
                $.ajax({
@@ -654,6 +719,7 @@
               let citySelect = $('#cities');
               let cityDev = $('#city-list');
                let quartiereDev = $('#quartier-list');
+               getLongAndLatByCity($(this).children("option:selected").html());
                $.ajax({
                    url: "{{ path('ajax_get_city_of_province') }}",
                    data: JSON.stringify({province: province}),
@@ -683,6 +749,11 @@
                });
            });
 
+
+            $('#quartiers').on('change', function () {
+                getLongAndLatByQuartier($(this).children("option:selected").html());
+            });
+
            //sent
             $('.finish').on('click', function () {
                let form = $('#advert-form');
@@ -699,8 +770,6 @@
 
 
             function getLongAndLatByCity(city) {
-                var obj = null;
-
                 $.ajax({
                     url: 'https://geocoder.ls.hereapi.com/6.2/geocode.json',
                     type: 'GET',
@@ -709,19 +778,22 @@
                     jsonp: 'jsoncallback',
                     data: {
                         city: city,
+                        Country: 'MAR',
                         apiKey: 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
                     },
                     success: function (data) {
                         //data = JSON.stringify(data);
-                        $('#latitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Latitude);
-                        $('#longitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Longitude);
+                        let $lat = data.Response.View[0].Result[0].Location.DisplayPosition.Latitude;
+                        let $lng = data.Response.View[0].Result[0].Location.DisplayPosition.Longitude;
+                        $('#latitude').val($lat);
+                        $('#longitude').val($lng);
+
+                        displayMap($lng, $lat)
                     }
                 });
 
             }
             function getLongAndLatByState(state) {
-                var obj = null;
-
                 $.ajax({
                     url: 'https://geocoder.ls.hereapi.com/6.2/geocode.json',
                     type: 'GET',
@@ -729,12 +801,38 @@
                     async: false,
                     jsonp: 'jsoncallback',
                     data: {
-                        state: state,
+                        State: state,
                         apiKey: 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8'
                     },
                     success: function (data) {
-                        $('#latitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Latitude);
-                        $('#longitude').val(data.Response.View[0].Result[0].Location.DisplayPosition.Longitude);
+                        let $lat = data.Response.View[0].Result[0].Location.DisplayPosition.Latitude;
+                        let $lng = data.Response.View[0].Result[0].Location.DisplayPosition.Longitude;
+                        $('#latitude').val($lat);
+                        $('#longitude').val($lng);
+
+                        displayMap($lng, $lat)
+                    }
+                });
+            }
+            function getLongAndLatByQuartier(quartier) {
+                $.ajax({
+                    url: 'https://geocoder.ls.hereapi.com/6.2/geocode.json',
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    async: false,
+                    jsonp: 'jsoncallback',
+                    data: {
+                        Street: quartier,
+                        apiKey: 'bXdx-YJ9AP7p8kKKn3_xNxDFd9PqttfQzJ5W39fS4c8',
+                        Country: 'MAR'
+                    },
+                    success: function (data) {
+                        let $lat = data.Response.View[0].Result[0].Location.DisplayPosition.Latitude;
+                        let $lng = data.Response.View[0].Result[0].Location.DisplayPosition.Longitude;
+                        $('#latitude').val($lat);
+                        $('#longitude').val($lng);
+
+                        displayMap($lng, $lat)
                     }
                 });
             }

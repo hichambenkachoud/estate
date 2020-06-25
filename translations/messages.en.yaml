@@ -429,6 +429,8 @@ front:
   wish.list: Recorded announcements
   city.quartier: District or City
   backtolist: Back to search
+  keywords: Keywords
+  seo.description: SEO description
 
 yes: Yes
 no: No

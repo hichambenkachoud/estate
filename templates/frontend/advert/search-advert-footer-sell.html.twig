@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+
+{% block title %}{{ 'title'|trans }} - {{ subject|lower|trans }} {% endblock %}
+
+{% block metas %}
+    <meta name="title" content="{{ subject|lower|trans }}">
+    <meta name="description" content="{{ subject|lower|trans }}">
+    <meta property="og:title" content="{{ subject|lower|trans }}">
+    <meta name="keywords" content="{{ subject|lower|trans }}">
+{% endblock %}
+
 {% block stylesheets %}
 {{ parent() }}
     <style>

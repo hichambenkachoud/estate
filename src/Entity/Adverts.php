@@ -195,6 +195,27 @@ class Adverts
      */
     private $rentHoliday;
 
+    /**
+     * @ORM\Column(name="seo_url", type="text", nullable=true)
+     */
+    private $seoUrl;
+
+    /**
+     * @ORM\Column(name="seo_title", type="text", nullable=true)
+     */
+    private $seoTitle;
+
+
+    /**
+     * @ORM\Column(name="seo_keywords", type="text", nullable=true)
+     */
+    private $seoKeywords;
+
+    /**
+     * @ORM\Column(name="seo_description", type="text", nullable=true)
+     */
+    private $seoDescription;
+
 
 
     public function __construct()
@@ -674,5 +695,68 @@ class Adverts
         $this->rentHoliday = $rentHoliday;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSeoUrl()
+    {
+        return $this->seoUrl;
+    }
+
+    /**
+     * @param mixed $seoUrl
+     */
+    public function setSeoUrl($seoUrl): void
+    {
+        $this->seoUrl = $seoUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
+    }
+
+    /**
+     * @param mixed $seoTitle
+     */
+    public function setSeoTitle($seoTitle): void
+    {
+        $this->seoTitle = $seoTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoKeywords()
+    {
+        return $this->seoKeywords;
+    }
+
+    /**
+     * @param mixed $seoKeywords
+     */
+    public function setSeoKeywords($seoKeywords): void
+    {
+        $this->seoKeywords = $seoKeywords;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoDescription()
+    {
+        return $this->seoDescription;
+    }
+
+    /**
+     * @param mixed $seoDescription
+     */
+    public function setSeoDescription($seoDescription): void
+    {
+        $this->seoDescription = $seoDescription;
+    }
 
 }

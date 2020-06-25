@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'title'|trans }} - {{ 'front.agencies'|trans }} {% endblock %}
+
+{% block metas %}
+    <meta name="title" content="{{ 'front.agencies'|trans }}">
+    <meta name="description" content="{{ 'front.agencies'|trans }}">
+    <meta property="og:title" content="{{ 'front.agencies'|trans }}">
+    <meta name="keywords" content="{{ 'front.agencies'|trans }}">
+{% endblock %}
+
 {% block body %}
 
     <div role="main" class="main">

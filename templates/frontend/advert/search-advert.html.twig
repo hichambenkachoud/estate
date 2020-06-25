@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ 'title'|trans }} - {{ 'front.search'|lower|trans }} {% endblock %}
 
+{% block metas %}
+    <meta name="title" content="{{ 'front.search'|lower|trans }}">
+    <meta name="description" content="{{ 'front.search'|lower|trans }}">
+    <meta property="og:title" content="{{ 'front.search'|lower|trans }}">
+    <meta name="keywords" content="{{ 'front.search'|lower|trans }}">
+{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
     <style>

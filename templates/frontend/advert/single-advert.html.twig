@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ 'title'|trans }} - {{ advert.title }} {% endblock %}
 
+{% block metas %}
+    <meta name="title" content="{{ advert.title }}">
+    <meta name="description" content="{{ advert.seoDescription }}">
+    <meta property="og:title" content="{{ advert.seoTitle }}">
+    <meta name="keywords" content="{{ advert.seoKeywords }}">
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -409,6 +416,8 @@
                 pixelRatio: window.devicePixelRatio || 1
             }
         );
+        var Marker = new H.map.Marker({lat:lat, lng:long});
+        map.addObject(Marker);
         window.addEventListener('resize', () => map.getViewPort().resize());
 
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));

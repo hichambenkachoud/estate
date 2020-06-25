@@ -429,7 +429,8 @@ front:
   image.bad.format: Le format est invalide
   city.quartier: Quartier ou Ville
   backtolist: Retour à la recherche
-
+  keywords: Mots clé
+  seo.description: SEO description
 
 yes: Oui
 no: Non

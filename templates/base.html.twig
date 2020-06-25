@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html {% if app.request.locale == 'ar' %} dir="rtl" {% endif %}>
+<html {% if app.request.locale == 'ar' %} dir="rtl" {% endif %} xmlns="http://www.w3.org/1999/xhtml" lang="{{ app.request.locale }}" xml:lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
     <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+
+    {% block metas %}
+        <meta name="title" content="">
+        <meta name="description" content="">
+        <meta property="og:title" content="">
+        <meta name="keywords" content="">
+    {% endblock %}
+    <meta property="og:site_name" content="{{ 'title'|trans }}">
     {% block stylesheets %}
         {% include('frontend/includes/include-css.html.twig') %}
     {% endblock %}

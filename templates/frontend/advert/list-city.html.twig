@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ 'title'|trans }} - {{ advertCity.code|lower|trans }} {% endblock %}
 
+{% block metas %}
+    <meta name="title" content="{{ advertCity.code|lower|trans }}">
+    <meta name="description" content="{{ advertCity.code|lower|trans }}">
+    <meta property="og:title" content="{{ advertCity.code|lower|trans }}">
+    <meta name="keywords" content="{{ advert.seoKeywords }}">
+{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
     <style>

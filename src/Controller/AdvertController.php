@@ -16,6 +16,7 @@ use App\Entity\Province;
 use App\Entity\Quartier;
 use App\Entity\Region;
 use App\Form\AdvertsType;
+use App\utils\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\QueryException;
 use phpDocumentor\Reflection\Types\Self_;
@@ -94,6 +95,12 @@ class AdvertController extends AbstractController
 
 
            try{
+
+               $advert->setSeoUrl(Util::slugify($advert->getTitle()));
+               $advert->setSeoTitle(Util::slugify($advert->getTitle()));
+               $advert->setSeoKeywords(isset($advertPost['keywords']) ? json_encode($advertPost['keywords']) : null);
+               $advert->setSeoDescription(isset($advertPost['seoDescription']) ? $advertPost['seoDescription'] : null);
+
                $this->entity_manager->persist($advert);
                $this->entity_manager->flush();
 
