@@ -127,6 +127,10 @@
                                                     <i class="far fa-heart" aria-hidden="true"></i>
                                                 {% endif %}
                                             </div>
+                                        {% else %}
+                                            <div class="thumb-info-listing-type wishlist-icon" data-id="{{ advert.id }}">
+                                                <a href="{{ path('front_security_login') }}"><i class="far fa-heart logged" aria-hidden="true"></i></a>
+                                            </div>
                                         {% endif %}
 
                                     </div>

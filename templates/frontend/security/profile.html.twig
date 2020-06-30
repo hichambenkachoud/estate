@@ -147,7 +147,7 @@
 
             $('.telephone').val({{ app.user.mobileNumber }});
             $('.telephone').on('keyup',function () {
-                let indicative = $('#w4-description .iti__selected-dial-code').text();
+                let indicative = $('.iti__selected-flag .iti__selected-dial-code').text();
                 let $val = $(this).val();
 
                 $('#tel').val(indicative+$val);

@@ -130,7 +130,9 @@
         let $wishCount = $('#wish-list-count');
         let $advertId = $div.data('id');
 
-        if ($icon.hasClass('fas fa-heart')){
+        if ($icon.hasClass('logged')){
+            window.location.href = "{{ path('front_security_login') }}"
+        }else if ($icon.hasClass('fas fa-heart')){
             $icon.removeClass('fas fa-heart');
             $icon.addClass('far fa-heart');
 

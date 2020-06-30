@@ -5,7 +5,7 @@
     <meta name="title" content="{{ advertCity.code|lower|trans }}">
     <meta name="description" content="{{ advertCity.code|lower|trans }}">
     <meta property="og:title" content="{{ advertCity.code|lower|trans }}">
-    <meta name="keywords" content="{{ advert.seoKeywords }}">
+    <meta name="keywords" content="{{ advertCity.code|lower|trans }}">
 {% endblock %}
 {% block stylesheets %}
 {{ parent() }}
@@ -121,6 +121,10 @@
                                                 <i class="far fa-heart" aria-hidden="true"></i>
                                             {% endif %}
                                         </div>
+                                        {% else %}
+                                            <div class="thumb-info-listing-type wishlist-icon" data-id="{{ advert.id }}">
+                                                <a href="{{ path('front_security_login') }}"><i class="far fa-heart logged" aria-hidden="true"></i></a>
+                                            </div>
                                     {% endif %}
                                 </div>
                                 <div class="details {% if app.request.locale == 'ar' %} arabe {% endif %}" style="width: 50%;">
